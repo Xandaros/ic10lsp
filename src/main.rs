@@ -316,7 +316,8 @@ impl LanguageServer for Backend {
             instruction_completions(prefix, &mut ret);
         } else if let Some(line_node) = node.find_parent("line") {
             let text = line_node.utf8_text(document.content.as_bytes()).unwrap();
-            let global_prefix = &text[..position.0.character as usize + 1];
+            let cursor_pos = position.0.character as usize - line_node.start_position().column;
+            let global_prefix = &text[..cursor_pos as usize + 1];
 
             if global_prefix.chars().all(char::is_whitespace) {
                 instruction_completions("", &mut ret);
