@@ -1,0 +1,13 @@
+{
+    "$schema": "https://puremourning.github.io/vimspector/schema/vimspector.schema.json#",
+    "configurations": {
+        "debug": {
+            "adapter": "CodeLLDB",
+            "configuration": {
+                "request": "launch",
+                "program": "${workspaceRoot}/target/debug/ic10lsp",
+                "args": ["--listen"]
+            }
+        }
+    }
+}
