@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build_ubuntu:
+    name: Build ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build release
+        run: cargo build --release --locked
+      - name: Generate changelog
+        id: changelog
+        uses: heinrichreimer/github-changelog-generator-action@v2.1.1
+        with:
+          onlyLastTag: true
+          filterByMilestone: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get current version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+      - name: Package Binary
+        run: cd target/release && tar czf ic10lsp-${{ steps.get_version.outputs.VERSION }}-linux.tar.gz ic10lsp
+      - name: Create/Update release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          draft: true
+          artifacts: target/release/ic10lsp-${{ steps.get_version.outputs.VERSION }}-linux.tar.gz
+          bodyFile: CHANGELOG.md
+          token: ${{ secrets.GITHUB_TOKEN }}
+  build_windows:
+    name: Build Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get current version
+        shell: bash
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+      - name: Build release
+        run: cargo build --release --locked
+      - name: Package Binary
+        shell: bash
+        run: cd target/release && 7z a -tzip ic10lsp-${{ steps.get_version.outputs.VERSION }}-windows.zip ic10lsp.exe
+      - name: Create/Update release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          draft: true
+          omitBody: true
+          artifacts: target/release/ic10lsp-${{ steps.get_version.outputs.VERSION }}-windows.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
