@@ -513,7 +513,7 @@ pub(crate) const DOCS: phf::Map<&'static str, &'static str> = phf_map! {
     "exp" => "Register = exp(a)",
     "rand" => "Register = a random value x with 0 &lt;= x &lt; 1",
     "yield" => "Pauses execution for 1 tick",
-    "label" => "DEPRECATED",
+    "label" => "DEPRECATED - Use alias instead",
     "peek" => "Register = the value at the top of the stack",
     "push" => "Pushes the value of a to the stack at sp and increments sp",
     "pop" => "Register = the value at the top of the stack and decrements sp",
