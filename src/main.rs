@@ -14,14 +14,15 @@ use tower_lsp::{
         CodeActionProviderCapability, CompletionItem, CompletionItemKind,
         CompletionItemLabelDetails, CompletionOptions, CompletionOptionsCompletionItem,
         CompletionParams, CompletionResponse, Diagnostic, DiagnosticRelatedInformation,
-        DiagnosticSeverity, DidChangeTextDocumentParams, DidOpenTextDocumentParams, Documentation,
-        ExecuteCommandOptions, ExecuteCommandParams, GotoDefinitionParams, GotoDefinitionResponse,
-        Hover, HoverContents, HoverParams, HoverProviderCapability, InitializeParams,
-        InitializeResult, InitializedParams, LanguageString, Location, MarkedString, MessageType,
-        NumberOrString, OneOf, ParameterInformation, ParameterLabel, PositionEncodingKind,
-        ServerCapabilities, ServerInfo, SignatureHelp, SignatureHelpOptions, SignatureHelpParams,
-        SignatureInformation, TextDocumentSyncCapability, TextDocumentSyncKind, TextEdit, Url,
-        WorkDoneProgressOptions, WorkspaceEdit,
+        DiagnosticSeverity, DidChangeTextDocumentParams, DidOpenTextDocumentParams,
+        DocumentSymbolParams, DocumentSymbolResponse, Documentation, ExecuteCommandOptions,
+        ExecuteCommandParams, GotoDefinitionParams, GotoDefinitionResponse, Hover, HoverContents,
+        HoverParams, HoverProviderCapability, InitializeParams, InitializeResult,
+        InitializedParams, LanguageString, Location, MarkedString, MessageType, NumberOrString,
+        OneOf, ParameterInformation, ParameterLabel, PositionEncodingKind, ServerCapabilities,
+        ServerInfo, SignatureHelp, SignatureHelpOptions, SignatureHelpParams, SignatureInformation,
+        SymbolInformation, SymbolKind, SymbolTag, TextDocumentSyncCapability, TextDocumentSyncKind,
+        TextEdit, Url, WorkDoneProgressOptions, WorkspaceEdit,
     },
     Client, LanguageServer, LspService, Server,
 };
@@ -187,6 +188,7 @@ impl LanguageServer for Backend {
                     work_done_progress_options: WorkDoneProgressOptions::default(),
                 }),
                 position_encoding: utf8_supported.then_some(PositionEncodingKind::UTF8),
+                document_symbol_provider: Some(OneOf::Left(true)),
                 completion_provider: Some(CompletionOptions {
                     resolve_provider: Some(false),
                     trigger_characters: Some(vec![" ".to_string()]),
@@ -227,6 +229,82 @@ impl LanguageServer for Backend {
                 .await;
         }
         self.run_diagnostics(&params.text_document.uri).await;
+    }
+
+    async fn document_symbol(
+        &self,
+        params: DocumentSymbolParams,
+    ) -> Result<Option<DocumentSymbolResponse>> {
+        let mut ret = Vec::new();
+        let files = self.files.read().await;
+        let uri = params.text_document.uri;
+
+        let Some(file_data) = files.get(&uri) else {
+            return Err(tower_lsp::jsonrpc::Error::invalid_request());
+        };
+
+        let document = &file_data.document_data;
+
+        let Some(ref tree) = document.tree else {
+            return Err(tower_lsp::jsonrpc::Error::internal_error());
+        };
+
+        let mut cursor = QueryCursor::new();
+        let query = Query::new(
+            tree_sitter_ic10::language(),
+            "(instruction (operation \"define\") . (operand)@name)@define
+            (instruction (operation \"alias\") . (operand)@name)@alias
+            (instruction (operation \"label\") . (operand)@name)@alias
+            (label (identifier)@name)@label",
+        )
+        .unwrap();
+        let define_idx = query.capture_index_for_name("define").unwrap();
+        let alias_idx = query.capture_index_for_name("alias").unwrap();
+        let label_idx = query.capture_index_for_name("label").unwrap();
+        let name_idx = query.capture_index_for_name("name").unwrap();
+
+        let matches = cursor.matches(&query, tree.root_node(), document.content.as_bytes());
+
+        for matched in matches {
+            let main_match = {
+                let mut ret = None;
+                for cap in matched.captures {
+                    if cap.index == define_idx || cap.index == alias_idx || cap.index == label_idx {
+                        ret = Some(cap);
+                    }
+                }
+                match ret {
+                    Some(ret) => ret,
+                    None => continue,
+                }
+            };
+
+            let kind = if main_match.index == define_idx {
+                SymbolKind::NUMBER
+            } else if main_match.index == alias_idx {
+                SymbolKind::VARIABLE
+            } else if main_match.index == label_idx {
+                SymbolKind::FUNCTION
+            } else {
+                SymbolKind::FILE
+            };
+
+            let Some(name_node) = matched.nodes_for_capture_index(name_idx).next() else {
+                continue;
+            };
+
+            let name = name_node.utf8_text(document.content.as_bytes()).unwrap();
+            #[allow(deprecated)]
+            ret.push(SymbolInformation {
+                name: name.to_string(),
+                kind,
+                tags: None,
+                deprecated: Some(matched.pattern_index == 2),
+                location: Location::new(uri.clone(), Range::from(name_node.range()).into()),
+                container_name: None,
+            });
+        }
+        Ok(Some(DocumentSymbolResponse::Flat(ret)))
     }
 
     async fn completion(&self, params: CompletionParams) -> Result<Option<CompletionResponse>> {
