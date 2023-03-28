@@ -14,7 +14,7 @@ use tower_lsp::{
         CodeActionProviderCapability, CompletionItem, CompletionItemKind,
         CompletionItemLabelDetails, CompletionOptions, CompletionOptionsCompletionItem,
         CompletionParams, CompletionResponse, Diagnostic, DiagnosticRelatedInformation,
-        DiagnosticSeverity, DidChangeTextDocumentParams, DidOpenTextDocumentParams,
+        DiagnosticSeverity, DidChangeTextDocumentParams, DidOpenTextDocumentParams, Documentation,
         ExecuteCommandOptions, ExecuteCommandParams, GotoDefinitionParams, GotoDefinitionResponse,
         Hover, HoverContents, HoverParams, HoverProviderCapability, InitializeParams,
         InitializeResult, InitializedParams, LanguageString, Location, MarkedString, MessageType,
@@ -241,6 +241,10 @@ impl LanguageServer for Backend {
                             description: None,
                         }),
                         kind: Some(CompletionItemKind::FUNCTION),
+                        documentation: instructions::DOCS
+                            .get(instruction)
+                            .map(|x| Documentation::String(x.to_string())),
+                        deprecated: Some(*instruction == "label"),
                         ..Default::default()
                     });
                 }
@@ -472,7 +476,9 @@ impl LanguageServer for Backend {
         Ok(Some(SignatureHelp {
             signatures: vec![SignatureInformation {
                 label: label,
-                documentation: None,
+                documentation: instructions::DOCS
+                    .get(text)
+                    .map(|x| Documentation::String(x.to_string())),
                 parameters: Some(
                     parameters
                         .iter()
@@ -666,7 +672,14 @@ impl LanguageServer for Backend {
                             content.push_str(&format!(" {parameter}"));
                         }
                         return Ok(Some(Hover {
-                            contents: HoverContents::Scalar(MarkedString::String(content)),
+                            contents: HoverContents::Array({
+                                let mut v = Vec::new();
+                                v.push(MarkedString::String(content));
+                                if let Some(doc) = instructions::DOCS.get(name) {
+                                    v.push(MarkedString::String(doc.to_string()));
+                                }
+                                v
+                            }),
                             range: Some(Range::from(node.range()).into()),
                         }));
                     }
@@ -799,15 +812,6 @@ impl Backend {
                                         .map(|x| x.kind())
                                         .map_or(false, |x| x != "number")
                                     {
-                                        diagnostics.push(Diagnostic::new(
-                                            Range::from(value_node.range()).into(),
-                                            Some(DiagnosticSeverity::ERROR),
-                                            None,
-                                            None,
-                                            "Expected literal number for `define`".to_string(),
-                                            None,
-                                            None,
-                                        ));
                                         continue;
                                     }
                                     type_data.defines.insert(
@@ -823,16 +827,6 @@ impl Backend {
                                         .map(|x| x.kind())
                                         .map_or(false, |x| x != "register" && x != "device")
                                     {
-                                        diagnostics.push(Diagnostic::new(
-                                            Range::from(value_node.range()).into(),
-                                            Some(DiagnosticSeverity::ERROR),
-                                            None,
-                                            None,
-                                            "Expected literal register or device for `alias`"
-                                                .to_string(),
-                                            None,
-                                            None,
-                                        ));
                                         continue;
                                     }
                                     type_data.aliases.insert(
@@ -965,7 +959,9 @@ impl Backend {
                                 .unwrap()
                                 .utf8_text(document.content.as_bytes())
                                 .unwrap();
-                            if type_data.defines.contains_key(ident)
+                            if parameter.match_type(DataType::Name) {
+                                DataType::Name
+                            } else if type_data.defines.contains_key(ident)
                                 || type_data.labels.contains_key(ident)
                             {
                                 DataType::Number
