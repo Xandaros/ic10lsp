@@ -2,46 +2,29 @@ use std::fmt::Display;
 
 use phf::{phf_map, phf_set};
 
-#[derive(Clone, Copy, Debug, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) enum DataType {
     Number,
     Register,
     Device,
     LogicType,
     SlotLogicType,
-    EitherLogicType,
     Name,
-}
-
-impl PartialEq for DataType {
-    fn eq(&self, other: &Self) -> bool {
-        if core::mem::discriminant(self) == core::mem::discriminant(other) {
-            return true;
-        }
-        use DataType::*;
-        match self {
-            LogicType | SlotLogicType => {
-                return matches!(other, EitherLogicType);
-            }
-            EitherLogicType => {
-                return matches!(other, LogicType | EitherLogicType);
-            }
-            _ => return false,
-        }
-    }
+    BatchMode,
 }
 
 #[derive(Debug)]
-pub(crate) struct Union(pub(crate) &'static [DataType]);
+pub(crate) struct Union<'a>(pub(crate) &'a [DataType]);
 
 #[derive(Debug)]
-pub(crate) struct InstructionSignature(pub(crate) &'static [Union]);
+pub(crate) struct InstructionSignature(pub(crate) &'static [Union<'static>]);
 
 const REGISTER: Union = Union(&[DataType::Register]);
 const DEVICE: Union = Union(&[DataType::Device]);
 const VALUE: Union = Union(&[DataType::Register, DataType::Number]);
 const LOGIC_TYPE: Union = Union(&[DataType::LogicType]);
 const SLOT_LOGIC_TYPE: Union = Union(&[DataType::SlotLogicType]);
+const BATCH_MODE: Union = Union(&[DataType::BatchMode, DataType::Number, DataType::Register]);
 
 pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = phf_map! {
     "alias" => InstructionSignature(&[Union(&[DataType::Name]), Union(&[DataType::Register, DataType::Device])]),
@@ -54,11 +37,11 @@ pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = ph
     "brdns" => InstructionSignature(&[DEVICE,VALUE]),
     "brdse" => InstructionSignature(&[DEVICE,VALUE]),
     "l" => InstructionSignature(&[REGISTER,DEVICE,LOGIC_TYPE]),
-    // "lb" => InstructionSignature(&[REGISTER,type,var,batchMode]),
+    "lb" => InstructionSignature(&[REGISTER,VALUE,LOGIC_TYPE,BATCH_MODE]),
     // "lr" => InstructionSignature(&[REGISTER,DEVICE,reagentMode,reagent]),
-    "ls" => InstructionSignature(&[REGISTER,DEVICE,VALUE,SLOT_LOGIC_TYPE]),
+    "ls" => InstructionSignature(&[REGISTER,VALUE,VALUE,SLOT_LOGIC_TYPE]),
     "s" => InstructionSignature(&[DEVICE,LOGIC_TYPE,VALUE]),
-    // "sb" => InstructionSignature(&[type,var,REGISTER]),
+    "sb" => InstructionSignature(&[VALUE,LOGIC_TYPE,REGISTER]),
     "bap" => InstructionSignature(&[VALUE,VALUE,VALUE,VALUE]),
     "bapz" => InstructionSignature(&[VALUE,VALUE,VALUE]),
     "bapzal" => InstructionSignature(&[VALUE,VALUE,VALUE]),
@@ -345,6 +328,20 @@ pub(crate) const SLOT_LOGIC_TYPES: phf::Set<&'static str> = phf_set! {
     "Seeding",
 };
 
+pub(crate) const BATCH_MODES: phf::Set<&'static str> = phf_set! {
+    "Average",
+    "Sum",
+    "Minimum",
+    "Maximum",
+};
+
+pub(crate) const BATCH_MODE_LOOKUP: phf::Map<u8, &'static str> = phf_map! {
+    0u8 => "Average",
+    1u8 => "Sum",
+    2u8 => "Minimum",
+    3u8 => "Maximum",
+};
+
 impl Display for DataType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let val = match *self {
@@ -353,8 +350,8 @@ impl Display for DataType {
             DataType::Device => "d?",
             DataType::LogicType => "type",
             DataType::SlotLogicType => "slotType",
-            DataType::EitherLogicType => "type|slotType",
             DataType::Name => "name",
+            DataType::BatchMode => "batchMode",
         };
         write!(f, "{}", val)
     }
@@ -369,13 +366,9 @@ impl Display for InstructionSignature {
     }
 }
 
-impl Display for Union {
+impl<'a> Display for Union<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let has_parens = self.0.len() != 1
-            || self
-                .0
-                .get(0)
-                .map_or(false, |x| matches!(x, DataType::EitherLogicType));
+        let has_parens = self.0.len() != 1;
         if has_parens {
             write!(f, "(")?;
         }
@@ -394,14 +387,31 @@ impl Display for Union {
     }
 }
 
-impl Union {
+impl<'a> From<&'a [DataType]> for Union<'a> {
+    fn from(value: &'a [DataType]) -> Self {
+        Union(value)
+    }
+}
+
+impl<'a> Union<'a> {
     pub(crate) fn match_type(&self, typ: DataType) -> bool {
         for x in self.0 {
             if *x == typ {
                 return true;
             }
         }
-        return false;
+        false
+    }
+
+    pub(crate) fn match_union(&self, types: &Union) -> bool {
+        for typ in self.0 {
+            for typ2 in types.0 {
+                if typ == typ2 {
+                    return true;
+                }
+            }
+        }
+        false
     }
 }
 

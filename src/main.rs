@@ -35,6 +35,7 @@ mod cli;
 mod instructions;
 
 const LINT_ABSOLUTE_JUMP: &'static str = "L001";
+const LINT_NUMBER_BATCH_MODE: &'static str = "L002";
 
 const SEMANTIC_SYMBOL_LEGEND: &'static [SemanticTokenType] = &[
     SemanticTokenType::KEYWORD,
@@ -620,7 +621,9 @@ impl LanguageServer for Backend {
             return Err(tower_lsp::jsonrpc::Error::invalid_request());
         };
 
-        let Some(ref tree) = file_data.document_data.tree else {
+        let document = &file_data.document_data;
+
+        let Some(ref tree) = document.tree else {
             return Err(tower_lsp::jsonrpc::Error::internal_error());
         };
 
@@ -632,7 +635,7 @@ impl LanguageServer for Backend {
             return Ok(None);
         };
 
-        let Some(instruction_node) = line_node.query("(instruction)@x", file_data.document_data.content.as_bytes()) else {
+        let Some(instruction_node) = line_node.query("(instruction)@x", document.content.as_bytes()) else {
             return Ok(None);
         };
 
@@ -641,7 +644,7 @@ impl LanguageServer for Backend {
         };
 
         let text = operation_node
-            .utf8_text(file_data.document_data.content.as_bytes())
+            .utf8_text(document.content.as_bytes())
             .unwrap();
 
         let current_param = {
@@ -703,7 +706,10 @@ impl LanguageServer for Backend {
             return Err(tower_lsp::jsonrpc::Error::invalid_request());
         };
 
-        let Some(ref tree) = file_data.document_data.tree else {
+        let document = &file_data.document_data;
+        let uri = &document.url;
+
+        let Some(ref tree) = document.tree else {
             return Err(tower_lsp::jsonrpc::Error::invalid_request());
         };
 
@@ -716,6 +722,24 @@ impl LanguageServer for Backend {
 
             let Some(NumberOrString::String(code)) = diagnostic.code.clone() else {continue;};
             match code.as_str() {
+                LINT_NUMBER_BATCH_MODE => {
+                    let replacement = diagnostic.data.as_ref().unwrap().as_str().unwrap();
+
+                    let edit =
+                        TextEdit::new(Range::from(node.range()).into(), replacement.to_string());
+
+                    ret.push(CodeActionOrCommand::CodeAction(CodeAction {
+                        title: format!("Replace with {replacement}"),
+                        kind: Some(CodeActionKind::QUICKFIX),
+                        diagnostics: Some(vec![diagnostic]),
+                        edit: Some(WorkspaceEdit::new(HashMap::from([(
+                            uri.clone(),
+                            vec![edit],
+                        )]))),
+                        is_preferred: Some(true),
+                        ..Default::default()
+                    }));
+                }
                 LINT_ABSOLUTE_JUMP => {
                     const REPLACEMENTS: phf::Map<&'static str, &'static str> = phf::phf_map! {
                         "bdns" => "brdns",
@@ -739,13 +763,10 @@ impl LanguageServer for Backend {
                         "j" => "jr",
                     };
 
-                    if let Some(node) = line_node.query(
-                        "(instruction (operation)@x)",
-                        file_data.document_data.content.as_bytes(),
-                    ) {
-                        let text = node
-                            .utf8_text(file_data.document_data.content.as_bytes())
-                            .unwrap();
+                    if let Some(node) =
+                        line_node.query("(instruction (operation)@x)", document.content.as_bytes())
+                    {
+                        let text = node.utf8_text(document.content.as_bytes()).unwrap();
 
                         if let Some(replacement) = REPLACEMENTS.get(text) {
                             let edit = TextEdit::new(
@@ -758,7 +779,7 @@ impl LanguageServer for Backend {
                                 kind: Some(CodeActionKind::QUICKFIX),
                                 diagnostics: Some(vec![diagnostic]),
                                 edit: Some(WorkspaceEdit::new(HashMap::from([(
-                                    file_data.document_data.url.clone(),
+                                    uri.clone(),
                                     vec![edit],
                                 )]))),
                                 command: None,
@@ -1127,28 +1148,28 @@ impl Backend {
                                         continue;
                                     };
 
+                    let mut types = Vec::new();
                     let typ = match operand.named_child(0).unwrap().kind() {
-                        "register" => DataType::Register,
-                        "device" => DataType::Device,
-                        "number" => DataType::Number,
+                        "register" => instructions::Union(&[DataType::Register]),
+                        "device" => instructions::Union(&[DataType::Device]),
+                        "number" => instructions::Union(&[DataType::Number]),
                         "logictype" => {
                             let ident = operand
                                 .named_child(0)
                                 .unwrap()
                                 .utf8_text(document.content.as_bytes())
                                 .unwrap();
-                            if instructions::LOGIC_TYPES.contains(ident)
-                                && instructions::SLOT_LOGIC_TYPES.contains(ident)
-                            {
-                                DataType::EitherLogicType
-                            } else if instructions::LOGIC_TYPES.contains(ident) {
-                                DataType::LogicType
-                            } else if instructions::SLOT_LOGIC_TYPES.contains(ident) {
-                                DataType::SlotLogicType
-                            } else {
-                                // WTF
-                                continue;
+
+                            if instructions::LOGIC_TYPES.contains(ident) {
+                                types.push(DataType::LogicType);
                             }
+                            if instructions::SLOT_LOGIC_TYPES.contains(ident) {
+                                types.push(DataType::SlotLogicType);
+                            }
+                            if instructions::BATCH_MODES.contains(ident) {
+                                types.push(DataType::BatchMode);
+                            }
+                            instructions::Union(types.as_slice())
                         }
                         "identifier" => {
                             let ident = operand
@@ -1157,15 +1178,19 @@ impl Backend {
                                 .utf8_text(document.content.as_bytes())
                                 .unwrap();
                             if parameter.match_type(DataType::Name) {
-                                DataType::Name
+                                instructions::Union(&[DataType::Name])
                             } else if type_data.defines.contains_key(ident)
                                 || type_data.labels.contains_key(ident)
                             {
-                                DataType::Number
+                                instructions::Union(&[DataType::Number])
                             } else if let Some(type_data) = type_data.aliases.get(ident) {
                                 match type_data.value {
-                                    AliasValue::Device(_) => DataType::Device,
-                                    AliasValue::Register(_) => DataType::Register,
+                                    AliasValue::Device(_) => {
+                                        instructions::Union(&[DataType::Device])
+                                    }
+                                    AliasValue::Register(_) => {
+                                        instructions::Union(&[DataType::Register])
+                                    }
                                 }
                             } else {
                                 diagnostics.push(Diagnostic::new(
@@ -1186,7 +1211,7 @@ impl Backend {
                         }
                     };
 
-                    if !parameter.match_type(typ) {
+                    if !parameter.match_union(&typ) {
                         diagnostics.push(Diagnostic::new(
                             Range::from(operand.range()).into(),
                             Some(DiagnosticSeverity::ERROR),
@@ -1248,13 +1273,13 @@ impl Backend {
         let files = self.files.read().await;
         let Some(file_data) = files.get(uri) else {return;};
 
+        let document = &file_data.document_data;
+        let Some(tree) = document.tree.as_ref() else {
+            return;
+        };
+
         // Find invalid instructions
         {
-            let document = &file_data.document_data;
-            let Some(tree) = document.tree.as_ref() else {
-                return;
-            };
-
             let mut cursor = QueryCursor::new();
             let query = Query::new(
                 tree_sitter_ic10::language(),
@@ -1278,13 +1303,8 @@ impl Backend {
         // Type check
         self.check_types(uri, &mut diagnostics).await;
 
-        // Lints
+        // Absolute jump to number lint
         {
-            let document = &file_data.document_data;
-            let Some(tree) = document.tree.as_ref() else {
-                return;
-            };
-
             const BRANCH_INSTRUCTIONS: phf::Set<&'static str> = phf_set!(
                 "bdns", "bdnsal", "bdse", "bdseal", "bap", "bapz", "bapzal", "beq", "beqal",
                 "beqz", "beqzal", "bge", "bgeal", "bgez", "bgezal", "bgt", "bgtal", "bgtz",
@@ -1321,13 +1341,61 @@ impl Backend {
                     diagnostics.push(Diagnostic::new(
                         Range::from(capture.range()).into(),
                         Some(DiagnosticSeverity::WARNING),
-                        Some(NumberOrString::String(LINT_ABSOLUTE_JUMP.to_owned())),
+                        Some(NumberOrString::String(LINT_ABSOLUTE_JUMP.to_string())),
                         None,
                         "Absolute jump to line number".to_string(),
                         None,
                         None,
                     ));
                 }
+            }
+        }
+
+        // Number batch mode
+        {
+            let mut cursor = QueryCursor::new();
+            let query = Query::new(
+                tree_sitter_ic10::language(),
+                "(instruction (operation \"lb\") (operand (number)@n) .)",
+            )
+            .unwrap();
+
+            let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+
+            for (capture, _) in captures {
+                let node = capture.captures[0].node;
+
+                let Ok(value) = node
+                    .utf8_text(document.content.as_bytes())
+                    .unwrap()
+                    .parse::<u8>() else {
+                    diagnostics.push(Diagnostic {
+                        range: Range::from(node.range()).into(),
+                        severity: Some(DiagnosticSeverity::ERROR),
+                        message: "Use of non-integer batch mode".to_string(),
+                        ..Default::default()
+                    });
+                    continue;
+                };
+
+                let Some(replacement) = instructions::BATCH_MODE_LOOKUP.get(&value) else {
+                    diagnostics.push(Diagnostic {
+                        range: Range::from(node.range()).into(),
+                        severity: Some(DiagnosticSeverity::ERROR),
+                        message: "Invalid batch mode".to_string(),
+                        ..Default::default()
+                    });
+                    continue;
+                };
+
+                diagnostics.push(Diagnostic {
+                    range: Range::from(node.range()).into(),
+                    severity: Some(DiagnosticSeverity::WARNING),
+                    code: Some(NumberOrString::String(LINT_NUMBER_BATCH_MODE.to_string())),
+                    message: "Use of literal number for batch mode".to_string(),
+                    data: Some(Value::String(replacement.to_string())),
+                    ..Default::default()
+                });
             }
         }
 
