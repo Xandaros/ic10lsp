@@ -19,10 +19,13 @@ use tower_lsp::{
         ExecuteCommandParams, GotoDefinitionParams, GotoDefinitionResponse, Hover, HoverContents,
         HoverParams, HoverProviderCapability, InitializeParams, InitializeResult,
         InitializedParams, LanguageString, Location, MarkedString, MessageType, NumberOrString,
-        OneOf, ParameterInformation, ParameterLabel, PositionEncodingKind, ServerCapabilities,
-        ServerInfo, SignatureHelp, SignatureHelpOptions, SignatureHelpParams, SignatureInformation,
-        SymbolInformation, SymbolKind, SymbolTag, TextDocumentSyncCapability, TextDocumentSyncKind,
-        TextEdit, Url, WorkDoneProgressOptions, WorkspaceEdit,
+        OneOf, ParameterInformation, ParameterLabel, PositionEncodingKind, SemanticToken,
+        SemanticTokenType, SemanticTokens, SemanticTokensFullOptions, SemanticTokensLegend,
+        SemanticTokensOptions, SemanticTokensParams, SemanticTokensResult,
+        SemanticTokensServerCapabilities, ServerCapabilities, ServerInfo, SignatureHelp,
+        SignatureHelpOptions, SignatureHelpParams, SignatureInformation, SymbolInformation,
+        SymbolKind, TextDocumentSyncCapability, TextDocumentSyncKind, TextEdit, Url,
+        WorkDoneProgressOptions, WorkspaceEdit,
     },
     Client, LanguageServer, LspService, Server,
 };
@@ -33,6 +36,15 @@ mod instructions;
 
 const LINT_ABSOLUTE_JUMP: &'static str = "L001";
 
+const SEMANTIC_SYMBOL_LEGEND: &'static [SemanticTokenType] = &[
+    SemanticTokenType::KEYWORD,
+    SemanticTokenType::COMMENT,
+    SemanticTokenType::STRING,
+    SemanticTokenType::FUNCTION,
+    SemanticTokenType::MACRO,
+    SemanticTokenType::NUMBER,
+    SemanticTokenType::VARIABLE,
+];
 struct DocumentData {
     url: Url,
     content: String,
@@ -197,6 +209,21 @@ impl LanguageServer for Backend {
                     }),
                     ..Default::default()
                 }),
+                semantic_tokens_provider: Some(
+                    SemanticTokensServerCapabilities::SemanticTokensOptions(
+                        SemanticTokensOptions {
+                            range: Some(false),
+                            full: Some(SemanticTokensFullOptions::Bool(true)),
+                            legend: {
+                                SemanticTokensLegend {
+                                    token_types: SEMANTIC_SYMBOL_LEGEND.into(),
+                                    token_modifiers: vec![],
+                                }
+                            },
+                            ..Default::default()
+                        },
+                    ),
+                ),
                 ..Default::default()
             },
             server_info: Some(ServerInfo {
@@ -229,6 +256,98 @@ impl LanguageServer for Backend {
                 .await;
         }
         self.run_diagnostics(&params.text_document.uri).await;
+    }
+
+    async fn semantic_tokens_full(
+        &self,
+        params: SemanticTokensParams,
+    ) -> Result<Option<SemanticTokensResult>> {
+        let mut ret = Vec::new();
+        let files = self.files.read().await;
+        let uri = params.text_document.uri;
+        let Some(file_data) = files.get(&uri) else {
+            return Err(tower_lsp::jsonrpc::Error::invalid_request());
+        };
+        let document = &file_data.document_data;
+
+        let Some(ref tree) = document.tree else {
+            return Err(tower_lsp::jsonrpc::Error::internal_error());
+        };
+
+        let mut cursor = QueryCursor::new();
+        let query = Query::new(
+            tree_sitter_ic10::language(),
+            "(comment) @comment
+             (instruction (operation)@keyword)
+             (logictype)@string
+             (device)@preproc
+             (register)@macro
+             (number)@float
+             (identifier)@variable",
+        )
+        .unwrap();
+
+        let mut previous_line = 0u32;
+        let mut previous_col = 0u32;
+
+        let comment_idx = query.capture_index_for_name("comment").unwrap();
+        let keyword_idx = query.capture_index_for_name("keyword").unwrap();
+        let string_idx = query.capture_index_for_name("string").unwrap();
+        let preproc_idx = query.capture_index_for_name("preproc").unwrap();
+        let macro_idx = query.capture_index_for_name("macro").unwrap();
+        let float_idx = query.capture_index_for_name("float").unwrap();
+        let variable_idx = query.capture_index_for_name("variable").unwrap();
+
+        for (capture, _) in cursor.captures(&query, tree.root_node(), document.content.as_bytes()) {
+            let node = capture.captures[0].node;
+            let idx = capture.captures[0].index;
+            let start = node.range().start_point;
+
+            let delta_line = start.row as u32 - previous_line;
+            let delta_start = if delta_line == 0 {
+                start.column as u32 - previous_col
+            } else {
+                start.column as u32
+            };
+
+            let tokentype = {
+                if idx == comment_idx {
+                    SemanticTokenType::COMMENT
+                } else if idx == keyword_idx {
+                    SemanticTokenType::KEYWORD
+                } else if idx == string_idx {
+                    SemanticTokenType::STRING
+                } else if idx == preproc_idx {
+                    SemanticTokenType::FUNCTION
+                } else if idx == macro_idx {
+                    SemanticTokenType::MACRO
+                } else if idx == float_idx {
+                    SemanticTokenType::NUMBER
+                } else if idx == variable_idx {
+                    SemanticTokenType::VARIABLE
+                } else {
+                    continue;
+                }
+            };
+
+            ret.push(SemanticToken {
+                delta_line,
+                delta_start,
+                length: node.range().end_point.column as u32 - start.column as u32,
+                token_type: SEMANTIC_SYMBOL_LEGEND
+                    .iter()
+                    .position(|x| *x == tokentype)
+                    .unwrap() as u32,
+                token_modifiers_bitset: 0,
+            });
+
+            previous_line = start.row as u32;
+            previous_col = start.column as u32;
+        }
+        Ok(Some(SemanticTokensResult::Tokens(SemanticTokens {
+            result_id: None,
+            data: ret,
+        })))
     }
 
     async fn document_symbol(
