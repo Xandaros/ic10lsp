@@ -459,7 +459,46 @@ impl LanguageServer for Backend {
             completions[start_entries..length].sort_by(|x, y| x.label.cmp(&y.label));
         }
 
-        fn param_completions_dynamic<T: std::fmt::Display>(
+        fn param_completions_static(
+            prefix: &str,
+            detail: &str,
+            param_type: &instructions::Union,
+            completions: &mut Vec<CompletionItem>,
+        ) {
+            use instructions::DataType;
+
+            let start_entries = completions.len();
+
+            for typ in param_type.0 {
+                let map = match typ {
+                    DataType::LogicType => instructions::LOGIC_TYPE_DOCS,
+                    DataType::SlotLogicType => instructions::SLOT_TYPE_DOCS,
+                    DataType::BatchMode => instructions::BATCH_MODE_DOCS,
+                    _ => continue,
+                };
+
+                for entry in map.entries() {
+                    let name = *entry.0;
+                    let docs = *entry.1;
+                    if name.starts_with(prefix) {
+                        completions.push(CompletionItem {
+                            label: name.to_string(),
+                            label_details: Some(CompletionItemLabelDetails {
+                                description: None,
+                                detail: Some(detail.to_string()),
+                            }),
+                            kind: Some(CompletionItemKind::CONSTANT),
+                            documentation: Some(Documentation::String(docs.to_string())),
+                            ..Default::default()
+                        });
+                    }
+                }
+            }
+            let length = completions.len();
+            completions[start_entries..length].sort_by(|x, y| x.label.cmp(&y.label));
+        }
+
+        fn param_completions_dynamic<T>(
             prefix: &str,
             map: &HashMap<String, DefinitionData<T>>,
             detail: &str,
@@ -467,6 +506,7 @@ impl LanguageServer for Backend {
             completions: &mut Vec<CompletionItem>,
         ) where
             DefinitionData<T>: HasType,
+            T: std::fmt::Display,
         {
             let start_entries = completions.len();
             for (identifier, value_data) in map.iter() {
@@ -549,19 +589,8 @@ impl LanguageServer for Backend {
                     .utf8_text(file_data.document_data.content.as_bytes())
                     .unwrap();
 
-                let (current_param, operand_node) = {
-                    let mut ret: usize = 0;
-                    let mut current_operand = None;
-                    let mut cursor = instruction_node.walk();
-                    for operand in instruction_node.children_by_field_name("operand", &mut cursor) {
-                        current_operand = Some(operand);
-                        if operand.end_position().column as u32 > position.0.character {
-                            break;
-                        }
-                        ret += 1;
-                    }
-                    (ret, current_operand)
-                };
+                let (current_param, operand_node) =
+                    get_current_parameter(instruction_node, position.0.character as usize);
 
                 let operand_text = operand_node
                     .map(|node| node.utf8_text(document.content.as_bytes()).unwrap())
@@ -569,8 +598,8 @@ impl LanguageServer for Backend {
 
                 let prefix = {
                     if let Some(operand_node) = operand_node {
-                        let cursor_pos =
-                            position.0.character as usize - operand_node.start_position().column;
+                        let cursor_pos = (position.0.character as usize)
+                            .saturating_sub(operand_node.start_position().column);
                         &operand_text[..(cursor_pos + 1).min(operand_text.len())]
                     } else {
                         ""
@@ -587,6 +616,8 @@ impl LanguageServer for Backend {
 
                 if !text.starts_with("br") && text.starts_with("b") || text == "j" || text == "jal"
                 {
+                    param_completions_static(prefix, "", param_type, &mut ret);
+
                     param_completions_dynamic(
                         prefix,
                         &file_data.type_data.labels,
@@ -611,6 +642,8 @@ impl LanguageServer for Backend {
                         &mut ret,
                     );
                 } else {
+                    param_completions_static(prefix, "", param_type, &mut ret);
+
                     param_completions_dynamic(
                         prefix,
                         &file_data.type_data.defines,
@@ -639,28 +672,6 @@ impl LanguageServer for Backend {
         }
 
         Ok(Some(CompletionResponse::Array(ret)))
-
-        // Ok(Some(CompletionResponse::Array(vec![CompletionItem {
-        //     label: "test".to_string(),
-        //     // label_details: todo!(),
-        //     // kind: todo!(),
-        //     // detail: todo!(),
-        //     // documentation: todo!(),
-        //     // deprecated: todo!(),
-        //     // preselect: todo!(),
-        //     // sort_text: todo!(),
-        //     // filter_text: todo!(),
-        //     // insert_text: todo!(),
-        //     // insert_text_format: todo!(),
-        //     // insert_text_mode: todo!(),
-        //     // text_edit: todo!(),
-        //     // additional_text_edits: todo!(),
-        //     // command: todo!(),
-        //     // commit_characters: todo!(),
-        //     // data: todo!(),
-        //     // tags: todo!(),
-        //     ..Default::default()
-        // }])))
     }
 
     async fn signature_help(&self, params: SignatureHelpParams) -> Result<Option<SignatureHelp>> {
@@ -698,17 +709,10 @@ impl LanguageServer for Backend {
             .utf8_text(document.content.as_bytes())
             .unwrap();
 
-        let current_param = {
-            let mut ret: u32 = 0;
-            let mut cursor = instruction_node.walk();
-            for operand in instruction_node.children_by_field_name("operand", &mut cursor) {
-                if operand.end_position().column as u32 >= position.0.character {
-                    break;
-                }
-                ret += 1;
-            }
-            ret
-        };
+        let (current_param, _) = get_current_parameter(
+            instruction_node,
+            position.0.character.saturating_sub(1) as usize,
+        );
 
         let Some(signature) = instructions::INSTRUCTIONS.get(text) else {
             return Ok(None);
@@ -739,7 +743,7 @@ impl LanguageServer for Backend {
                         })
                         .collect(),
                 ),
-                active_parameter: Some(current_param),
+                active_parameter: Some(current_param as u32),
             }],
             active_signature: None,
             active_parameter: None,
@@ -888,72 +892,122 @@ impl LanguageServer for Backend {
 
         let position = params.text_document_position_params.position;
 
-        if let Some(tree) = document.tree.as_ref() {
-            let root = tree.root_node();
-            let node = root.named_descendant_for_point_range(
-                tree_sitter::Point::new(position.line as usize, position.character as usize),
-                tree_sitter::Point::new(position.line as usize, position.character as usize + 1),
-            );
+        let Some(tree) = document.tree.as_ref() else {
+            return Ok(None);
+        };
+        let root = tree.root_node();
+        let Some(node) = root.named_descendant_for_point_range(
+            tree_sitter::Point::new(position.line as usize, position.character as usize),
+            tree_sitter::Point::new(position.line as usize, position.character as usize + 1),
+        ) else {
+            return Ok(None);
+        };
 
-            if let Some(node) = node {
-                let name = node.utf8_text(document.content.as_bytes()).unwrap();
-                match node.kind() {
-                    "identifier" => {
-                        if let Some(definition_data) = type_data.defines.get(name) {
-                            return Ok(Some(Hover {
-                                contents: HoverContents::Array(vec![MarkedString::LanguageString(
-                                    LanguageString {
-                                        language: "ic10".to_string(),
-                                        value: format!("define {} {}", name, definition_data.value),
-                                    },
-                                )]),
-                                range: Some(Range::from(node.range()).into()),
-                            }));
-                        }
-                        if let Some(definition_data) = type_data.aliases.get(name) {
-                            return Ok(Some(Hover {
-                                contents: HoverContents::Array(vec![MarkedString::LanguageString(
-                                    LanguageString {
-                                        language: "ic10".to_string(),
-                                        value: format!("alias {} {}", name, definition_data.value),
-                                    },
-                                )]),
-                                range: Some(Range::from(node.range()).into()),
-                            }));
-                        }
-                        if let Some(definition_data) = type_data.labels.get(name) {
-                            return Ok(Some(Hover {
-                                contents: HoverContents::Scalar(MarkedString::String(format!(
-                                    "Label on line {}",
-                                    definition_data.value + 1
-                                ))),
-                                range: Some(Range::from(node.range()).into()),
-                            }));
-                        }
-                    }
-                    "operation" => {
-                        let Some(signature) =  instructions::INSTRUCTIONS.get(name) else {
-                            return Ok(None);
-                        };
-                        let mut content = name.to_string();
-                        for parameter in signature.0 {
-                            content.push_str(&format!(" {parameter}"));
-                        }
-                        return Ok(Some(Hover {
-                            contents: HoverContents::Array({
-                                let mut v = Vec::new();
-                                v.push(MarkedString::String(content));
-                                if let Some(doc) = instructions::INSTRUCTION_DOCS.get(name) {
-                                    v.push(MarkedString::String(doc.to_string()));
-                                }
-                                v
-                            }),
-                            range: Some(Range::from(node.range()).into()),
-                        }));
-                    }
-                    _ => {}
+        let name = node.utf8_text(document.content.as_bytes()).unwrap();
+        match node.kind() {
+            "identifier" => {
+                if let Some(definition_data) = type_data.defines.get(name) {
+                    return Ok(Some(Hover {
+                        contents: HoverContents::Array(vec![MarkedString::LanguageString(
+                            LanguageString {
+                                language: "ic10".to_string(),
+                                value: format!("define {} {}", name, definition_data.value),
+                            },
+                        )]),
+                        range: Some(Range::from(node.range()).into()),
+                    }));
+                }
+                if let Some(definition_data) = type_data.aliases.get(name) {
+                    return Ok(Some(Hover {
+                        contents: HoverContents::Array(vec![MarkedString::LanguageString(
+                            LanguageString {
+                                language: "ic10".to_string(),
+                                value: format!("alias {} {}", name, definition_data.value),
+                            },
+                        )]),
+                        range: Some(Range::from(node.range()).into()),
+                    }));
+                }
+                if let Some(definition_data) = type_data.labels.get(name) {
+                    return Ok(Some(Hover {
+                        contents: HoverContents::Scalar(MarkedString::String(format!(
+                            "Label on line {}",
+                            definition_data.value + 1
+                        ))),
+                        range: Some(Range::from(node.range()).into()),
+                    }));
                 }
             }
+            "operation" => {
+                let Some(signature) =  instructions::INSTRUCTIONS.get(name) else {
+                    return Ok(None);
+                };
+                let mut content = name.to_string();
+                for parameter in signature.0 {
+                    content.push_str(&format!(" {parameter}"));
+                }
+                return Ok(Some(Hover {
+                    contents: HoverContents::Array({
+                        let mut v = Vec::new();
+                        v.push(MarkedString::String(content));
+                        if let Some(doc) = instructions::INSTRUCTION_DOCS.get(name) {
+                            v.push(MarkedString::String(doc.to_string()));
+                        }
+                        v
+                    }),
+                    range: Some(Range::from(node.range()).into()),
+                }));
+            }
+            "logictype" => {
+                let Some(instruction_node) = node.find_parent("instruction") else {
+                    return Ok(None);
+                };
+
+                let Some(operation_node) = instruction_node.child_by_field_name("operation") else {
+                    return Ok(None);
+                };
+
+                let operation = operation_node
+                    .utf8_text(document.content.as_bytes())
+                    .unwrap();
+
+                let (current_param, _) =
+                    get_current_parameter(instruction_node, position.character as usize);
+
+                let candidates = instructions::logictype_candidates(name);
+
+                let types = if let Some(signature) = instructions::INSTRUCTIONS.get(operation) {
+                    if let Some(param_type) = signature.0.get(current_param) {
+                        param_type.intersection(&candidates)
+                    } else {
+                        candidates
+                    }
+                } else {
+                    candidates
+                };
+
+                let strings = types
+                    .iter()
+                    .map(|typ| {
+                        MarkedString::String(format!("# `{}` (`{}`)\n{}", name, typ, {
+                            use instructions::DataType;
+                            match typ {
+                                DataType::LogicType => instructions::LOGIC_TYPE_DOCS.get(name),
+                                DataType::SlotLogicType => instructions::SLOT_TYPE_DOCS.get(name),
+                                DataType::BatchMode => instructions::BATCH_MODE_DOCS.get(name),
+                                _ => None,
+                            }
+                            .unwrap_or(&"")
+                        }))
+                    })
+                    .collect();
+
+                return Ok(Some(Hover {
+                    contents: HoverContents::Array(strings),
+                    range: Some(Range::from(node.range()).into()),
+                }));
+            }
+            _ => {}
         }
         Ok(None)
     }
@@ -1453,6 +1507,24 @@ impl Backend {
             .publish_diagnostics(uri.to_owned(), diagnostics, None)
             .await;
     }
+}
+
+fn get_current_parameter(instruction_node: Node, position: usize) -> (usize, Option<Node>) {
+    let mut ret: usize = 0;
+    let mut cursor = instruction_node.walk();
+    for operand in instruction_node.children_by_field_name("operand", &mut cursor) {
+        if operand.end_position().column > position {
+            break;
+        }
+        ret += 1;
+    }
+
+    let operand = instruction_node
+        .children_by_field_name("operand", &mut cursor)
+        .nth(ret);
+
+    cursor.reset(instruction_node);
+    (ret, operand)
 }
 
 trait NodeEx: Sized {
