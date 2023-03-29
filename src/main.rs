@@ -187,7 +187,7 @@ impl LanguageServer for Backend {
                     TextDocumentSyncKind::FULL,
                 )),
                 execute_command_provider: Some(ExecuteCommandOptions {
-                    commands: vec!["ic10.debug".to_string()],
+                    commands: vec!["ic10.version".to_string()],
                     work_done_progress_options: WorkDoneProgressOptions {
                         work_done_progress: None,
                     },
@@ -236,7 +236,15 @@ impl LanguageServer for Backend {
 
     async fn initialized(&self, _params: InitializedParams) {}
 
-    async fn execute_command(&self, _params: ExecuteCommandParams) -> Result<Option<Value>> {
+    async fn execute_command(&self, params: ExecuteCommandParams) -> Result<Option<Value>> {
+        if params.command == "ic10.version" {
+            self.client
+                .show_message(
+                    MessageType::INFO,
+                    concat!("IC10LSP Version: ", env!("CARGO_PKG_VERSION")),
+                )
+                .await;
+        }
         Ok(None)
     }
 
