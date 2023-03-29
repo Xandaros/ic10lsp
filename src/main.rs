@@ -713,11 +713,11 @@ impl LanguageServer for Backend {
             return Err(tower_lsp::jsonrpc::Error::invalid_request());
         };
 
-        'diagnostics: for diagnostic in params.context.diagnostics {
-            let Some(node) = self.node_at_range(params.range.into(), tree) else {
-                        continue;
-                    };
+        let Some(node) = self.node_at_range(params.range.into(), tree) else {
+            return Ok(None);
+        };
 
+        'diagnostics: for diagnostic in params.context.diagnostics {
             let Some(line_node) = node.find_parent("line") else { continue 'diagnostics; };
 
             let Some(NumberOrString::String(code)) = diagnostic.code.clone() else {continue;};
@@ -725,8 +725,7 @@ impl LanguageServer for Backend {
                 LINT_NUMBER_BATCH_MODE => {
                     let replacement = diagnostic.data.as_ref().unwrap().as_str().unwrap();
 
-                    let edit =
-                        TextEdit::new(Range::from(node.range()).into(), replacement.to_string());
+                    let edit = TextEdit::new(diagnostic.range, replacement.to_string());
 
                     ret.push(CodeActionOrCommand::CodeAction(CodeAction {
                         title: format!("Replace with {replacement}"),
