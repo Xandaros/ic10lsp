@@ -648,13 +648,13 @@ impl LanguageServer for Backend {
             .unwrap();
 
         let current_param = {
-            let mut ret = 0;
+            let mut ret: u32 = 0;
             let mut cursor = instruction_node.walk();
             for operand in instruction_node.children_by_field_name("operand", &mut cursor) {
-                ret += 1;
-                if operand.start_position().column as u32 > position.0.character {
+                if operand.end_position().column as u32 >= position.0.character {
                     break;
                 }
+                ret += 1;
             }
             ret
         };
