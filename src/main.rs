@@ -459,7 +459,8 @@ impl LanguageServer for Backend {
             completions[start_entries..length].sort_by(|x, y| x.label.cmp(&y.label));
         }
 
-        fn param_completions<T: std::fmt::Display>(
+        fn param_completions_dynamic<T: std::fmt::Display>(
+            prefix: &str,
             map: &HashMap<String, DefinitionData<T>>,
             detail: &str,
             param_type: &instructions::Union,
@@ -470,7 +471,7 @@ impl LanguageServer for Backend {
             let start_entries = completions.len();
             for (identifier, value_data) in map.iter() {
                 let value = &value_data.value;
-                if param_type.match_type(value_data.get_type()) {
+                if identifier.starts_with(prefix) && param_type.match_type(value_data.get_type()) {
                     completions.push(CompletionItem {
                         label: identifier.to_string(),
                         label_details: Some(CompletionItemLabelDetails {
@@ -548,16 +549,32 @@ impl LanguageServer for Backend {
                     .utf8_text(file_data.document_data.content.as_bytes())
                     .unwrap();
 
-                let current_param = {
+                let (current_param, operand_node) = {
                     let mut ret: usize = 0;
+                    let mut current_operand = None;
                     let mut cursor = instruction_node.walk();
                     for operand in instruction_node.children_by_field_name("operand", &mut cursor) {
+                        current_operand = Some(operand);
                         if operand.end_position().column as u32 > position.0.character {
                             break;
                         }
                         ret += 1;
                     }
-                    ret
+                    (ret, current_operand)
+                };
+
+                let operand_text = operand_node
+                    .map(|node| node.utf8_text(document.content.as_bytes()).unwrap())
+                    .unwrap_or("");
+
+                let prefix = {
+                    if let Some(operand_node) = operand_node {
+                        let cursor_pos =
+                            position.0.character as usize - operand_node.start_position().column;
+                        &operand_text[..(cursor_pos + 1).min(operand_text.len())]
+                    } else {
+                        ""
+                    }
                 };
 
                 let Some(signature) = instructions::INSTRUCTIONS.get(text) else {
@@ -570,27 +587,53 @@ impl LanguageServer for Backend {
 
                 if !text.starts_with("br") && text.starts_with("b") || text == "j" || text == "jal"
                 {
-                    param_completions(&file_data.type_data.labels, " label", param_type, &mut ret);
+                    param_completions_dynamic(
+                        prefix,
+                        &file_data.type_data.labels,
+                        " label",
+                        param_type,
+                        &mut ret,
+                    );
 
-                    param_completions(
+                    param_completions_dynamic(
+                        prefix,
                         &file_data.type_data.defines,
                         " define",
                         param_type,
                         &mut ret,
                     );
 
-                    param_completions(&file_data.type_data.aliases, " alias", param_type, &mut ret);
+                    param_completions_dynamic(
+                        prefix,
+                        &file_data.type_data.aliases,
+                        " alias",
+                        param_type,
+                        &mut ret,
+                    );
                 } else {
-                    param_completions(
+                    param_completions_dynamic(
+                        prefix,
                         &file_data.type_data.defines,
                         " define",
                         param_type,
                         &mut ret,
                     );
 
-                    param_completions(&file_data.type_data.aliases, " alias", param_type, &mut ret);
+                    param_completions_dynamic(
+                        prefix,
+                        &file_data.type_data.aliases,
+                        " alias",
+                        param_type,
+                        &mut ret,
+                    );
 
-                    param_completions(&file_data.type_data.labels, " label", param_type, &mut ret);
+                    param_completions_dynamic(
+                        prefix,
+                        &file_data.type_data.labels,
+                        " label",
+                        param_type,
+                        &mut ret,
+                    );
                 }
             }
         }
