@@ -1094,8 +1094,12 @@ impl Backend {
         node
     }
 
-    async fn update_content(&self, uri: Url, text: String) {
+    async fn update_content(&self, uri: Url, mut text: String) {
         let mut files = self.files.write().await;
+
+        if !text.ends_with("\n") {
+            text.push('\n');
+        }
         match files.entry(uri) {
             std::collections::hash_map::Entry::Vacant(entry) => {
                 let mut parser = Parser::new();
