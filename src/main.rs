@@ -18,8 +18,9 @@ use tower_lsp::{
         DocumentSymbolParams, DocumentSymbolResponse, Documentation, ExecuteCommandOptions,
         ExecuteCommandParams, GotoDefinitionParams, GotoDefinitionResponse, Hover, HoverContents,
         HoverParams, HoverProviderCapability, InitializeParams, InitializeResult,
-        InitializedParams, LanguageString, Location, MarkedString, MessageType, NumberOrString,
-        OneOf, ParameterInformation, ParameterLabel, PositionEncodingKind, SemanticToken,
+        InitializedParams, InlayHint, InlayHintKind, InlayHintLabel, InlayHintParams,
+        LanguageString, Location, MarkedString, MessageType, NumberOrString, OneOf,
+        ParameterInformation, ParameterLabel, PositionEncodingKind, SemanticToken,
         SemanticTokenType, SemanticTokens, SemanticTokensFullOptions, SemanticTokensLegend,
         SemanticTokensOptions, SemanticTokensParams, SemanticTokensResult,
         SemanticTokensServerCapabilities, ServerCapabilities, ServerInfo, SignatureHelp,
@@ -192,6 +193,7 @@ impl LanguageServer for Backend {
                         work_done_progress: None,
                     },
                 }),
+                inlay_hint_provider: Some(OneOf::Left(true)),
                 hover_provider: Some(HoverProviderCapability::Simple(true)),
                 definition_provider: Some(OneOf::Left(true)),
                 code_action_provider: Some(CodeActionProviderCapability::Simple(true)),
@@ -265,6 +267,68 @@ impl LanguageServer for Backend {
                 .await;
         }
         self.run_diagnostics(&params.text_document.uri).await;
+    }
+
+    async fn inlay_hint(&self, params: InlayHintParams) -> Result<Option<Vec<InlayHint>>> {
+        let mut ret = Vec::new();
+
+        let files = self.files.read().await;
+        let uri = params.text_document.uri;
+        let Some(file_data) = files.get(&uri) else {
+            return Err(tower_lsp::jsonrpc::Error::invalid_request());
+        };
+
+        let document = &file_data.document_data;
+
+        let Some(ref tree) = document.tree else {
+            return Err(tower_lsp::jsonrpc::Error::internal_error());
+        };
+
+        let mut cursor = QueryCursor::new();
+        let query = Query::new(tree_sitter_ic10::language(), "(number)@x").unwrap();
+
+        for (capture, _) in cursor.captures(&query, tree.root_node(), document.content.as_bytes()) {
+            let node = capture.captures[0].node;
+
+            let range = Range::from(node.range());
+            if !range.contains(node.range().start_point.into())
+                || !range.contains(node.range().end_point.into())
+            {
+                continue;
+            }
+
+            let text = node.utf8_text(document.content.as_bytes()).unwrap();
+            if let Some(item_name) = instructions::HASH_NAME_LOOKUP.get(text) {
+                let Some(line_node) = node.find_parent("line") else {
+                    continue;
+                };
+
+                let endpos = if let Some(newline) =
+                    line_node.query("(newline)@x", document.content.as_bytes())
+                {
+                    Position::from(newline.range().start_point)
+                } else if let Some(instruction) =
+                    line_node.query("(instruction)@x", document.content.as_bytes())
+                {
+                    Position::from(instruction.range().end_point)
+                } else {
+                    Position::from(node.range().end_point)
+                };
+
+                ret.push(InlayHint {
+                    position: endpos.into(),
+                    label: InlayHintLabel::String(item_name.to_string()),
+                    kind: Some(InlayHintKind::TYPE),
+                    text_edits: None,
+                    tooltip: None,
+                    padding_left: None,
+                    padding_right: None,
+                    data: None,
+                });
+            }
+        }
+
+        Ok(Some(ret))
     }
 
     async fn semantic_tokens_full(
@@ -1612,6 +1676,18 @@ struct Position(tower_lsp::lsp_types::Position);
 
 #[derive(Clone, Debug)]
 struct Range(tower_lsp::lsp_types::Range);
+
+impl Range {
+    pub fn contains(&self, position: Position) -> bool {
+        let (start_line, start_char) = (self.0.start.line, self.0.start.character);
+        let (end_line, end_char) = (self.0.end.line, self.0.end.character);
+        let (line, character) = (position.0.line, position.0.character);
+
+        (line > start_line && line < end_line)
+            || (line == start_line && character >= start_char)
+            || (line == end_line && character <= end_char)
+    }
+}
 
 impl From<tree_sitter::Point> for Position {
     fn from(value: tree_sitter::Point) -> Self {
