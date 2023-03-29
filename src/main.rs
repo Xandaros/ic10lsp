@@ -447,7 +447,7 @@ impl LanguageServer for Backend {
                             description: None,
                         }),
                         kind: Some(CompletionItemKind::FUNCTION),
-                        documentation: instructions::DOCS
+                        documentation: instructions::INSTRUCTION_DOCS
                             .get(instruction)
                             .map(|x| Documentation::String(x.to_string())),
                         deprecated: Some(*instruction == "label"),
@@ -684,7 +684,7 @@ impl LanguageServer for Backend {
         Ok(Some(SignatureHelp {
             signatures: vec![SignatureInformation {
                 label: label,
-                documentation: instructions::DOCS
+                documentation: instructions::INSTRUCTION_DOCS
                     .get(text)
                     .map(|x| Documentation::String(x.to_string())),
                 parameters: Some(
@@ -900,7 +900,7 @@ impl LanguageServer for Backend {
                             contents: HoverContents::Array({
                                 let mut v = Vec::new();
                                 v.push(MarkedString::String(content));
-                                if let Some(doc) = instructions::DOCS.get(name) {
+                                if let Some(doc) = instructions::INSTRUCTION_DOCS.get(name) {
                                     v.push(MarkedString::String(doc.to_string()));
                                 }
                                 v

@@ -43,6 +43,7 @@ pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = ph
     "s" => InstructionSignature(&[DEVICE,LOGIC_TYPE,VALUE]),
     "sb" => InstructionSignature(&[VALUE,LOGIC_TYPE,REGISTER]),
     "bap" => InstructionSignature(&[VALUE,VALUE,VALUE,VALUE]),
+    "bapal" => InstructionSignature(&[VALUE,VALUE,VALUE,VALUE]),
     "bapz" => InstructionSignature(&[VALUE,VALUE,VALUE]),
     "bapzal" => InstructionSignature(&[VALUE,VALUE,VALUE]),
     "beq" => InstructionSignature(&[VALUE,VALUE,VALUE]),
@@ -66,6 +67,7 @@ pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = ph
     "bltz" => InstructionSignature(&[VALUE,VALUE]),
     "bltzal" => InstructionSignature(&[VALUE,VALUE]),
     "bna" => InstructionSignature(&[VALUE,VALUE,VALUE,VALUE]),
+    "bnaal" => InstructionSignature(&[VALUE,VALUE,VALUE,VALUE]),
     "bnaz" => InstructionSignature(&[VALUE,VALUE,VALUE]),
     "bnazal" => InstructionSignature(&[VALUE,VALUE,VALUE]),
     "bne" => InstructionSignature(&[VALUE,VALUE,VALUE]),
@@ -73,6 +75,8 @@ pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = ph
     "bnez" => InstructionSignature(&[VALUE,VALUE]),
     "bnezal" => InstructionSignature(&[VALUE,VALUE]),
     "brap" => InstructionSignature(&[VALUE,VALUE,VALUE,VALUE]),
+    "brapz" => InstructionSignature(&[VALUE,VALUE,VALUE]),
+    "brnaz" => InstructionSignature(&[VALUE,VALUE,VALUE]),
     "breq" => InstructionSignature(&[VALUE,VALUE,VALUE]),
     "breqz" => InstructionSignature(&[VALUE,VALUE]),
     "brge" => InstructionSignature(&[VALUE,VALUE,VALUE]),
@@ -90,6 +94,7 @@ pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = ph
     "jal" => InstructionSignature(&[VALUE]),
     "jr" => InstructionSignature(&[VALUE]),
     "sap" => InstructionSignature(&[REGISTER,VALUE,VALUE,VALUE]),
+    "sapz" => InstructionSignature(&[REGISTER,VALUE,VALUE]),
     "sdns" => InstructionSignature(&[REGISTER,DEVICE]),
     "sdse" => InstructionSignature(&[REGISTER,DEVICE]),
     "select" => InstructionSignature(&[REGISTER,VALUE,VALUE,VALUE]),
@@ -104,6 +109,7 @@ pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = ph
     "slt" => InstructionSignature(&[REGISTER,VALUE,VALUE]),
     "sltz" => InstructionSignature(&[REGISTER,VALUE]),
     "sna" => InstructionSignature(&[REGISTER,VALUE,VALUE,VALUE]),
+    "snaz" => InstructionSignature(&[REGISTER,VALUE,VALUE]),
     "sne" => InstructionSignature(&[REGISTER,VALUE,VALUE]),
     "snez" => InstructionSignature(&[REGISTER,VALUE]),
     "abs" => InstructionSignature(&[REGISTER,VALUE]),
@@ -111,6 +117,7 @@ pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = ph
     "add" => InstructionSignature(&[REGISTER,VALUE,VALUE]),
     "asin" => InstructionSignature(&[REGISTER,VALUE]),
     "atan" => InstructionSignature(&[REGISTER,VALUE]),
+    "atan2" => InstructionSignature(&[REGISTER,VALUE,VALUE]),
     "ceil" => InstructionSignature(&[REGISTER,VALUE]),
     "cos" => InstructionSignature(&[REGISTER,VALUE]),
     "div" => InstructionSignature(&[REGISTER,VALUE,VALUE]),
@@ -417,13 +424,13 @@ impl<'a> Union<'a> {
 
 // Taken directly from the game's rocketstation_Data/StreamingAssets/Language/english.xml
 // with slight changes
-pub(crate) const DOCS: phf::Map<&'static str, &'static str> = phf_map! {
+pub(crate) const INSTRUCTION_DOCS: phf::Map<&'static str, &'static str> = phf_map! {
     "l" => "Loads device var to register.",
     "lb" => "Loads var from all output network devices with provided type hash using the provide batch mode. Average (0), Sum (1), Minimum (2), Maximum (3). Can use either the word, or the number.",
     "s" => "Stores register value to var on device.",
     "sb" => "Stores register value to var on all output network devices with provided type hash.",
     "ls" => "Loads slot var on device to register.",
-    "lr" => "Loads reagent of device's reagentMode to register. Contents (0), Required (1), Recipe (2). Can use either the word, or the number.",
+    // "lr" => "Loads reagent of device's reagentMode to register. Contents (0), Required (1), Recipe (2). Can use either the word, or the number.",
     "alias" => "Labels register or device reference with name, device references also affect what shows on the screws on the IC base.",
     "define" => "Creates a label that will be replaced throughout the program with the provided value.",
     "move" => "Register = provided num or register value.",
@@ -445,8 +452,8 @@ pub(crate) const DOCS: phf::Map<&'static str, &'static str> = phf_map! {
     "sgez" => "Register = 1 if a &gt;= 0, otherwise 0",
     "seqz" => "Register = 1 if a == 0, otherwise 0",
     "snez" => "Register = 1 if a != 0, otherwise 0",
-    "sapz" => "Register = 1 if |a| &lt;= float.epsilon * 8, otherwise 0",
-    "snaz" => "Register = 1 if |a| &gt; float.epsilon, otherwise 0",
+    "sapz" => "Register = 1 if abs(a) <= max(b * abs(a), float.epsilon * 8), otherwise 0",
+    "snaz" => "Register = 1 if abs(a) > max(b * abs(a), float.epsilon * 8), otherwise 0",
     "and" => "Register = 1 if a and b not zero, otherwise 0",
     "or" => "Register = 1 if a and/or b not 0, otherwise 0",
     "xor" => "Register = 1 if either a or b not 0, otherwise 0",
@@ -538,3 +545,20 @@ pub(crate) const DOCS: phf::Map<&'static str, &'static str> = phf_map! {
     "atan" => "Returns the angle (radians) whos tan is the specified value",
     "atan2" => "Returns the angle (radians) whose tangent is the quotient of two specified values: a (y) and b (x)",
 };
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn matching_instructions() {
+        for instruction in INSTRUCTIONS.keys() {
+            println!("Is {instruction} in INSTRUCTION_DOCS?");
+            assert!(INSTRUCTION_DOCS.contains_key(instruction));
+        }
+        for instruction in INSTRUCTION_DOCS.keys() {
+            println!("Is {instruction} in INSTRUCTIONS?");
+            assert!(INSTRUCTIONS.contains_key(instruction));
+        }
+    }
+}
