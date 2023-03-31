@@ -290,26 +290,42 @@ impl LanguageServer for Backend {
     }
 
     async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
-        let mut config = self.config.write().await;
-        let value = params.settings;
+        {
+            let mut config = self.config.write().await;
+            let value = params.settings;
 
-        if let Some(warnings) = value.get("warnings").and_then(Value::as_object) {
-            config.warn_overline_comment = warnings
-                .get("overline_comment")
-                .and_then(Value::as_bool)
-                .unwrap_or(config.warn_overline_comment);
+            if let Some(warnings) = value.get("warnings").and_then(Value::as_object) {
+                config.warn_overline_comment = warnings
+                    .get("overline_comment")
+                    .and_then(Value::as_bool)
+                    .unwrap_or(config.warn_overline_comment);
 
-            config.warn_overcolumn_comment = warnings
-                .get("overcolumn_comment")
-                .and_then(Value::as_bool)
-                .unwrap_or(config.warn_overcolumn_comment);
+                config.warn_overcolumn_comment = warnings
+                    .get("overcolumn_comment")
+                    .and_then(Value::as_bool)
+                    .unwrap_or(config.warn_overcolumn_comment);
+            }
+
+            config.max_lines = value
+                .get("max_lines")
+                .and_then(Value::as_u64)
+                .map(|x| x as usize)
+                .unwrap_or(config.max_lines);
+
+            config.max_columns = value
+                .get("max_columns")
+                .and_then(Value::as_u64)
+                .map(|x| x as usize)
+                .unwrap_or(config.max_columns);
         }
 
-        config.max_lines = value
-            .get("max_lines")
-            .and_then(Value::as_u64)
-            .map(|x| x as usize)
-            .unwrap_or(config.max_lines);
+        let uris = {
+            let files = self.files.read().await;
+            files.keys().map(Clone::clone).collect::<Vec<_>>()
+        };
+        for uri in uris {
+            self.run_diagnostics(&uri).await;
+        }
     }
 
     async fn inlay_hint(&self, params: InlayHintParams) -> Result<Option<Vec<InlayHint>>> {
@@ -1568,7 +1584,8 @@ impl Backend {
             }
 
             cursor.set_point_range(
-                tree_sitter::Point::new(128, 0)..tree_sitter::Point::new(usize::MAX, usize::MAX),
+                tree_sitter::Point::new(config.max_lines, 0)
+                    ..tree_sitter::Point::new(usize::MAX, usize::MAX),
             );
             let query = Query::new(tree_sitter_ic10::language(), "(instruction)@x").unwrap();
 
