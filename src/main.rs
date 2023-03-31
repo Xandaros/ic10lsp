@@ -14,19 +14,19 @@ use tower_lsp::{
         CodeActionProviderCapability, CompletionItem, CompletionItemKind,
         CompletionItemLabelDetails, CompletionOptions, CompletionOptionsCompletionItem,
         CompletionParams, CompletionResponse, Diagnostic, DiagnosticRelatedInformation,
-        DiagnosticSeverity, DidChangeTextDocumentParams, DidOpenTextDocumentParams,
-        DocumentSymbolParams, DocumentSymbolResponse, Documentation, ExecuteCommandOptions,
-        ExecuteCommandParams, GotoDefinitionParams, GotoDefinitionResponse, Hover, HoverContents,
-        HoverParams, HoverProviderCapability, InitializeParams, InitializeResult,
-        InitializedParams, InlayHint, InlayHintKind, InlayHintLabel, InlayHintParams,
-        LanguageString, Location, MarkedString, MessageType, NumberOrString, OneOf,
-        ParameterInformation, ParameterLabel, PositionEncodingKind, SemanticToken,
-        SemanticTokenType, SemanticTokens, SemanticTokensFullOptions, SemanticTokensLegend,
-        SemanticTokensOptions, SemanticTokensParams, SemanticTokensResult,
-        SemanticTokensServerCapabilities, ServerCapabilities, ServerInfo, SignatureHelp,
-        SignatureHelpOptions, SignatureHelpParams, SignatureInformation, SymbolInformation,
-        SymbolKind, TextDocumentSyncCapability, TextDocumentSyncKind, TextEdit, Url,
-        WorkDoneProgressOptions, WorkspaceEdit,
+        DiagnosticSeverity, DidChangeConfigurationParams, DidChangeTextDocumentParams,
+        DidOpenTextDocumentParams, DocumentSymbolParams, DocumentSymbolResponse, Documentation,
+        ExecuteCommandOptions, ExecuteCommandParams, GotoDefinitionParams, GotoDefinitionResponse,
+        Hover, HoverContents, HoverParams, HoverProviderCapability, InitializeParams,
+        InitializeResult, InitializedParams, InlayHint, InlayHintKind, InlayHintLabel,
+        InlayHintParams, LanguageString, Location, MarkedString, MessageType, NumberOrString,
+        OneOf, ParameterInformation, ParameterLabel, Position as LspPosition, PositionEncodingKind,
+        Range as LspRange, SemanticToken, SemanticTokenType, SemanticTokens,
+        SemanticTokensFullOptions, SemanticTokensLegend, SemanticTokensOptions,
+        SemanticTokensParams, SemanticTokensResult, SemanticTokensServerCapabilities,
+        ServerCapabilities, ServerInfo, SignatureHelp, SignatureHelpOptions, SignatureHelpParams,
+        SignatureInformation, SymbolInformation, SymbolKind, TextDocumentSyncCapability,
+        TextDocumentSyncKind, TextEdit, Url, WorkDoneProgressOptions, WorkspaceEdit,
     },
     Client, LanguageServer, LspService, Server,
 };
@@ -154,9 +154,29 @@ struct FileData {
     type_data: TypeData,
 }
 
+#[derive(Clone, Debug)]
+struct Configuration {
+    max_lines: usize,
+    max_columns: usize,
+    warn_overline_comment: bool,
+    warn_overcolumn_comment: bool,
+}
+
+impl Default for Configuration {
+    fn default() -> Self {
+        Self {
+            max_lines: 128,
+            max_columns: 52,
+            warn_overline_comment: true,
+            warn_overcolumn_comment: false,
+        }
+    }
+}
+
 struct Backend {
     client: Client,
     files: Arc<RwLock<HashMap<Url, FileData>>>,
+    config: Arc<RwLock<Configuration>>,
 }
 
 #[async_trait]
@@ -188,7 +208,7 @@ impl LanguageServer for Backend {
                     TextDocumentSyncKind::FULL,
                 )),
                 execute_command_provider: Some(ExecuteCommandOptions {
-                    commands: vec!["ic10.version".to_string()],
+                    commands: vec!["version".to_string()],
                     work_done_progress_options: WorkDoneProgressOptions {
                         work_done_progress: None,
                     },
@@ -239,7 +259,7 @@ impl LanguageServer for Backend {
     async fn initialized(&self, _params: InitializedParams) {}
 
     async fn execute_command(&self, params: ExecuteCommandParams) -> Result<Option<Value>> {
-        if params.command == "ic10.version" {
+        if params.command == "version" {
             self.client
                 .show_message(
                     MessageType::INFO,
@@ -267,6 +287,29 @@ impl LanguageServer for Backend {
                 .await;
         }
         self.run_diagnostics(&params.text_document.uri).await;
+    }
+
+    async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
+        let mut config = self.config.write().await;
+        let value = params.settings;
+
+        if let Some(warnings) = value.get("warnings").and_then(Value::as_object) {
+            config.warn_overline_comment = warnings
+                .get("overline_comment")
+                .and_then(Value::as_bool)
+                .unwrap_or(config.warn_overline_comment);
+
+            config.warn_overcolumn_comment = warnings
+                .get("overcolumn_comment")
+                .and_then(Value::as_bool)
+                .unwrap_or(config.warn_overcolumn_comment);
+        }
+
+        config.max_lines = value
+            .get("max_lines")
+            .and_then(Value::as_u64)
+            .map(|x| x as usize)
+            .unwrap_or(config.max_lines);
     }
 
     async fn inlay_hint(&self, params: InlayHintParams) -> Result<Option<Vec<InlayHint>>> {
@@ -1442,6 +1485,7 @@ impl Backend {
         // Collect definitions
         self.update_definitions(uri, &mut diagnostics).await;
 
+        let config = self.config.read().await;
         let files = self.files.read().await;
         let Some(file_data) = files.get(uri) else {return;};
 
@@ -1474,6 +1518,87 @@ impl Backend {
 
         // Type check
         self.check_types(uri, &mut diagnostics).await;
+
+        // Overlength checks
+        {
+            let mut cursor = QueryCursor::new();
+
+            let query = Query::new(tree_sitter_ic10::language(), "(instruction)@x").unwrap();
+            for (capture, _) in
+                cursor.captures(&query, tree.root_node(), document.content.as_bytes())
+            {
+                let node = capture.captures[0].node;
+                if node.end_position().column > config.max_columns {
+                    diagnostics.push(Diagnostic {
+                        range: LspRange::new(
+                            LspPosition::new(
+                                node.end_position().row as u32,
+                                config.max_columns as u32,
+                            ),
+                            Position::from(node.end_position()).into(),
+                        ),
+                        severity: Some(DiagnosticSeverity::ERROR),
+                        message: format!("Instruction past column {}", config.max_columns),
+                        ..Default::default()
+                    });
+                }
+            }
+
+            if config.warn_overcolumn_comment {
+                let query = Query::new(tree_sitter_ic10::language(), "(comment)@x").unwrap();
+                for (capture, _) in
+                    cursor.captures(&query, tree.root_node(), document.content.as_bytes())
+                {
+                    let node = capture.captures[0].node;
+                    if node.end_position().column > config.max_columns {
+                        diagnostics.push(Diagnostic {
+                            range: LspRange::new(
+                                LspPosition::new(
+                                    node.end_position().row as u32,
+                                    config.max_columns as u32,
+                                ),
+                                Position::from(node.end_position()).into(),
+                            ),
+                            severity: Some(DiagnosticSeverity::WARNING),
+                            message: format!("Comment past column {}", config.max_columns),
+                            ..Default::default()
+                        });
+                    }
+                }
+            }
+
+            cursor.set_point_range(
+                tree_sitter::Point::new(128, 0)..tree_sitter::Point::new(usize::MAX, usize::MAX),
+            );
+            let query = Query::new(tree_sitter_ic10::language(), "(instruction)@x").unwrap();
+
+            for (capture, _) in
+                cursor.captures(&query, tree.root_node(), document.content.as_bytes())
+            {
+                let node = capture.captures[0].node;
+                diagnostics.push(Diagnostic {
+                    range: Range::from(node.range()).into(),
+                    severity: Some(DiagnosticSeverity::ERROR),
+                    message: format!("Instruction past line {}", config.max_lines),
+                    ..Default::default()
+                });
+            }
+
+            if config.warn_overline_comment {
+                let query = Query::new(tree_sitter_ic10::language(), "(comment)@x").unwrap();
+                for (capture, _) in
+                    cursor.captures(&query, tree.root_node(), document.content.as_bytes())
+                {
+                    let node = capture.captures[0].node;
+                    diagnostics.push(Diagnostic {
+                        range: Range::from(node.range()).into(),
+                        severity: Some(DiagnosticSeverity::WARNING),
+                        message: format!("Comment past line {}", config.max_lines),
+                        ..Default::default()
+                    });
+                }
+            }
+        }
 
         // Absolute jump to number lint
         {
@@ -1635,6 +1760,7 @@ async fn main() {
     let (service, socket) = LspService::new(|client| Backend {
         client,
         files: Arc::new(RwLock::new(HashMap::new())),
+        config: Arc::new(RwLock::new(Configuration::default())),
     });
 
     if !cli.listen && cli.host.is_none() {
