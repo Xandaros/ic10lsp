@@ -146,6 +146,21 @@ pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = ph
     "move" => InstructionSignature(&[REGISTER,VALUE]),
     "sleep" => InstructionSignature(&[VALUE]),
     "yield" => InstructionSignature(&[]),
+    "bnan" => InstructionSignature(&[VALUE, VALUE]),
+    "brnan" => InstructionSignature(&[VALUE, VALUE]),
+    "lbn" => InstructionSignature(&[REGISTER, VALUE, VALUE, LOGIC_TYPE, BATCH_MODE]),
+    "lbns" => InstructionSignature(&[REGISTER, VALUE, VALUE, VALUE, SLOT_LOGIC_TYPE, BATCH_MODE]),
+    "lbs" => InstructionSignature(&[REGISTER, VALUE, VALUE, SLOT_LOGIC_TYPE, BATCH_MODE]),
+    "not" => InstructionSignature(&[REGISTER, VALUE]),
+    "sbn" => InstructionSignature(&[VALUE, VALUE, LOGIC_TYPE, REGISTER]),
+    "sbs" => InstructionSignature(&[VALUE, VALUE, SLOT_LOGIC_TYPE, REGISTER]),
+    "sla" => InstructionSignature(&[REGISTER, VALUE, VALUE]),
+    "sll" => InstructionSignature(&[REGISTER, VALUE, VALUE]),
+    "sra" => InstructionSignature(&[REGISTER, VALUE, VALUE]),
+    "srl" => InstructionSignature(&[REGISTER, VALUE, VALUE]),
+    "snan" => InstructionSignature(&[REGISTER, VALUE]),
+    "snanz" => InstructionSignature(&[REGISTER, VALUE]),
+    "ss" => InstructionSignature(&[DEVICE, VALUE, SLOT_LOGIC_TYPE, REGISTER]),
 };
 
 pub(crate) const LOGIC_TYPES: phf::Set<&'static str> = phf_set! {
