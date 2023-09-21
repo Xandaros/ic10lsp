@@ -1274,7 +1274,7 @@ impl Backend {
                                     if value_node
                                         .child(0)
                                         .map(|x| x.kind())
-                                        .map_or(false, |x| x != "register" && x != "device")
+                                        .map_or(false, |x| x != "register" && x != "device_spec")
                                     {
                                         continue;
                                     }
@@ -1382,7 +1382,7 @@ impl Backend {
                     let mut types = Vec::new();
                     let typ = match operand.named_child(0).unwrap().kind() {
                         "register" => instructions::Union(&[DataType::Register]),
-                        "device" => instructions::Union(&[DataType::Device]),
+                        "device_spec" => instructions::Union(&[DataType::Device]),
                         "number" => instructions::Union(&[DataType::Number]),
                         "logictype" => {
                             let ident = operand
