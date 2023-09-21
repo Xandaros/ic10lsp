@@ -1510,6 +1510,24 @@ impl Backend {
             return;
         };
 
+        // Syntax errors
+        {
+            let mut cursor = QueryCursor::new();
+            let query = Query::new(tree_sitter_ic10::language(), "(ERROR)@error").unwrap();
+            let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+            for (capture, _) in captures {
+                diagnostics.push(Diagnostic::new(
+                    Range::from(capture.captures[0].node.range()).into(),
+                    Some(DiagnosticSeverity::ERROR),
+                    None,
+                    None,
+                    "Syntax error".to_string(),
+                    None,
+                    None,
+                ));
+            }
+        }
+
         // Find invalid instructions
         {
             let mut cursor = QueryCursor::new();
