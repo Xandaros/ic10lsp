@@ -768,7 +768,6 @@ impl LanguageServer for Backend {
                     }
                     let length = ret.len();
                     ret[start_entries..length].sort_by(|x, y| x.label.cmp(&y.label));
-                    println!("{:#?}", ret);
                 };
 
                 if !text.starts_with("br") && text.starts_with("b") || text == "j" || text == "jal"
