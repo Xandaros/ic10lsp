@@ -1721,14 +1721,23 @@ impl Backend {
             let mut cursor = QueryCursor::new();
             let query = Query::new(
                 tree_sitter_ic10::language(),
-                "(instruction (operation \"lb\") (operand (number)@n) .)",
+                "(instruction (operation)@op (operand (number)@n) .)",
             )
             .unwrap();
 
-            let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+            let matches = cursor.matches(&query, tree.root_node(), document.content.as_bytes());
 
-            for (capture, _) in captures {
-                let node = capture.captures[0].node;
+            for query_match in matches {
+                {
+                    let operation_node = query_match.captures[0].node;
+                    let operation_text = operation_node
+                        .utf8_text(document.content.as_bytes())
+                        .unwrap();
+                    if !operation_text.starts_with("lb") {
+                        continue;
+                    }
+                }
+                let node = query_match.captures[1].node;
 
                 let Ok(value) = node
                     .utf8_text(document.content.as_bytes())
