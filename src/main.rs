@@ -13,20 +13,21 @@ use tower_lsp::{
         CodeAction, CodeActionKind, CodeActionOrCommand, CodeActionParams,
         CodeActionProviderCapability, CompletionItem, CompletionItemKind,
         CompletionItemLabelDetails, CompletionOptions, CompletionOptionsCompletionItem,
-        CompletionParams, CompletionResponse, Diagnostic, DiagnosticRelatedInformation,
-        DiagnosticSeverity, DidChangeConfigurationParams, DidChangeTextDocumentParams,
-        DidOpenTextDocumentParams, DocumentSymbolParams, DocumentSymbolResponse, Documentation,
-        ExecuteCommandOptions, ExecuteCommandParams, GotoDefinitionParams, GotoDefinitionResponse,
-        Hover, HoverContents, HoverParams, HoverProviderCapability, InitializeParams,
-        InitializeResult, InitializedParams, InlayHint, InlayHintKind, InlayHintLabel,
-        InlayHintParams, LanguageString, Location, MarkedString, MessageType, NumberOrString,
-        OneOf, ParameterInformation, ParameterLabel, Position as LspPosition, PositionEncodingKind,
-        Range as LspRange, SemanticToken, SemanticTokenType, SemanticTokens,
-        SemanticTokensFullOptions, SemanticTokensLegend, SemanticTokensOptions,
-        SemanticTokensParams, SemanticTokensResult, SemanticTokensServerCapabilities,
-        ServerCapabilities, ServerInfo, SignatureHelp, SignatureHelpOptions, SignatureHelpParams,
-        SignatureInformation, SymbolInformation, SymbolKind, TextDocumentSyncCapability,
-        TextDocumentSyncKind, TextEdit, Url, WorkDoneProgressOptions, WorkspaceEdit,
+        CompletionParams, CompletionResponse, CompletionTextEdit, Diagnostic,
+        DiagnosticRelatedInformation, DiagnosticSeverity, DidChangeConfigurationParams,
+        DidChangeTextDocumentParams, DidOpenTextDocumentParams, DocumentSymbolParams,
+        DocumentSymbolResponse, Documentation, ExecuteCommandOptions, ExecuteCommandParams,
+        GotoDefinitionParams, GotoDefinitionResponse, Hover, HoverContents, HoverParams,
+        HoverProviderCapability, InitializeParams, InitializeResult, InitializedParams, InlayHint,
+        InlayHintKind, InlayHintLabel, InlayHintParams, LanguageString, Location, MarkedString,
+        MessageType, NumberOrString, OneOf, ParameterInformation, ParameterLabel,
+        Position as LspPosition, PositionEncodingKind, Range as LspRange, SemanticToken,
+        SemanticTokenType, SemanticTokens, SemanticTokensFullOptions, SemanticTokensLegend,
+        SemanticTokensOptions, SemanticTokensParams, SemanticTokensResult,
+        SemanticTokensServerCapabilities, ServerCapabilities, ServerInfo, SignatureHelp,
+        SignatureHelpOptions, SignatureHelpParams, SignatureInformation, SymbolInformation,
+        SymbolKind, TextDocumentSyncCapability, TextDocumentSyncKind, TextEdit, Url,
+        WorkDoneProgressOptions, WorkspaceEdit,
     },
     Client, LanguageServer, LspService, Server,
 };
@@ -735,6 +736,38 @@ impl LanguageServer for Backend {
 
                 let Some(param_type) = signature.0.get(current_param) else {
                     return Ok(None);
+                };
+
+                if let Some(preproc_string_node) = instruction_node.query(
+                    "(preproc_string)@x",
+                    file_data.document_data.content.as_bytes(),
+                ) {
+                    let string_text = preproc_string_node
+                        .utf8_text(file_data.document_data.content.as_bytes())
+                        .unwrap();
+
+                    let start_entries = ret.len();
+
+                    for hash_name in &instructions::HASH_NAMES {
+                        if hash_name.starts_with(string_text) {
+                            ret.push(CompletionItem {
+                                label: hash_name.to_string(),
+                                text_edit: Some(CompletionTextEdit::Edit(TextEdit {
+                                    range: {
+                                        let mut edit_range =
+                                            Range::from(preproc_string_node.range());
+                                        edit_range.0.end.character -= 1;
+                                        edit_range.into()
+                                    },
+                                    new_text: hash_name.to_string(),
+                                })),
+                                ..Default::default()
+                            });
+                        }
+                    }
+                    let length = ret.len();
+                    ret[start_entries..length].sort_by(|x, y| x.label.cmp(&y.label));
+                    println!("{:#?}", ret);
                 };
 
                 if !text.starts_with("br") && text.starts_with("b") || text == "j" || text == "jal"
