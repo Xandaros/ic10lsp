@@ -11,6 +11,7 @@ pub(crate) enum DataType {
     SlotLogicType,
     Name,
     BatchMode,
+    ReagentMode,
 }
 
 #[derive(Debug)]
@@ -25,6 +26,7 @@ const VALUE: Union = Union(&[DataType::Register, DataType::Number]);
 const LOGIC_TYPE: Union = Union(&[DataType::LogicType]);
 const SLOT_LOGIC_TYPE: Union = Union(&[DataType::SlotLogicType]);
 const BATCH_MODE: Union = Union(&[DataType::BatchMode, DataType::Number, DataType::Register]);
+const REAGENT_MODE: Union = Union(&[DataType::ReagentMode, DataType::Number, DataType::Register]);
 
 pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = phf_map! {
     "alias" => InstructionSignature(&[Union(&[DataType::Name]), Union(&[DataType::Register, DataType::Device])]),
@@ -38,7 +40,7 @@ pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = ph
     "brdse" => InstructionSignature(&[DEVICE,VALUE]),
     "l" => InstructionSignature(&[REGISTER,DEVICE,LOGIC_TYPE]),
     "lb" => InstructionSignature(&[REGISTER,VALUE,LOGIC_TYPE,BATCH_MODE]),
-    // "lr" => InstructionSignature(&[REGISTER,DEVICE,reagentMode,reagent]),
+    "lr" => InstructionSignature(&[REGISTER,DEVICE,REAGENT_MODE,VALUE]),
     "ls" => InstructionSignature(&[REGISTER,DEVICE,VALUE,SLOT_LOGIC_TYPE]),
     "s" => InstructionSignature(&[DEVICE,LOGIC_TYPE,VALUE]),
     "sb" => InstructionSignature(&[VALUE,LOGIC_TYPE,VALUE]),
@@ -364,6 +366,18 @@ pub(crate) const BATCH_MODE_LOOKUP: phf::Map<u8, &'static str> = phf_map! {
     3u8 => "Maximum",
 };
 
+pub(crate) const REAGENT_MODES: phf::Set<&'static str> = phf_set! {
+    "Contents",
+    "Required",
+    "Recipe",
+};
+
+pub(crate) const REAGENT_MODE_LOOKUP: phf::Map<u8, &'static str> = phf_map! {
+    0u8 => "Contents",
+    1u8 => "Required",
+    2u8 => "Recipe",
+};
+
 impl Display for DataType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let val = match *self {
@@ -374,6 +388,7 @@ impl Display for DataType {
             DataType::SlotLogicType => "slotType",
             DataType::Name => "name",
             DataType::BatchMode => "batchMode",
+            DataType::ReagentMode => "reagentMode",
         };
         write!(f, "{}", val)
     }
@@ -457,6 +472,9 @@ pub(crate) fn logictype_candidates(text: &str) -> Vec<DataType> {
     if BATCH_MODES.contains(text) {
         ret.push(DataType::BatchMode);
     }
+    if REAGENT_MODES.contains(text) {
+        ret.push(DataType::ReagentMode);
+    }
 
     ret
 }
@@ -469,7 +487,7 @@ pub(crate) const INSTRUCTION_DOCS: phf::Map<&'static str, &'static str> = phf_ma
     "s" => "Stores register value to var on device.",
     "sb" => "Stores register value to var on all output network devices with provided type hash.",
     "ls" => "Loads slot var on device to register.",
-    // "lr" => "Loads reagent of device's reagentMode to register. Contents (0), Required (1), Recipe (2). Can use either the word, or the number.",
+    "lr" => "Loads reagent of device's reagentMode to register. Contents (0), Required (1), Recipe (2). Can use either the word, or the number.",
     "alias" => "Labels register or device reference with name, device references also affect what shows on the screws on the IC base.",
     "define" => "Creates a label that will be replaced throughout the program with the provided value.",
     "move" => "Register = provided num or register value.",
