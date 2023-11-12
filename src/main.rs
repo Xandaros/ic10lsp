@@ -114,6 +114,12 @@ impl HasType for DefinitionData<f64> {
     }
 }
 
+impl HasType for DefinitionData<String> {
+    fn get_type(&self) -> instructions::DataType {
+        instructions::DataType::Number
+    }
+}
+
 impl HasType for DefinitionData<u8> {
     fn get_type(&self) -> instructions::DataType {
         instructions::DataType::Number
@@ -131,7 +137,7 @@ where
 
 #[derive(Default, Debug)]
 struct TypeData {
-    defines: HashMap<String, DefinitionData<f64>>,
+    defines: HashMap<String, DefinitionData<String>>,
     aliases: HashMap<String, DefinitionData<AliasValue>>,
     labels: HashMap<String, DefinitionData<u8>>,
 }
@@ -1300,7 +1306,7 @@ impl Backend {
                                         name.to_owned(),
                                         DefinitionData::new(
                                             name_node.range().into(),
-                                            value.parse().unwrap(),
+                                            value.to_string(),
                                         ),
                                     );
                                 } else if capture.captures[0].index == alias_idx {
