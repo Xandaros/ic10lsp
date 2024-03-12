@@ -41,13 +41,17 @@ const LINT_NUMBER_BATCH_MODE: &'static str = "L002";
 const LINT_NUMBER_REAGENT_MODE: &'static str = "L003";
 
 const SEMANTIC_SYMBOL_LEGEND: &'static [SemanticTokenType] = &[
-    SemanticTokenType::KEYWORD,
     SemanticTokenType::COMMENT,
-    SemanticTokenType::STRING,
-    SemanticTokenType::FUNCTION,
-    SemanticTokenType::MACRO,
+    SemanticTokenType::KEYWORD,
+    SemanticTokenType::TYPE,
+    SemanticTokenType::STRUCT,
+    SemanticTokenType::PARAMETER,
     SemanticTokenType::NUMBER,
     SemanticTokenType::VARIABLE,
+    SemanticTokenType::STRING,
+    SemanticTokenType::ENUM_MEMBER,
+    SemanticTokenType::MACRO,
+    SemanticTokenType::FUNCTION,
 ];
 struct DocumentData {
     url: Url,
@@ -395,6 +399,51 @@ impl LanguageServer for Backend {
             }
         }
 
+        let query = Query::new(
+            tree_sitter_ic10::language(),
+            "(hash_preproc string: (preproc_string)@x)",
+        )
+        .unwrap();
+
+        for (capture, _) in cursor.captures(&query, tree.root_node(), document.content.as_bytes()) {
+            let node = capture.captures[0].node;
+
+            let range = Range::from(node.range());
+            if !range.contains(node.range().start_point.into())
+                || !range.contains(node.range().end_point.into())
+            {
+                continue;
+            }
+
+            let text = node.utf8_text(document.content.as_bytes()).unwrap();
+            let Some(line_node) = node.find_parent("line") else {
+                continue;
+            };
+            let crc = const_crc32::crc32(text.as_bytes()) as i32;
+            let endpos = if let Some(newline) =
+                line_node.query("(newline)@x", document.content.as_bytes())
+            {
+                Position::from(newline.range().start_point)
+            } else if let Some(instruction) =
+                line_node.query("(instruction)@x", document.content.as_bytes())
+            {
+                Position::from(instruction.range().end_point)
+            } else {
+                Position::from(node.range().end_point)
+            };
+
+            ret.push(InlayHint {
+                position: endpos.into(),
+                label: InlayHintLabel::String(format!("{}", crc)),
+                kind: Some(InlayHintKind::TYPE),
+                text_edits: None,
+                tooltip: None,
+                padding_left: None,
+                padding_right: None,
+                data: None,
+            });
+        }
+
         Ok(Some(ret))
     }
 
@@ -417,13 +466,20 @@ impl LanguageServer for Backend {
         let mut cursor = QueryCursor::new();
         let query = Query::new(
             tree_sitter_ic10::language(),
-            "(comment) @comment
+            "
+
+             (comment)@comment
              (instruction (operation)@keyword)
-             (logictype)@string
-             (device)@preproc
-             (register)@macro
-             (number)@float
-             (identifier)@variable",
+             (logictype)@logictype
+             (constant)@constant
+             (device)@device
+             (register)@register
+             (number)@number
+             (identifier)@variable
+             (hash_preproc)@preproc
+             (hash_preproc string: (preproc_string) @string)
+             (enum)@enum
+             (label)@label",
         )
         .unwrap();
 
@@ -432,11 +488,16 @@ impl LanguageServer for Backend {
 
         let comment_idx = query.capture_index_for_name("comment").unwrap();
         let keyword_idx = query.capture_index_for_name("keyword").unwrap();
-        let string_idx = query.capture_index_for_name("string").unwrap();
-        let preproc_idx = query.capture_index_for_name("preproc").unwrap();
-        let macro_idx = query.capture_index_for_name("macro").unwrap();
-        let float_idx = query.capture_index_for_name("float").unwrap();
+        let logictype_idx = query.capture_index_for_name("logictype").unwrap();
+        let device_idx = query.capture_index_for_name("device").unwrap();
+        let register_idx = query.capture_index_for_name("register").unwrap();
+        let number_idx = query.capture_index_for_name("number").unwrap();
         let variable_idx = query.capture_index_for_name("variable").unwrap();
+        let string_idx = query.capture_index_for_name("string").unwrap();
+        let constant_idx = query.capture_index_for_name("constant").unwrap();
+        let preproc_idx = query.capture_index_for_name("preproc").unwrap();
+        let enum_idx = query.capture_index_for_name("enum").unwrap();
+        let label_idx = query.capture_index_for_name("label").unwrap();
 
         for (capture, _) in cursor.captures(&query, tree.root_node(), document.content.as_bytes()) {
             let node = capture.captures[0].node;
@@ -455,16 +516,26 @@ impl LanguageServer for Backend {
                     SemanticTokenType::COMMENT
                 } else if idx == keyword_idx {
                     SemanticTokenType::KEYWORD
-                } else if idx == string_idx {
-                    SemanticTokenType::STRING
-                } else if idx == preproc_idx {
-                    SemanticTokenType::FUNCTION
-                } else if idx == macro_idx {
-                    SemanticTokenType::MACRO
-                } else if idx == float_idx {
+                } else if idx == logictype_idx {
+                    SemanticTokenType::TYPE
+                } else if idx == device_idx {
+                    SemanticTokenType::STRUCT
+                } else if idx == register_idx {
+                    SemanticTokenType::PARAMETER
+                } else if idx == number_idx {
                     SemanticTokenType::NUMBER
                 } else if idx == variable_idx {
                     SemanticTokenType::VARIABLE
+                } else if idx == string_idx {
+                    SemanticTokenType::STRING
+                } else if idx == constant_idx {
+                    SemanticTokenType::TYPE
+                } else if idx == enum_idx {
+                    SemanticTokenType::ENUM_MEMBER
+                } else if idx == preproc_idx {
+                    SemanticTokenType::MACRO
+                } else if idx == label_idx {
+                    SemanticTokenType::FUNCTION
                 } else {
                     continue;
                 }
@@ -605,13 +676,14 @@ impl LanguageServer for Backend {
                     DataType::LogicType => instructions::LOGIC_TYPE_DOCS,
                     DataType::SlotLogicType => instructions::SLOT_TYPE_DOCS,
                     DataType::BatchMode => instructions::BATCH_MODE_DOCS,
+                    DataType::ReagentMode => instructions::REAGENT_MODE_DOCS,
                     _ => continue,
                 };
 
                 for entry in map.entries() {
                     let name = *entry.0;
                     let docs = *entry.1;
-                    if name.starts_with(prefix) {
+                    if name.to_lowercase().starts_with(&prefix.to_lowercase()) {
                         completions.push(CompletionItem {
                             label: name.to_string(),
                             label_details: Some(CompletionItemLabelDetails {
@@ -622,6 +694,30 @@ impl LanguageServer for Backend {
                             documentation: Some(Documentation::String(docs.to_string())),
                             ..Default::default()
                         });
+                    }
+                }
+                if typ == &DataType::Number {
+                    for name in instructions::ENUMS.iter() {
+                        if name.to_lowercase().starts_with(&prefix.to_lowercase()) {
+                            let docs = instructions::ENUM_DOCS
+                                .get(name)
+                                .unwrap_or(&"No Documentation Found");
+                            let value = instructions::ENUM_LOOKUP.get(name).unwrap();
+                            completions.push(CompletionItem {
+                                label: name.to_string(),
+                                label_details: Some(CompletionItemLabelDetails {
+                                    description: None,
+                                    detail: Some(detail.to_string()),
+                                }),
+                                kind: Some(CompletionItemKind::ENUM_MEMBER),
+                                documentation: Some(Documentation::String(format!(
+                                    "Value: {}\n{}",
+                                    value,
+                                    docs.to_string()
+                                ))),
+                                ..Default::default()
+                            })
+                        }
                     }
                 }
             }
@@ -708,7 +804,10 @@ impl LanguageServer for Backend {
                     return Ok(None);
                 };
 
-                let Some(instruction_node) = line_node.query("(instruction)@x", file_data.document_data.content.as_bytes()) else {
+                let Some(instruction_node) = line_node.query(
+                    "(instruction)@x",
+                    file_data.document_data.content.as_bytes(),
+                ) else {
                     return Ok(None);
                 };
 
@@ -756,7 +855,10 @@ impl LanguageServer for Backend {
                     let start_entries = ret.len();
 
                     for hash_name in &instructions::HASH_NAMES {
-                        if hash_name.starts_with(string_text) {
+                        if hash_name
+                            .to_lowercase()
+                            .starts_with(&string_text.to_lowercase())
+                        {
                             ret.push(CompletionItem {
                                 label: hash_name.to_string(),
                                 text_edit: Some(CompletionTextEdit::Edit(TextEdit {
@@ -859,7 +961,9 @@ impl LanguageServer for Backend {
             return Ok(None);
         };
 
-        let Some(instruction_node) = line_node.query("(instruction)@x", document.content.as_bytes()) else {
+        let Some(instruction_node) =
+            line_node.query("(instruction)@x", document.content.as_bytes())
+        else {
             return Ok(None);
         };
 
@@ -935,9 +1039,13 @@ impl LanguageServer for Backend {
         };
 
         'diagnostics: for diagnostic in params.context.diagnostics {
-            let Some(line_node) = node.find_parent("line") else { continue 'diagnostics; };
+            let Some(line_node) = node.find_parent("line") else {
+                continue 'diagnostics;
+            };
 
-            let Some(NumberOrString::String(code)) = diagnostic.code.clone() else {continue;};
+            let Some(NumberOrString::String(code)) = diagnostic.code.clone() else {
+                continue;
+            };
             match code.as_str() {
                 LINT_NUMBER_BATCH_MODE => {
                     let replacement = diagnostic.data.as_ref().unwrap().as_str().unwrap();
@@ -1020,7 +1128,8 @@ impl LanguageServer for Backend {
         params: GotoDefinitionParams,
     ) -> Result<Option<GotoDefinitionResponse>> {
         let files = self.files.read().await;
-        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri) else {
+        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri)
+        else {
             return Err(tower_lsp::jsonrpc::Error::internal_error());
         };
         let document = &file_data.document_data;
@@ -1046,7 +1155,8 @@ impl LanguageServer for Backend {
 
     async fn hover(&self, params: HoverParams) -> Result<Option<Hover>> {
         let files = self.files.read().await;
-        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri) else {
+        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri)
+        else {
             return Err(tower_lsp::jsonrpc::Error::internal_error());
         };
         let document = &file_data.document_data;
@@ -1101,7 +1211,7 @@ impl LanguageServer for Backend {
                 }
             }
             "operation" => {
-                let Some(signature) =  instructions::INSTRUCTIONS.get(name) else {
+                let Some(signature) = instructions::INSTRUCTIONS.get(name) else {
                     return Ok(None);
                 };
                 let mut content = name.to_string();
@@ -1168,6 +1278,69 @@ impl LanguageServer for Backend {
                     contents: HoverContents::Array(strings),
                     range: Some(Range::from(node.range()).into()),
                 }));
+            }
+            "enum" => {
+                if instructions::ENUMS.contains(name) {
+                    let value = instructions::ENUM_LOOKUP.get(name).unwrap();
+                    let docs = instructions::ENUM_DOCS.get(name).unwrap_or(&"");
+                    return Ok(Some(Hover {
+                        contents: HoverContents::Scalar(MarkedString::String(format!(
+                            "# `{}` (`{}`)\n{}",
+                            name, value, docs
+                        ))),
+
+                        range: Some(Range::from(node.range()).into()),
+                    }));
+                }
+            }
+            "constant" => {
+                if instructions::CONSTANTS.contains(name) {
+                    return Ok(Some(Hover {
+                        contents: HoverContents::Scalar(MarkedString::String(format!(
+                            "# `{}`\n{}",
+                            name,
+                            instructions::CONSTANTS_DOCS.get(name).unwrap_or(&"")
+                        ))),
+                        range: Some(Range::from(node.range()).into()),
+                    }));
+                }
+            }
+            "preproc_string" => {
+
+                let value = const_crc32::crc32(name.as_bytes()) as i32;
+                if instructions::HASH_NAMES.contains(name) {
+                    let desc = instructions::HASH_DESC_LOOKUP.get(name).unwrap_or(&"");
+                    return Ok(Some(Hover {
+                        contents: HoverContents::Scalar(MarkedString::String(format!(
+                            "# `{}` (`{}`)\n{}",
+                            name,
+                            value,
+                            desc,
+                        ))),
+                        range: Some(Range::from(node.range()).into()),
+                    }));
+                }
+                return Ok(Some(Hover {
+                    contents: HoverContents::Scalar(MarkedString::String(format!(
+                        "Hash = `{}`",
+                        value,
+                    ))),
+                    range: Some(Range::from(node.range()).into()),
+                }));
+            }
+            "number" => {
+                if let Some(hash_name) = instructions::HASH_NAME_LOOKUP.get(name) {
+                    let desc = instructions::HASH_DESC_LOOKUP.get(name).unwrap_or(&"");
+                    return Ok(Some(Hover {
+                        contents: HoverContents::Scalar(MarkedString::String(format!(
+                            "# `{}` (`{}`)\n{}",
+                            hash_name,
+                            name,
+                            desc,
+                        ))),
+                        range: Some(Range::from(node.range()).into()),
+                    }));
+                }
             }
             _ => {}
         }
@@ -1387,19 +1560,19 @@ impl Backend {
                     .utf8_text(document.content.as_bytes())
                     .unwrap();
                 let Some(signature) = instructions::INSTRUCTIONS.get(operation) else {
-                                if operation != "define" && operation != "alias" && operation != "label" {
-                                    diagnostics.push(Diagnostic::new(
-                                            Range::from(operation_node.range()).into(),
-                                            Some(DiagnosticSeverity::INFORMATION),
-                                            None,
-                                            None,
-                                            format!("Unsupported instruction"),
-                                            None,
-                                            None,
-                                            ));
-                                }
-                                continue;
-                            };
+                    if operation != "define" && operation != "alias" && operation != "label" {
+                        diagnostics.push(Diagnostic::new(
+                            Range::from(operation_node.range()).into(),
+                            Some(DiagnosticSeverity::INFORMATION),
+                            None,
+                            None,
+                            format!("Unsupported instruction"),
+                            None,
+                            None,
+                        ));
+                    }
+                    continue;
+                };
 
                 let mut argument_count = 0;
                 let mut tree_cursor = capture.walk();
@@ -1412,11 +1585,11 @@ impl Backend {
                     use instructions::DataType;
                     argument_count = argument_count + 1;
                     let Some(parameter) = parameters.next() else {
-                                        if first_superfluous_arg.is_none() {
-                                            first_superfluous_arg = Some(operand);
-                                        }
-                                        continue;
-                                    };
+                        if first_superfluous_arg.is_none() {
+                            first_superfluous_arg = Some(operand);
+                        }
+                        continue;
+                    };
 
                     let mut types = Vec::new();
                     let typ = match operand.named_child(0).unwrap().kind() {
@@ -1545,7 +1718,9 @@ impl Backend {
 
         let config = self.config.read().await;
         let files = self.files.read().await;
-        let Some(file_data) = files.get(uri) else {return;};
+        let Some(file_data) = files.get(uri) else {
+            return;
+        };
 
         let document = &file_data.document_data;
         let Some(tree) = document.tree.as_ref() else {
@@ -1706,7 +1881,11 @@ impl Backend {
                 }
 
                 tree_cursor.reset(capture);
-                let Some(last_operand) = capture.children_by_field_name("operand", &mut tree_cursor).into_iter().last() else {
+                let Some(last_operand) = capture
+                    .children_by_field_name("operand", &mut tree_cursor)
+                    .into_iter()
+                    .last()
+                else {
                     continue;
                 };
                 let last_operand = last_operand.child(0).unwrap();
@@ -1751,7 +1930,8 @@ impl Backend {
                 let Ok(value) = node
                     .utf8_text(document.content.as_bytes())
                     .unwrap()
-                    .parse::<u8>() else {
+                    .parse::<u8>()
+                else {
                     diagnostics.push(Diagnostic {
                         range: Range::from(node.range()).into(),
                         severity: Some(DiagnosticSeverity::ERROR),
@@ -1799,7 +1979,8 @@ impl Backend {
                 let Ok(value) = node
                     .utf8_text(document.content.as_bytes())
                     .unwrap()
-                    .parse::<u8>() else {
+                    .parse::<u8>()
+                else {
                     diagnostics.push(Diagnostic {
                         range: Range::from(node.range()).into(),
                         severity: Some(DiagnosticSeverity::ERROR),
