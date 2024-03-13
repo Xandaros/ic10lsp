@@ -396,6 +396,87 @@ impl LanguageServer for Backend {
                     padding_right: None,
                     data: None,
                 });
+            } else {
+                let Some(instruction_node) = node.find_parent("instruction") else {
+                    continue;
+                };
+
+                let Some(operation_node) = instruction_node.child_by_field_name("operation") else {
+                    continue;
+                };
+
+                let operation = operation_node
+                    .utf8_text(document.content.as_bytes())
+                    .unwrap();
+
+                let (current_param, _) = get_current_parameter(
+                    instruction_node,
+                    Position::from(node.range().start_point).0.character as usize,
+                );
+
+                let Some(value) = text.parse::<u8>().ok() else {
+                    continue;
+                };
+
+                let candidates = instructions::logictype_candidates_from_enum(&value);
+                if candidates.is_empty() {
+                    continue;
+                }
+
+                let types = if let Some(signature) = instructions::INSTRUCTIONS.get(operation) {
+                    if let Some(param_type) = signature.0.get(current_param) {
+                        param_type.intersection(&candidates)
+                    } else {
+                        candidates
+                    }
+                } else {
+                    candidates
+                };
+
+                let hints = types
+                    .iter()
+                    .filter_map(|typ| {
+                        use instructions::DataType;
+                        match typ {
+                            DataType::LogicType => instructions::LOGIC_TYPE_LOOKUP.get(&value),
+                            DataType::SlotLogicType => instructions::SLOT_TYPE_LOOKUP.get(&value),
+                            DataType::BatchMode => instructions::BATCH_MODE_LOOKUP.get(&value),
+                            _ => None,
+                        }
+                    })
+                    .cloned()
+                    .collect::<Vec<_>>();
+                if hints.is_empty() {
+                    continue;
+                }
+                let hint = hints.join(" | ");
+
+                let Some(line_node) = node.find_parent("line") else {
+                    continue;
+                };
+
+                let endpos = if let Some(newline) =
+                    line_node.query("(newline)@x", document.content.as_bytes())
+                {
+                    Position::from(newline.range().start_point)
+                } else if let Some(instruction) =
+                    line_node.query("(instruction)@x", document.content.as_bytes())
+                {
+                    Position::from(instruction.range().end_point)
+                } else {
+                    Position::from(node.range().end_point)
+                };
+
+                ret.push(InlayHint {
+                    position: endpos.into(),
+                    label: InlayHintLabel::String(hint.to_string()),
+                    kind: Some(InlayHintKind::PARAMETER),
+                    text_edits: None,
+                    tooltip: None,
+                    padding_left: None,
+                    padding_right: None,
+                    data: None,
+                });
             }
         }
 
@@ -1369,7 +1450,11 @@ impl LanguageServer for Backend {
                     let (current_param, _) =
                         get_current_parameter(instruction_node, position.character as usize);
 
-                    let candidates = instructions::logictype_candidates(name);
+                    let Some(value) = name.parse::<u8>().ok() else {
+                        break 'logictype;
+                    };
+
+                    let candidates = instructions::logictype_candidates_from_enum(&value);
                     if candidates.is_empty() {
                         break 'logictype;
                     }
@@ -1383,44 +1468,42 @@ impl LanguageServer for Backend {
                     } else {
                         candidates
                     };
-                    let Some(value) = name.parse::<u8>().ok() else {
-                        break 'logictype;
-                    };
 
                     let strings = types
                         .iter()
                         .map(|typ| {
+                            let type_name = {
+                                use instructions::DataType;
+                                match typ {
+                                    DataType::LogicType => {
+                                        instructions::LOGIC_TYPE_LOOKUP.get(&value)
+                                    }
+                                    DataType::SlotLogicType => {
+                                        instructions::SLOT_TYPE_LOOKUP.get(&value)
+                                    }
+                                    DataType::BatchMode => {
+                                        instructions::BATCH_MODE_LOOKUP.get(&value)
+                                    }
+                                    _ => None,
+                                }
+                                .unwrap_or(&"Unknown")
+                            };
                             MarkedString::String(format!(
                                 "# `{}` (`{}`) (`{}`)\n{}",
-                                {
-                                    use instructions::DataType;
-                                    match typ {
-                                        DataType::LogicType => {
-                                            instructions::LOGIC_TYPE_LOOKUP.get(&value)
-                                        }
-                                        DataType::SlotLogicType => {
-                                            instructions::SLOT_TYPE_LOOKUP.get(&value)
-                                        }
-                                        DataType::BatchMode => {
-                                            instructions::BATCH_MODE_LOOKUP.get(&value)
-                                        }
-                                        _ => None,
-                                    }
-                                    .unwrap_or(&"Unknown")
-                                },
+                                type_name,
                                 typ,
                                 name,
                                 {
                                     use instructions::DataType;
                                     match typ {
                                         DataType::LogicType => {
-                                            instructions::LOGIC_TYPE_DOCS.get(name)
+                                            instructions::LOGIC_TYPE_DOCS.get(type_name)
                                         }
                                         DataType::SlotLogicType => {
-                                            instructions::SLOT_TYPE_DOCS.get(name)
+                                            instructions::SLOT_TYPE_DOCS.get(type_name)
                                         }
                                         DataType::BatchMode => {
-                                            instructions::BATCH_MODE_DOCS.get(name)
+                                            instructions::BATCH_MODE_DOCS.get(type_name)
                                         }
                                         _ => None,
                                     }
