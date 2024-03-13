@@ -58,7 +58,7 @@ impl Display for DataType {
             DataType::Number => "num",
             DataType::Register => "r?",
             DataType::Device => "d?",
-            DataType::LogicType => "type",
+            DataType::LogicType => "logicType",
             DataType::SlotLogicType => "slotType",
             DataType::Name => "name",
             DataType::BatchMode => "batchMode",

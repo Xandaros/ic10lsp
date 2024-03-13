@@ -1261,16 +1261,40 @@ impl LanguageServer for Backend {
                 let strings = types
                     .iter()
                     .map(|typ| {
-                        MarkedString::String(format!("# `{}` (`{}`)\n{}", name, typ, {
-                            use instructions::DataType;
-                            match typ {
-                                DataType::LogicType => instructions::LOGIC_TYPE_DOCS.get(name),
-                                DataType::SlotLogicType => instructions::SLOT_TYPE_DOCS.get(name),
-                                DataType::BatchMode => instructions::BATCH_MODE_DOCS.get(name),
-                                _ => None,
+                        MarkedString::String(format!(
+                            "# `{}` (`{}`) (`{}`)\n{}",
+                            name,
+                            typ,
+                            {
+                                use instructions::DataType;
+                                match typ {
+                                    DataType::LogicType => instructions::LOGIC_TYPE_LOOKUP
+                                        .into_iter()
+                                        .find(|(_, n)| n == &&name),
+                                    DataType::SlotLogicType => instructions::SLOT_TYPE_LOOKUP
+                                        .into_iter()
+                                        .find(|(_, n)| n == &&name),
+                                    DataType::BatchMode => instructions::BATCH_MODE_LOOKUP
+                                        .into_iter()
+                                        .find(|(_, n)| n == &&name),
+                                    _ => None,
+                                }
+                                .map(|(v, _)| v.to_string())
+                                .unwrap_or("unknown".to_string())
+                            },
+                            {
+                                use instructions::DataType;
+                                match typ {
+                                    DataType::LogicType => instructions::LOGIC_TYPE_DOCS.get(name),
+                                    DataType::SlotLogicType => {
+                                        instructions::SLOT_TYPE_DOCS.get(name)
+                                    }
+                                    DataType::BatchMode => instructions::BATCH_MODE_DOCS.get(name),
+                                    _ => None,
+                                }
+                                .unwrap_or(&"")
                             }
-                            .unwrap_or(&"")
-                        }))
+                        ))
                     })
                     .collect();
 
@@ -1306,16 +1330,15 @@ impl LanguageServer for Backend {
                 }
             }
             "preproc_string" => {
-
                 let value = const_crc32::crc32(name.as_bytes()) as i32;
                 if instructions::HASH_NAMES.contains(name) {
-                    let desc = instructions::HASH_DESC_LOOKUP.get(name).unwrap_or(&"");
+                    let desc = instructions::HASH_DESC_LOOKUP
+                        .get(&value.to_string())
+                        .unwrap_or(&"");
                     return Ok(Some(Hover {
                         contents: HoverContents::Scalar(MarkedString::String(format!(
                             "# `{}` (`{}`)\n{}",
-                            name,
-                            value,
-                            desc,
+                            name, value, desc,
                         ))),
                         range: Some(Range::from(node.range()).into()),
                     }));
@@ -1329,14 +1352,95 @@ impl LanguageServer for Backend {
                 }));
             }
             "number" => {
+                'logictype: {
+                    let Some(instruction_node) = node.find_parent("instruction") else {
+                        break 'logictype;
+                    };
+
+                    let Some(operation_node) = instruction_node.child_by_field_name("operation")
+                    else {
+                        break 'logictype;
+                    };
+
+                    let operation = operation_node
+                        .utf8_text(document.content.as_bytes())
+                        .unwrap();
+
+                    let (current_param, _) =
+                        get_current_parameter(instruction_node, position.character as usize);
+
+                    let candidates = instructions::logictype_candidates(name);
+                    if candidates.is_empty() {
+                        break 'logictype;
+                    }
+
+                    let types = if let Some(signature) = instructions::INSTRUCTIONS.get(operation) {
+                        if let Some(param_type) = signature.0.get(current_param) {
+                            param_type.intersection(&candidates)
+                        } else {
+                            candidates
+                        }
+                    } else {
+                        candidates
+                    };
+                    let Some(value) = name.parse::<u8>().ok() else {
+                        break 'logictype;
+                    };
+
+                    let strings = types
+                        .iter()
+                        .map(|typ| {
+                            MarkedString::String(format!(
+                                "# `{}` (`{}`) (`{}`)\n{}",
+                                {
+                                    use instructions::DataType;
+                                    match typ {
+                                        DataType::LogicType => {
+                                            instructions::LOGIC_TYPE_LOOKUP.get(&value)
+                                        }
+                                        DataType::SlotLogicType => {
+                                            instructions::SLOT_TYPE_LOOKUP.get(&value)
+                                        }
+                                        DataType::BatchMode => {
+                                            instructions::BATCH_MODE_LOOKUP.get(&value)
+                                        }
+                                        _ => None,
+                                    }
+                                    .unwrap_or(&"Unknown")
+                                },
+                                typ,
+                                name,
+                                {
+                                    use instructions::DataType;
+                                    match typ {
+                                        DataType::LogicType => {
+                                            instructions::LOGIC_TYPE_DOCS.get(name)
+                                        }
+                                        DataType::SlotLogicType => {
+                                            instructions::SLOT_TYPE_DOCS.get(name)
+                                        }
+                                        DataType::BatchMode => {
+                                            instructions::BATCH_MODE_DOCS.get(name)
+                                        }
+                                        _ => None,
+                                    }
+                                    .unwrap_or(&"")
+                                }
+                            ))
+                        })
+                        .collect();
+
+                    return Ok(Some(Hover {
+                        contents: HoverContents::Array(strings),
+                        range: Some(Range::from(node.range()).into()),
+                    }));
+                }
                 if let Some(hash_name) = instructions::HASH_NAME_LOOKUP.get(name) {
                     let desc = instructions::HASH_DESC_LOOKUP.get(name).unwrap_or(&"");
                     return Ok(Some(Hover {
                         contents: HoverContents::Scalar(MarkedString::String(format!(
                             "# `{}` (`{}`)\n{}",
-                            hash_name,
-                            name,
-                            desc,
+                            hash_name, name, desc,
                         ))),
                         range: Some(Range::from(node.range()).into()),
                     }));
@@ -1389,7 +1493,7 @@ impl Backend {
                 });
             }
             std::collections::hash_map::Entry::Occupied(mut entry) => {
-                let mut entry = entry.get_mut();
+                let entry = entry.get_mut();
                 entry.document_data.tree = entry.document_data.parser.parse(&text, None); // TODO
                 entry.document_data.content = text;
             }
