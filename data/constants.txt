@@ -1,7 +1,7 @@
 nan A constant representing 'not a number'. This constants technically provides a 'quiet' NaN, a signal NaN from some instructions will result in an exception and halt execution
 pinf A constant representing a positive infinite value
 ninf A constant representing a negative infinite value
-pi 3.14159265358979 \nA constant representing the ratio of the circumference of a circle to its diameter, provided in double percision
+pi 3.14159265358979 \nA constant representing the ratio of the circumference of a circle to its diameter, provided in double precision
 deg2rad 0.0174532923847437 \nDegrees to radians conversion constant
 rad2deg 57.2957801818848 \nRadians to degrees conversion constant
-epsilon A constant representing the smallest value representable in double percision
+epsilon A constant representing the smallest value representable in double precision
