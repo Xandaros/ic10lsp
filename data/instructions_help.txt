@@ -63,7 +63,6 @@ brnaz Relative branch to line c if abs(a) > float.epsilon * 8
 brne Relative branch to line c if a != b
 brnez Relative branch to line b if a != 0
 ceil Register = smallest integer greater than a
-command command
 cos Returns the cosine of the specified angle (radians)
 define Creates a label that will be replaced throughout the program with the provided value.
 div Register = a / b

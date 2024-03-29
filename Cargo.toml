@@ -11,10 +11,10 @@ phf = { version = "0.11.1", features = ["macros"] }
 serde_json = "1.0.94"
 tokio = { version = "1.26.0", features = ["full"] }
 const-crc32 = "1.3.0"
-tower-lsp = "0.19.0"
-tree-sitter = "0.20.9"
+tower-lsp = "0.20.0"
+tree-sitter = "0.20.10"
 # tree-sitter-ic10 = "0.5.2"
-tree-sitter-ic10 = { git = "https://github.com/Ryex/tree-sitter-ic10.git", rev = "46735fbfabe49a531bce38b178665176018113e9" }
+tree-sitter-ic10 = { git = "https://github.com/Ryex/tree-sitter-ic10.git", branch = "master"}
 
 [build-dependencies]
 phf_codegen = "0.11.1"

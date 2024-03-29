@@ -190,7 +190,7 @@ pub(crate) fn logictype_candidates(text: &str) -> Vec<DataType> {
 
     ret
 }
-pub(crate) fn logictype_candidates_from_enum(val: &u8) -> Vec<DataType> {
+pub(crate) fn logictype_candidates_from_enum(val: &u16) -> Vec<DataType> {
     let mut ret = Vec::with_capacity(3);
 
     if LOGIC_TYPE_LOOKUP.contains_key(val) {

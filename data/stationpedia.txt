@@ -234,6 +234,7 @@
 412924554 ItemAstroloyIngot Ingot (Astroloy)
 -1662476145 ItemAstroloySheets Astroloy Sheets
 789015045 ItemAuthoringTool Authoring Tool
+-1731627004 ItemAuthoringToolRocketNetwork <N:EN:ItemAuthoringToolRocketNetwork>
 -1262580790 ItemBasketBall Basket Ball
 700133157 ItemBatteryCell Battery Cell (Small)
 -459827268 ItemBatteryCellLarge Battery Cell (Large)
@@ -330,11 +331,12 @@
 235361649 ItemExplosive Remote Explosive
 -233482317 ItemExplosiveBasic Explosive Basic
 892110467 ItemFern Fern
--383972371 ItemFertilizedEgg Fertilized Egg
+-383972371 ItemFertilizedEgg Egg
 266654416 ItemFilterFern Darga Fern
 1578288856 ItemFireExtinguisher Fire Extinguisher
 2011191088 ItemFlagSmall Kit (Small Flag)
 -2107840748 ItemFlashingLight Kit (Flashing Light)
+-838472102 ItemFlashlight Flashlight
 -665995854 ItemFlour Flour
 -1573623434 ItemFlowerBlue Flower (Blue)
 -1513337058 ItemFlowerGreen Flower (Green)
@@ -389,6 +391,7 @@
 -1348105509 ItemGoldOre Ore (Gold)
 1544275894 ItemGrenade Hand Grenade
 470636008 ItemHEMDroidRepairKit HEMDroid Repair Kit
+745978059 ItemHandSanitizer Hand Sanitizer
 374891127 ItemHardBackpack Hardsuit Backpack
 -412551656 ItemHardJetpack Hardsuit Jetpack
 900366130 ItemHardMiningBackPack Hard Mining Backpack
@@ -452,6 +455,7 @@
 -1935075707 ItemKitDeepMiner Kit (Deep Miner)
 77421200 ItemKitDockingPort Kit (Docking Port)
 168615924 ItemKitDoor Kit (Door)
+-1743663875 ItemKitDrinkingFountain Kit (Drinking Fountain)
 1584075627 ItemKitDuct Kit (Duct)
 -1061945368 ItemKitDynamicCanister Kit (Portable Gas Tank)
 1533501495 ItemKitDynamicGasTankAdvanced Kit (Portable Gas Tank Mk II)
@@ -578,6 +582,7 @@
 178422810 ItemKitSatelliteDish Kit (Medium Satellite Dish)
 578078533 ItemKitSecurityPrinter Kit (Security Printer)
 -1776897113 ItemKitSensor Kit (Sensors)
+735858725 ItemKitShower Kit (Shower)
 529996327 ItemKitSign Kit (Sign)
 326752036 ItemKitSleeper Kit (Sleeper)
 -1332682164 ItemKitSmallDirectHeatExchanger Kit (Small Direct Heat Exchanger)
@@ -622,6 +627,7 @@
 -821868990 ItemKitWallPadded Kit (Padded Wall)
 -210898273 ItemKitWallPanels Kit (Wall Panels)
 159886536 ItemKitWaterBottleFiller Kit (Water Bottle Filler)
+611181283 ItemKitWaterPurifier Kit (Water Purifier)
 337505889 ItemKitWeatherStation Kit (Weather Station)
 -868916503 ItemKitWindTurbine Kit (Wind Turbine)
 1779979754 ItemKitWindowShutter Kit (Window Shutter)
@@ -682,6 +688,7 @@
 -1532448832 ItemPipeDigitalValve Kit (Digital Valve)
 -1134459463 ItemPipeGasMixer Kit (Gas Mixer)
 -1751627006 ItemPipeHeater Pipe Heater Kit (Gas)
+1366030599 ItemPipeIgniter Kit (Pipe Igniter)
 391769637 ItemPipeLabel Kit (Pipe Label)
 -906521320 ItemPipeLiquidRadiator Kit (Liquid Radiator)
 1207939683 ItemPipeMeter Kit (Pipe Meter)
@@ -709,7 +716,9 @@
 1277979876 ItemPumpkinSoup Pumpkin Soup
 -1616308158 ItemPureIce Pure Ice Water
 -1251009404 ItemPureIceCarbonDioxide Pure Ice Carbon Dioxide
+944530361 ItemPureIceHydrogen Pure Ice Hydrogen
 -1715945725 ItemPureIceLiquidCarbonDioxide Pure Ice Liquid Carbon Dioxide
+-1044933269 ItemPureIceLiquidHydrogen Pure Ice Liquid Hydrogen
 1674576569 ItemPureIceLiquidNitrogen Pure Ice Liquid Nitrogen
 1428477399 ItemPureIceLiquidNitrous Pure Ice Liquid Nitrous
 541621589 ItemPureIceLiquidOxygen Pure Ice Liquid Oxygen
@@ -719,6 +728,7 @@
 386754635 ItemPureIceNitrous Pure Ice NitrousOxide
 -1150448260 ItemPureIceOxygen Pure Ice Oxygen
 -1755356 ItemPureIcePollutant Pure Ice Pollutant
+-2073202179 ItemPureIcePollutedWater Pure Ice Polluted Water
 -874791066 ItemPureIceSteam Pure Ice Steam
 -633723719 ItemPureIceVolatiles Pure Ice Volatiles
 495305053 ItemRTG Kit (Creative RTG)
@@ -729,6 +739,7 @@
 -1352732550 ItemResearchCapsuleGreen Research Capsule Green
 954947943 ItemResearchCapsuleRed Research Capsule Red
 750952701 ItemResearchCapsuleYellow Research Capsule Yellow
+-1773192190 ItemReusableFireExtinguisher Fire Extinguisher (Reusable)
 658916791 ItemRice Rice
 871811564 ItemRoadFlare Road Flare
 2109945337 ItemRocketMiningDrillHead Mining-Drill Head (Basic)
@@ -744,7 +755,7 @@
 -1981101032 ItemSecurityCamera Security Camera
 -1176140051 ItemSensorLenses Sensor Lenses
 -1154200014 ItemSensorProcessingUnitCelestialScanner Sensor Processing Unit (Celestial Scanner)
--1730464583 ItemSensorProcessingUnitMesonScanner Sensor Processing Unit (Meson Scanner)
+-1730464583 ItemSensorProcessingUnitMesonScanner Sensor Processing Unit (T-Ray Scanner)
 -1219128491 ItemSensorProcessingUnitOreScanner Sensor Processing Unit (Ore Scanner)
 -290196476 ItemSiliconIngot Ingot (Silicon)
 1103972403 ItemSiliconOre Ore (Silicon)
@@ -974,9 +985,11 @@
 471085864 Milk Milk
 96856935 ModularRocketCargo01 Rocket Cargo
 762107604 ModularRocketCommand01Lander Rocket Command Lander
+-1667675295 MonsterEgg <N:EN:MonsterEgg>
 -337075633 MotherboardComms Communications Motherboard
 502555944 MotherboardLogic Logic Motherboard
 296034716 MotherboardManufacturing Manufacturing Motherboard
+-127121474 MotherboardMissionControl <N:EN:MotherboardMissionControl>
 -161107071 MotherboardProgrammableChip IC Editor Motherboard
 -806986392 MotherboardRockets Rocket Control Motherboard
 -1908268220 MotherboardSorter Sorter Motherboard
@@ -990,6 +1003,7 @@
 1958538866 Oil Oil
 593101129 OrganBrain Human Brain
 -144408069 OrganLungs Human Lungs
+-2096246323 OrganLungsChicken Organ Lungs Chicken
 248893646 PassiveSpeaker Passive Speaker
 393296429 Phobos Phobos
 443947415 PipeBenderMod Pipe Bender Mod
@@ -1081,6 +1095,7 @@
 -889269388 StructureCableCorner Cable (Corner)
 980469101 StructureCableCorner3 Cable (3-Way Corner)
 318437449 StructureCableCorner3Burnt Burnt Cable (3-Way Corner)
+2393826 StructureCableCorner3HBurnt <N:EN:StructureCableCorner3HBurnt>
 -1542172466 StructureCableCorner4 Cable (4-Way Corner)
 268421361 StructureCableCorner4Burnt Burnt Cable (4-Way Corner)
 -981223316 StructureCableCorner4HBurnt Burnt Heavy Cable (4-Way Corner)
@@ -1216,6 +1231,7 @@
 576516101 StructureDiodeSlide Diode Slide
 -137465079 StructureDockPortSide Dock (Port Side)
 544677628 StructureDockShipSide Dock Ship Side
+1968371847 StructureDrinkingFountain <N:EN:StructureDrinkingFountain>
 -1027802654 StructureDuctCorner Duct Corner
 667066324 StructureDuctCrossJunction Duct Cross Junction
 -330605879 StructureDuctCrossJunction3 Duct Cross Junction3
@@ -1478,6 +1494,7 @@
 -1877193979 StructurePipeCrossJunction5 Pipe (5-Way Junction)
 152378047 StructurePipeCrossJunction6 Pipe (6-Way Junction)
 -419758574 StructurePipeHeater Pipe Heater (Gas)
+1286441942 StructurePipeIgniter Pipe Igniter
 -2068497073 StructurePipeInsulatedLiquidCrossJunction Insulated Liquid Pipe (Cross Junction)
 -999721119 StructurePipeLabel Pipe Label
 -1856720921 StructurePipeLiquidCorner Liquid Pipe (Corner)
@@ -1555,6 +1572,8 @@
 182006674 StructureShelfMedium Shelf Medium
 1330754486 StructureShortCornerLocker Short Corner Locker
 -554553467 StructureShortLocker Short Locker
+-775128944 StructureShower Shower
+-1081797501 StructureShowerPowered Shower (Powered)
 -1309237526 StructureShuttleLandingPad Landing Pad
 879058460 StructureSign1x1 Sign 1x1
 908320837 StructureSign2x1 Sign 2x1
@@ -1689,10 +1708,12 @@
 -517628750 StructureWaterDigitalValve Liquid Digital Valve
 -1687126443 StructureWaterPipeHeater Pipe Heater (Gas)
 433184168 StructureWaterPipeMeter Liquid Pipe Meter
+887383294 StructureWaterPurifier Water Purifier
 -1369060582 StructureWaterWallCooler Liquid Wall Cooler
 1997212478 StructureWeatherStation Weather Station
 -2082355173 StructureWindTurbine Wind Turbine
 2056377335 StructureWindowShutter Window Shutter
+328180977 StrutureDrinkingFountain Drinking Fountain
 733496620 Tomato Tomato
 1700018136 ToolPrinterMod Tool Printer Mod
 94730034 ToyLuna Toy Luna

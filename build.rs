@@ -127,7 +127,7 @@ fn write_logictypes() {
         let mut it = line.splitn(3, ' ');
         let name = it.next().unwrap();
         let val_str = it.next().unwrap();
-        let val: Option<u8> = val_str.parse().ok();
+        let val: Option<u16> = val_str.parse().ok();
         let help = it.next().unwrap_or("").replace("\\n", "\n");
 
         logictype_set.entry(name);
@@ -147,7 +147,7 @@ fn write_logictypes() {
         let mut it = line.splitn(3, ' ');
         let name = it.next().unwrap();
         let val_str = it.next().unwrap();
-        let val: Option<u8> = val_str.parse().ok();
+        let val: Option<u16> = val_str.parse().ok();
         let help = it.next().unwrap_or("").replace("\\n", "\n");
         
         slotlogictype_set.entry(name);
@@ -166,7 +166,7 @@ fn write_logictypes() {
 
     write!(
         &mut writer,
-        "pub(crate) const LOGIC_TYPE_LOOKUP: phf::Map<u8, &'static str> = {};\n",
+        "pub(crate) const LOGIC_TYPE_LOOKUP: phf::Map<u16, &'static str> = {};\n",
         logictype_lookup_map_builder.build()
     )
     .unwrap();
@@ -189,7 +189,7 @@ fn write_logictypes() {
 
     write!(
         &mut writer,
-        "pub(crate) const SLOT_TYPE_LOOKUP: phf::Map<u8, &'static str> = {};\n",
+        "pub(crate) const SLOT_TYPE_LOOKUP: phf::Map<u16, &'static str> = {};\n",
         slotlogictype_lookup_map_builder.build()
     )
     .unwrap();
@@ -222,7 +222,7 @@ fn write_modes() {
         let mut it = line.splitn(3, ' ');
         let name = it.next().unwrap();
         let val_str = it.next().unwrap();
-        let val: Option<u8> = val_str.parse().ok();
+        let val: Option<u16> = val_str.parse().ok();
         let help = it.next().unwrap_or("").replace("\\n", "\n");
 
         batchmode_set.entry(name);
@@ -242,7 +242,7 @@ fn write_modes() {
         let mut it = line.splitn(3, ' ');
         let name = it.next().unwrap();
         let val_str = it.next().unwrap();
-        let val: Option<u8> = val_str.parse().ok();
+        let val: Option<u16> = val_str.parse().ok();
         let help = it.next().unwrap_or("").replace("\\n", "\n");
         
         reagentmode_set.entry(name);
@@ -261,7 +261,7 @@ fn write_modes() {
 
     write!(
         &mut writer,
-        "pub(crate) const BATCH_MODE_LOOKUP: phf::Map<u8, &'static str> = {};\n",
+        "pub(crate) const BATCH_MODE_LOOKUP: phf::Map<u16, &'static str> = {};\n",
         batchmode_lookup_map_builder.build()
     )
     .unwrap();
@@ -284,7 +284,7 @@ fn write_modes() {
 
     write!(
         &mut writer,
-        "pub(crate) const REAGENT_MODE_LOOKUP: phf::Map<u8, &'static str> = {};\n",
+        "pub(crate) const REAGENT_MODE_LOOKUP: phf::Map<u16, &'static str> = {};\n",
         reagentmode_lookup_map_builder.build()
     )
     .unwrap();
@@ -357,24 +357,7 @@ fn write_enums() {
         let mut it = line.splitn(2, ' ');
         let name = it.next().unwrap();
         let val_str = it.next().unwrap();
-        let val: Option<u8> = val_str.parse().ok();
-
-        if !check_set.contains(name) {
-            enums_set.entry(name);
-            check_set.insert(name);
-        }
-
-        if let Some(v) = val {
-            enums_lookup_map_builder.entry(name, &format!("{}u8", v));
-        }
-    }
-
-    let eh_infile = Path::new("data/enum_help.txt");
-    let eh_contents = fs::read_to_string(eh_infile).unwrap();
-
-    for line in eh_contents.lines().filter(|l| !l.trim().is_empty()) {
-        let mut it = line.splitn(2, ' ');
-        let name = it.next().unwrap();
+        let val: Option<u16> = val_str.parse().ok();
         let help = it.next().unwrap_or("").replace("\\n", "\n");
 
         if !check_set.contains(name) {
@@ -382,8 +365,12 @@ fn write_enums() {
             check_set.insert(name);
         }
 
+        if let Some(v) = val {
+            enums_lookup_map_builder.entry(name, &format!("{}u16", v));
+        }
         enums_help_map_builder.entry(name, &format!("\"{}\"", help));
     }
+
     write!(
         &mut writer,
         "pub(crate) const ENUMS: phf::Set<&'static str> = {};\n",

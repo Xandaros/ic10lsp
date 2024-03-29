@@ -1,5 +1,6 @@
 use std::{borrow::Cow, collections::HashMap, fmt::Display, net::Ipv4Addr, sync::Arc};
 
+use instructions::LOGIC_TYPE_DOCS;
 use phf::phf_set;
 use serde_json::Value;
 use tokio::{
@@ -39,6 +40,7 @@ mod instructions;
 const LINT_ABSOLUTE_JUMP: &'static str = "L001";
 const LINT_NUMBER_BATCH_MODE: &'static str = "L002";
 const LINT_NUMBER_REAGENT_MODE: &'static str = "L003";
+const LINT_DEPRECATED_LOGICTYPE: &'static str = "L004";
 
 const SEMANTIC_SYMBOL_LEGEND: &'static [SemanticTokenType] = &[
     SemanticTokenType::COMMENT,
@@ -414,7 +416,7 @@ impl LanguageServer for Backend {
                     Position::from(node.range().start_point).0.character as usize,
                 );
 
-                let Some(value) = text.parse::<u8>().ok() else {
+                let Some(value) = text.parse::<u16>().ok() else {
                     continue;
                 };
 
@@ -551,7 +553,7 @@ impl LanguageServer for Backend {
 
              (comment)@comment
              (instruction (operation)@keyword)
-             (logictype)@logictype
+             (logicable)@logictype
              (constant)@constant
              (device)@device
              (register)@register
@@ -1450,7 +1452,7 @@ impl LanguageServer for Backend {
                     let (current_param, _) =
                         get_current_parameter(instruction_node, position.character as usize);
 
-                    let Some(value) = name.parse::<u8>().ok() else {
+                    let Some(value) = name.parse::<u16>().ok() else {
                         break 'logictype;
                     };
 
@@ -2117,7 +2119,7 @@ impl Backend {
                 let Ok(value) = node
                     .utf8_text(document.content.as_bytes())
                     .unwrap()
-                    .parse::<u8>()
+                    .parse::<u16>()
                 else {
                     diagnostics.push(Diagnostic {
                         range: Range::from(node.range()).into(),
@@ -2166,7 +2168,7 @@ impl Backend {
                 let Ok(value) = node
                     .utf8_text(document.content.as_bytes())
                     .unwrap()
-                    .parse::<u8>()
+                    .parse::<u16>()
                 else {
                     diagnostics.push(Diagnostic {
                         range: Range::from(node.range()).into(),
@@ -2195,6 +2197,36 @@ impl Backend {
                     data: Some(Value::String(replacement.to_string())),
                     ..Default::default()
                 });
+            }
+        }
+
+        // Deprecated Logictype
+        {
+            let mut cursor = QueryCursor::new();
+            let query = Query::new(tree_sitter_ic10::language(), "(logictype)@lt").unwrap();
+
+            let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+
+            for (capture, _) in captures {
+                let node = capture.captures[0].node;
+
+                let name = node.utf8_text(document.content.as_bytes()).unwrap();
+
+                if let Some(docs) = LOGIC_TYPE_DOCS.get(&name) {
+                    if docs.to_uppercase() == "DEPRECATED" {
+                        diagnostics.push(Diagnostic::new(
+                            Range::from(node.range()).into(),
+                            Some(DiagnosticSeverity::WARNING),
+                            Some(NumberOrString::String(
+                                LINT_DEPRECATED_LOGICTYPE.to_string(),
+                            )),
+                            None,
+                            format!("LogicType '{name}' is Deprecated"),
+                            None,
+                            None,
+                        ));
+                    }
+                }
             }
         }
 
