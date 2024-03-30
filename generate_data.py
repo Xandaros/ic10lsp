@@ -1,5 +1,6 @@
 from collections import defaultdict
 import json
+from pprint import pprint
 import xml.etree.ElementTree as ET
 import argparse
 from pathlib import Path
@@ -96,7 +97,7 @@ def extract_data(install_path, data_path: Path, language: str):
     enums = {}
     with (Path("data") / "enums.txt").open("r") as f:
         for line in f.readlines():
-            match line.strip().split(' ', maxsplit=3):
+            match line.strip().split(' ', maxsplit=2):
                 case [name, val]:
                     help = ""
                     if name in enum_help_strings:
@@ -109,7 +110,7 @@ def extract_data(install_path, data_path: Path, language: str):
 
     with (Path("data") / "logictypes.txt").open("r") as f:
         for line in f.readlines():
-            match line.strip().split(' ', maxsplit=3):
+            match line.strip().split(' ', maxsplit=2):
                 case [name, val]:
                     help = ""
                     if f"LogicType.{name}" in enum_help_strings:
@@ -124,7 +125,7 @@ def extract_data(install_path, data_path: Path, language: str):
     
     with(Path("data") / "slotlogictypes.txt").open("r") as f:
         for line in f.readlines():
-            match line.strip().split(' ', maxsplit=3):
+            match line.strip().split(' ', maxsplit=2):
                 case [name, val]:
                     help = ""
                     if f"LogicSlotType.{name}" in enum_help_strings:
@@ -140,7 +141,7 @@ def extract_data(install_path, data_path: Path, language: str):
     batchmodes = {}
     with(Path("data") / "batchmodes.txt").open("r") as f:
         for line in f.readlines():
-            match line.strip().split(' ', maxsplit=3):
+            match line.strip().split(' ', maxsplit=2):
                 case [name, val]:
                     batchmodes[name] = (intOrNone(val), "")
                 case [name, val, help]:
@@ -151,7 +152,7 @@ def extract_data(install_path, data_path: Path, language: str):
     reagentmodes = {}
     with(Path("data") / "reagentmodes.txt").open("r") as f:
         for line in f.readlines():
-            match line.strip().split(' ', maxsplit=3):
+            match line.strip().split(' ', maxsplit=2):
                 case [name, val]:
                     reagentmodes[name] = (intOrNone(val), "")
                 case [name, val, help]:
@@ -173,6 +174,13 @@ def extract_data(install_path, data_path: Path, language: str):
                         if name in enum_help_strings:
                             help = enum_help_strings[name]
                         enum[name] = (val, help)
+                to_remove = []
+                for name, (val, help) in enum.items():
+                    if name not in values: 
+                        print("Removing", name, val, help)
+                        to_remove.append(name)
+                for name in to_remove:
+                    del enum[name]
             update_enum(logictypes, enum_values["LogicType"])
             update_enum(slotlogictypes, enum_values["LogicSlotType"])
             update_enum(batchmodes, enum_values["LogicBatchMethod"])
@@ -202,7 +210,6 @@ def extract_data(install_path, data_path: Path, language: str):
         stationpedia[crc_s] = (key, value)
     
     exported_stationpedia_path = install_path / "Stationpedia" / "Stationpedia.json"
-    print(exported_stationpedia_path, exported_stationpedia_path.exists())
     if exported_stationpedia_path.exists():
         with exported_stationpedia_path.open(mode="r") as f:
             exported = json.load(f)

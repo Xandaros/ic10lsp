@@ -85,14 +85,14 @@ LogicType.Bpm 103 Bpm
 LogicType.BurnTimeRemaining 225 Estimated time in seconds until fuel is depleted. Calculated based on current fuel usage.
 LogicType.CelestialHash 242 
 LogicType.CelestialParentHash 250 
-LogicType.Channel0 165 
-LogicType.Channel1 166 
-LogicType.Channel2 167 
-LogicType.Channel3 168 
-LogicType.Channel4 169 
-LogicType.Channel5 170 
-LogicType.Channel6 171 
-LogicType.Channel7 172 
+LogicType.Channel0 165 Channel 0 on a cable network which should be considered volatile
+LogicType.Channel1 166 Channel 1 on a cable network which should be considered volatile
+LogicType.Channel2 167 Channel 2 on a cable network which should be considered volatile
+LogicType.Channel3 168 Channel 3 on a cable network which should be considered volatile
+LogicType.Channel4 169 Channel 4 on a cable network which should be considered volatile
+LogicType.Channel5 170 Channel 5 on a cable network which should be considered volatile
+LogicType.Channel6 171 Channel 6 on a cable network which should be considered volatile
+LogicType.Channel7 172 Channel 7 on a cable network which should be considered volatile
 LogicType.Charge 11 The current charge the device has
 LogicType.Chart 256 
 LogicType.ChartedNavPoints 259 
@@ -346,13 +346,13 @@ PowerMode.Charging 3
 PowerMode.Discharged 1 
 PowerMode.Discharging 2 
 PowerMode.Idle 0 
-RobotMode.Follow 1 
-RobotMode.MoveToTarget 2 
-RobotMode.None 0 
-RobotMode.PathToTarget 5 
-RobotMode.Roam 3 
-RobotMode.StorageFull 6 
-RobotMode.Unload 4 
+RobotMode.Follow 1 Follow nearest player
+RobotMode.MoveToTarget 2 Move to target in straight line
+RobotMode.None 0 Do nothing
+RobotMode.PathToTarget 5 Path(find) to target
+RobotMode.Roam 3 Wander around looking for ores ina 15 co-ors radius
+RobotMode.StorageFull 6 Automatic assigned state, shows when storage slots a full
+RobotMode.Unload 4 Unload in chute input of chute bin within 3 meters / 1.5 large grids
 SlotClass.AccessCard 22 
 SlotClass.Appliance 18 
 SlotClass.Back 3 
