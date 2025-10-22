@@ -1,3 +1,4 @@
+use regex::Regex;
 use std::{borrow::Cow, collections::HashMap, fmt::Display, net::Ipv4Addr, sync::Arc};
 
 use phf::phf_set;
@@ -1176,14 +1177,14 @@ impl LanguageServer for Backend {
 }
 
 impl Backend {
-    fn node_at_position<'a>(&'a self, position: Position, tree: &'a Tree) -> Option<Node> {
+    fn node_at_position<'a>(&'a self, position: Position, tree: &'a Tree) -> Option<Node<'a>> {
         self.node_at_range(
             tower_lsp::lsp_types::Range::new(position.into(), position.into()).into(),
             tree,
         )
     }
 
-    fn node_at_range<'a>(&'a self, range: Range, tree: &'a Tree) -> Option<Node> {
+    fn node_at_range<'a>(&'a self, range: Range, tree: &'a Tree) -> Option<Node<'a>> {
         let root = tree.root_node();
         let start = Position::from(range.0.start);
         let end = Position::from(range.0.end);
@@ -1216,7 +1217,7 @@ impl Backend {
                 });
             }
             std::collections::hash_map::Entry::Occupied(mut entry) => {
-                let mut entry = entry.get_mut();
+                let entry = entry.get_mut();
                 entry.document_data.tree = entry.document_data.parser.parse(&text, None); // TODO
                 entry.document_data.content = text;
             }
@@ -1551,6 +1552,7 @@ impl Backend {
         let Some(tree) = document.tree.as_ref() else {
             return;
         };
+        let str_lines_var = str_lines(&document.content);
 
         // Syntax errors
         {
@@ -1558,6 +1560,10 @@ impl Backend {
             let query = Query::new(tree_sitter_ic10::language(), "(ERROR)@error").unwrap();
             let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
             for (capture, _) in captures {
+                let line = capture.captures[0].node.start_position().row;
+                if str_lines_var.contains(&line) {
+                    continue;
+                }
                 diagnostics.push(Diagnostic::new(
                     Range::from(capture.captures[0].node.range()).into(),
                     Some(DiagnosticSeverity::ERROR),
@@ -1580,6 +1586,10 @@ impl Backend {
             .unwrap();
             let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
             for (capture, _) in captures {
+                let line = capture.captures[0].node.start_position().row;
+                if str_lines_var.contains(&line) {
+                    continue;
+                }
                 diagnostics.push(Diagnostic::new(
                     Range::from(capture.captures[0].node.range()).into(),
                     Some(DiagnosticSeverity::ERROR),
@@ -1830,6 +1840,15 @@ impl Backend {
             }
         }
 
+        let str_lines_set = str_lines(&document.content);
+        let diagnostics: Vec<_> = diagnostics
+            .into_iter()
+            .filter(|diag| {
+                let line = diag.range.start.line as usize;
+                !str_lines_set.contains(&line)
+            })
+            .collect();
+
         self.client
             .publish_diagnostics(uri.to_owned(), diagnostics, None)
             .await;
@@ -1879,6 +1898,17 @@ impl<'a> NodeEx for Node<'a> {
             .and_then(|x| x.get(0))
             .map(|x| x.node)
     }
+}
+
+/// Returns a set of line numbers (0-based) that contain STR(" or STR(' (with optional whitespace)
+/// Special case for syntax checking after the introduction of this option with the 2025 Sep 15 update
+fn str_lines(content: &str) -> std::collections::HashSet<usize> {
+    let re = Regex::new(r#"STR\s*\(\s*(['\"])"#).unwrap();
+    content
+        .lines()
+        .enumerate()
+        .filter_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
+        .collect()
 }
 
 #[tokio::main]

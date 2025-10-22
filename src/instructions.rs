@@ -163,6 +163,10 @@ pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = ph
     "snan" => InstructionSignature(&[REGISTER, VALUE]),
     "snanz" => InstructionSignature(&[REGISTER, VALUE]),
     "ss" => InstructionSignature(&[DEVICE, VALUE, SLOT_LOGIC_TYPE, REGISTER]),
+    "get" => InstructionSignature(&[REGISTER, DEVICE, VALUE]),
+    "getd" => InstructionSignature(&[REGISTER, VALUE, VALUE]),
+    "put" => InstructionSignature(&[DEVICE, VALUE, VALUE]),
+    "putd" => InstructionSignature(&[VALUE, VALUE, VALUE])
 };
 
 pub(crate) const LOGIC_TYPES: phf::Set<&'static str> = phf_set! {
@@ -591,6 +595,10 @@ pub(crate) const INSTRUCTION_DOCS: phf::Map<&'static str, &'static str> = phf_ma
     "peek" => "Register = the value at the top of the stack",
     "push" => "Pushes the value of a to the stack at sp and increments sp",
     "pop" => "Register = the value at the top of the stack and decrements sp",
+    "get" => "Loads the value in the stack memory at index address on provided device into register r?.",
+    "getd" => "Loads the value in the stack memory at index address on provided device id into register r?.",
+    "put" => "Adds the value to the stack memory off the provided device at index address.",
+    "putd" => "Adds the value to the stack memory off the provided device id at index address",
     "hcf" => "Halt and catch fire",
     "select" => "Register = b if a is non-zero, otherwise c",
     "sleep" => "Pauses execution on the IC for a seconds",
@@ -601,6 +609,21 @@ pub(crate) const INSTRUCTION_DOCS: phf::Map<&'static str, &'static str> = phf_ma
     "acos" => "Returns the angle (radians) whos cosine is the specified value",
     "atan" => "Returns the angle (radians) whos tan is the specified value",
     "atan2" => "Returns the angle (radians) whose tangent is the quotient of two specified values: a (y) and b (x)",
+    "brnan" => "Relative branch to line b if a is not a number (NaN)",
+    "lbns" => "Loads LogicSlotType from slotIndex from all output network devices with provided type and name hashes using the provide batch mode. Average (0), Sum (1), Minimum (2), Maximum (3). Can use either the word, or the number.",
+    "sbs" => "Stores register value to LogicSlotType on all output network devices with provided type hash in the provided slot.",
+    "sra" => "Performs a bitwise arithmetic right shift operation on the binary representation of a value. It shifts the bits to the right and fills the vacated leftmost bits with a copy of the sign bit (the most significant bit).",
+    "sla" => "Performs a bitwise arithmetic left shift operation on the binary representation of a value. It shifts the bits to the left and fills the vacated rightmost bits with zeros (note that this is indistinguishable from 'sll').",
+    "sll" => "Performs a bitwise logical left shift operation on the binary representation of a value. It shifts the bits to the left and fills the vacated rightmost bits with zeros.",
+    "bnan" => "Branch to line b if a is not a number (NaN)",
+    "lbs" => "Loads LogicSlotType from slotIndex from all output network devices with provided type hash using the provide batch mode. Average (0), Sum (1), Minimum (2), Maximum (3). Can use either the word, or the number.",
+    "not" => "Performs a bitwise logical NOT operation flipping each bit of the input value, resulting in a binary complement. If a bit is 1, it becomes 0, and if a bit is 0, it becomes 1.",
+    "snanz" => "Register = 0 if a is NaN, otherwise 1",
+    "ss" => "Stores register value to device stored in a slot LogicSlotType on device.",
+    "sbn" => "Stores register value to LogicType on all output network devices with provided type hash and name.",
+    "srl" => "Performs a bitwise logical right shift operation on the binary representation of a value. It shifts the bits to the right and fills the vacated leftmost bits with zeros",
+    "snan" => "Register = 1 if a is NaN, otherwise 0",
+    "lbn" => "Loads LogicType from all output network devices with provided type and name hashes using the provide batch mode. Average (0), Sum (1), Minimum (2), Maximum (3). Can use either the word, or the number."
 };
 
 pub(crate) const LOGIC_TYPE_DOCS: phf::Map<&'static str, &'static str> = phf_map! {
