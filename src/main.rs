@@ -1900,8 +1900,7 @@ impl<'a> NodeEx for Node<'a> {
     }
 }
 
-/// Returns a set of line numbers (0-based) that contain STR("") or STR('') (with optional whitespace)
-/// Special case for syntax checking after the introduction of this option with the 2025 Sep 15 update
+/// Check for STR(""), STR('')  anywhere. I am not sure if it can only appear at the end of a content line
 fn str_lines(content: &str) -> std::collections::HashSet<usize> {
     let re1 = Regex::new(r#"STR\s*\(\s*"[^"]*"\s*\)"#).unwrap();
     let re2 = Regex::new(r#"STR\s*\(\s*'[^']*'\s*\)"#).unwrap();
