@@ -175,7 +175,7 @@ impl Default for Configuration {
     fn default() -> Self {
         Self {
             max_lines: 128,
-            max_columns: 52,
+            max_columns: 90, //lines can be 90 characters long these days
             warn_overline_comment: true,
             warn_overcolumn_comment: false,
         }
@@ -1900,14 +1900,15 @@ impl<'a> NodeEx for Node<'a> {
     }
 }
 
-/// Returns a set of line numbers (0-based) that contain STR(" or STR(' (with optional whitespace)
+/// Returns a set of line numbers (0-based) that contain STR("") or STR('') (with optional whitespace)
 /// Special case for syntax checking after the introduction of this option with the 2025 Sep 15 update
 fn str_lines(content: &str) -> std::collections::HashSet<usize> {
-    let re = Regex::new(r#"STR\s*\(\s*(['\"])"#).unwrap();
+    let re1 = Regex::new(r#"STR\s*\(\s*"[^"]*"\s*\)"#).unwrap();
+    let re2 = Regex::new(r#"STR\s*\(\s*'[^']*'\s*\)"#).unwrap();
     content
         .lines()
         .enumerate()
-        .filter_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
+        .filter_map(|(i, line)| if re1.is_match(line) || re2.is_match(line) { Some(i) } else { None })
         .collect()
 }
 
