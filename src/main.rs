@@ -174,7 +174,7 @@ impl Default for Configuration {
     fn default() -> Self {
         Self {
             max_lines: 128,
-            max_columns: 52,
+            max_columns: 90, //lines can be 90 characters long these days
             warn_overline_comment: true,
             warn_overcolumn_comment: false,
         }
@@ -708,7 +708,10 @@ impl LanguageServer for Backend {
                     return Ok(None);
                 };
 
-                let Some(instruction_node) = line_node.query("(instruction)@x", file_data.document_data.content.as_bytes()) else {
+                let Some(instruction_node) = line_node.query(
+                    "(instruction)@x",
+                    file_data.document_data.content.as_bytes(),
+                ) else {
                     return Ok(None);
                 };
 
@@ -859,7 +862,9 @@ impl LanguageServer for Backend {
             return Ok(None);
         };
 
-        let Some(instruction_node) = line_node.query("(instruction)@x", document.content.as_bytes()) else {
+        let Some(instruction_node) =
+            line_node.query("(instruction)@x", document.content.as_bytes())
+        else {
             return Ok(None);
         };
 
@@ -935,9 +940,13 @@ impl LanguageServer for Backend {
         };
 
         'diagnostics: for diagnostic in params.context.diagnostics {
-            let Some(line_node) = node.find_parent("line") else { continue 'diagnostics; };
+            let Some(line_node) = node.find_parent("line") else {
+                continue 'diagnostics;
+            };
 
-            let Some(NumberOrString::String(code)) = diagnostic.code.clone() else {continue;};
+            let Some(NumberOrString::String(code)) = diagnostic.code.clone() else {
+                continue;
+            };
             match code.as_str() {
                 LINT_NUMBER_BATCH_MODE => {
                     let replacement = diagnostic.data.as_ref().unwrap().as_str().unwrap();
@@ -1020,7 +1029,8 @@ impl LanguageServer for Backend {
         params: GotoDefinitionParams,
     ) -> Result<Option<GotoDefinitionResponse>> {
         let files = self.files.read().await;
-        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri) else {
+        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri)
+        else {
             return Err(tower_lsp::jsonrpc::Error::internal_error());
         };
         let document = &file_data.document_data;
@@ -1046,7 +1056,8 @@ impl LanguageServer for Backend {
 
     async fn hover(&self, params: HoverParams) -> Result<Option<Hover>> {
         let files = self.files.read().await;
-        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri) else {
+        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri)
+        else {
             return Err(tower_lsp::jsonrpc::Error::internal_error());
         };
         let document = &file_data.document_data;
@@ -1101,7 +1112,7 @@ impl LanguageServer for Backend {
                 }
             }
             "operation" => {
-                let Some(signature) =  instructions::INSTRUCTIONS.get(name) else {
+                let Some(signature) = instructions::INSTRUCTIONS.get(name) else {
                     return Ok(None);
                 };
                 let mut content = name.to_string();
@@ -1176,14 +1187,14 @@ impl LanguageServer for Backend {
 }
 
 impl Backend {
-    fn node_at_position<'a>(&'a self, position: Position, tree: &'a Tree) -> Option<Node> {
+    fn node_at_position<'a>(&'a self, position: Position, tree: &'a Tree) -> Option<Node<'a>> {
         self.node_at_range(
             tower_lsp::lsp_types::Range::new(position.into(), position.into()).into(),
             tree,
         )
     }
 
-    fn node_at_range<'a>(&'a self, range: Range, tree: &'a Tree) -> Option<Node> {
+    fn node_at_range<'a>(&'a self, range: Range, tree: &'a Tree) -> Option<Node<'a>> {
         let root = tree.root_node();
         let start = Position::from(range.0.start);
         let end = Position::from(range.0.end);
@@ -1216,7 +1227,7 @@ impl Backend {
                 });
             }
             std::collections::hash_map::Entry::Occupied(mut entry) => {
-                let mut entry = entry.get_mut();
+                let entry = entry.get_mut();
                 entry.document_data.tree = entry.document_data.parser.parse(&text, None); // TODO
                 entry.document_data.content = text;
             }
@@ -1387,19 +1398,19 @@ impl Backend {
                     .utf8_text(document.content.as_bytes())
                     .unwrap();
                 let Some(signature) = instructions::INSTRUCTIONS.get(operation) else {
-                                if operation != "define" && operation != "alias" && operation != "label" {
-                                    diagnostics.push(Diagnostic::new(
-                                            Range::from(operation_node.range()).into(),
-                                            Some(DiagnosticSeverity::INFORMATION),
-                                            None,
-                                            None,
-                                            format!("Unsupported instruction"),
-                                            None,
-                                            None,
-                                            ));
-                                }
-                                continue;
-                            };
+                    if operation != "define" && operation != "alias" && operation != "label" {
+                        diagnostics.push(Diagnostic::new(
+                            Range::from(operation_node.range()).into(),
+                            Some(DiagnosticSeverity::INFORMATION),
+                            None,
+                            None,
+                            format!("Unsupported instruction"),
+                            None,
+                            None,
+                        ));
+                    }
+                    continue;
+                };
 
                 let mut argument_count = 0;
                 let mut tree_cursor = capture.walk();
@@ -1412,11 +1423,11 @@ impl Backend {
                     use instructions::DataType;
                     argument_count = argument_count + 1;
                     let Some(parameter) = parameters.next() else {
-                                        if first_superfluous_arg.is_none() {
-                                            first_superfluous_arg = Some(operand);
-                                        }
-                                        continue;
-                                    };
+                        if first_superfluous_arg.is_none() {
+                            first_superfluous_arg = Some(operand);
+                        }
+                        continue;
+                    };
 
                     let mut types = Vec::new();
                     let typ = match operand.named_child(0).unwrap().kind() {
@@ -1545,7 +1556,9 @@ impl Backend {
 
         let config = self.config.read().await;
         let files = self.files.read().await;
-        let Some(file_data) = files.get(uri) else {return;};
+        let Some(file_data) = files.get(uri) else {
+            return;
+        };
 
         let document = &file_data.document_data;
         let Some(tree) = document.tree.as_ref() else {
@@ -1683,7 +1696,8 @@ impl Backend {
                 "bdns", "bdnsal", "bdse", "bdseal", "bap", "bapz", "bapzal", "beq", "beqal",
                 "beqz", "beqzal", "bge", "bgeal", "bgez", "bgezal", "bgt", "bgtal", "bgtz",
                 "bgtzal", "ble", "bleal", "blez", "blezal", "blt", "bltal", "bltz", "bltzal",
-                "bna", "bnaz", "bnazal", "bne", "bneal", "bnez", "bnezal", "j", "jal"
+                "bna", "bnaz", "bnazal", "bne", "bneal", "bnez", "bnezal", "j", "jal", "bdnvl",
+                "bdnvs"
             );
             let mut cursor = QueryCursor::new();
             let query = Query::new(
@@ -1706,7 +1720,11 @@ impl Backend {
                 }
 
                 tree_cursor.reset(capture);
-                let Some(last_operand) = capture.children_by_field_name("operand", &mut tree_cursor).into_iter().last() else {
+                let Some(last_operand) = capture
+                    .children_by_field_name("operand", &mut tree_cursor)
+                    .into_iter()
+                    .last()
+                else {
                     continue;
                 };
                 let last_operand = last_operand.child(0).unwrap();
@@ -1751,7 +1769,8 @@ impl Backend {
                 let Ok(value) = node
                     .utf8_text(document.content.as_bytes())
                     .unwrap()
-                    .parse::<u8>() else {
+                    .parse::<u8>()
+                else {
                     diagnostics.push(Diagnostic {
                         range: Range::from(node.range()).into(),
                         severity: Some(DiagnosticSeverity::ERROR),
@@ -1799,7 +1818,8 @@ impl Backend {
                 let Ok(value) = node
                     .utf8_text(document.content.as_bytes())
                     .unwrap()
-                    .parse::<u8>() else {
+                    .parse::<u8>()
+                else {
                     diagnostics.push(Diagnostic {
                         range: Range::from(node.range()).into(),
                         severity: Some(DiagnosticSeverity::ERROR),

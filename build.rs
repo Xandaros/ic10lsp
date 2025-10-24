@@ -21,7 +21,9 @@ fn main() {
         let mut it = line.splitn(2, ' ');
         let hash = it.next().unwrap();
         let name = it.next().unwrap();
-        map_builder.entry(hash, &format!("\"{}\"", name));
+
+        let formatted_name = format!("\"{}\"", name);
+        map_builder.entry(hash, formatted_name);
 
         if !check_set.contains(name) {
             set_builder.entry(name);
