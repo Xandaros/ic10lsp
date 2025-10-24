@@ -31,7 +31,7 @@ use tower_lsp::{
     },
     Client, LanguageServer, LspService, Server,
 };
-use tree_sitter::{Node, Parser, Query, QueryCursor, Tree};
+use tree_sitter::{Node, Parser, Query, QueryCursor, StreamingIterator as _, Tree};
 
 mod cli;
 mod instructions;
@@ -352,9 +352,10 @@ impl LanguageServer for Backend {
         };
 
         let mut cursor = QueryCursor::new();
-        let query = Query::new(tree_sitter_ic10::language(), "(number)@x").unwrap();
+        let query = Query::new(&tree_sitter_ic10::language(), "(number)@x").unwrap();
 
-        for (capture, _) in cursor.captures(&query, tree.root_node(), document.content.as_bytes()) {
+        let mut captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+        while let Some((capture, _)) = captures.next() {
             let node = capture.captures[0].node;
 
             let range = Range::from(node.range());
@@ -416,7 +417,7 @@ impl LanguageServer for Backend {
 
         let mut cursor = QueryCursor::new();
         let query = Query::new(
-            tree_sitter_ic10::language(),
+            &tree_sitter_ic10::language(),
             "(comment) @comment
              (instruction (operation)@keyword)
              (logictype)@string
@@ -438,7 +439,8 @@ impl LanguageServer for Backend {
         let float_idx = query.capture_index_for_name("float").unwrap();
         let variable_idx = query.capture_index_for_name("variable").unwrap();
 
-        for (capture, _) in cursor.captures(&query, tree.root_node(), document.content.as_bytes()) {
+        let mut captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+        while let Some((capture, _)) = captures.next() {
             let node = capture.captures[0].node;
             let idx = capture.captures[0].index;
             let start = node.range().start_point;
@@ -510,7 +512,7 @@ impl LanguageServer for Backend {
 
         let mut cursor = QueryCursor::new();
         let query = Query::new(
-            tree_sitter_ic10::language(),
+            &tree_sitter_ic10::language(),
             "(instruction (operation \"define\") . (operand)@name)@define
             (instruction (operation \"alias\") . (operand)@name)@alias
             (instruction (operation \"label\") . (operand)@name)@alias
@@ -522,9 +524,9 @@ impl LanguageServer for Backend {
         let label_idx = query.capture_index_for_name("label").unwrap();
         let name_idx = query.capture_index_for_name("name").unwrap();
 
-        let matches = cursor.matches(&query, tree.root_node(), document.content.as_bytes());
+        let mut matches = cursor.matches(&query, tree.root_node(), document.content.as_bytes());
 
-        for matched in matches {
+        while let Some(matched) = matches.next() {
             let main_match = {
                 let mut ret = None;
                 for cap in matched.captures {
@@ -1213,7 +1215,7 @@ impl Backend {
             std::collections::hash_map::Entry::Vacant(entry) => {
                 let mut parser = Parser::new();
                 parser
-                    .set_language(tree_sitter_ic10::language())
+                    .set_language(&tree_sitter_ic10::language())
                     .expect("Could not set language");
                 let key = entry.key().clone();
                 entry.insert(FileData {
@@ -1249,7 +1251,7 @@ impl Backend {
 
             let mut cursor = QueryCursor::new();
             let query = Query::new(
-                tree_sitter_ic10::language(),
+                &tree_sitter_ic10::language(),
                 "(instruction (operation \"define\"))@define
                          (instruction (operation \"alias\"))@alias
                          (instruction (operation \"label\"))@alias
@@ -1261,9 +1263,10 @@ impl Backend {
             let alias_idx = query.capture_index_for_name("alias").unwrap();
             let label_idx = query.capture_index_for_name("label").unwrap();
 
-            let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+            let mut captures =
+                cursor.captures(&query, tree.root_node(), document.content.as_bytes());
 
-            for (capture, _) in captures {
+            while let Some((capture, _)) = captures.next() {
                 let capture_idx = capture.captures[0].index;
                 if capture_idx == define_idx || capture_idx == alias_idx {
                     if let Some(name_node) = capture.captures[0].node.child_by_field_name("operand")
@@ -1386,11 +1389,11 @@ impl Backend {
         };
 
         let mut cursor = QueryCursor::new();
-        let query = Query::new(tree_sitter_ic10::language(), "(instruction)@a").unwrap();
+        let query = Query::new(&tree_sitter_ic10::language(), "(instruction)@a").unwrap();
 
-        let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+        let mut captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
 
-        for (capture, _) in captures {
+        while let Some((capture, _)) = captures.next() {
             let capture = capture.captures[0].node;
 
             if let Some(operation_node) = capture.child_by_field_name("operation") {
@@ -1568,9 +1571,10 @@ impl Backend {
         // Syntax errors
         {
             let mut cursor = QueryCursor::new();
-            let query = Query::new(tree_sitter_ic10::language(), "(ERROR)@error").unwrap();
-            let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
-            for (capture, _) in captures {
+            let query = Query::new(&tree_sitter_ic10::language(), "(ERROR)@error").unwrap();
+            let mut captures =
+                cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+            while let Some((capture, _)) = captures.next() {
                 diagnostics.push(Diagnostic::new(
                     Range::from(capture.captures[0].node.range()).into(),
                     Some(DiagnosticSeverity::ERROR),
@@ -1587,12 +1591,13 @@ impl Backend {
         {
             let mut cursor = QueryCursor::new();
             let query = Query::new(
-                tree_sitter_ic10::language(),
+                &tree_sitter_ic10::language(),
                 "(instruction (invalid_instruction)@error)",
             )
             .unwrap();
-            let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
-            for (capture, _) in captures {
+            let mut captures =
+                cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+            while let Some((capture, _)) = captures.next() {
                 diagnostics.push(Diagnostic::new(
                     Range::from(capture.captures[0].node.range()).into(),
                     Some(DiagnosticSeverity::ERROR),
@@ -1612,10 +1617,10 @@ impl Backend {
         {
             let mut cursor = QueryCursor::new();
 
-            let query = Query::new(tree_sitter_ic10::language(), "(instruction)@x").unwrap();
-            for (capture, _) in
-                cursor.captures(&query, tree.root_node(), document.content.as_bytes())
-            {
+            let query = Query::new(&tree_sitter_ic10::language(), "(instruction)@x").unwrap();
+            let mut captures =
+                cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+            while let Some((capture, _)) = captures.next() {
                 let node = capture.captures[0].node;
                 if node.end_position().column > config.max_columns {
                     diagnostics.push(Diagnostic {
@@ -1634,10 +1639,10 @@ impl Backend {
             }
 
             if config.warn_overcolumn_comment {
-                let query = Query::new(tree_sitter_ic10::language(), "(comment)@x").unwrap();
-                for (capture, _) in
-                    cursor.captures(&query, tree.root_node(), document.content.as_bytes())
-                {
+                let query = Query::new(&tree_sitter_ic10::language(), "(comment)@x").unwrap();
+                let mut captures =
+                    cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+                while let Some((capture, _)) = captures.next() {
                     let node = capture.captures[0].node;
                     if node.end_position().column > config.max_columns {
                         diagnostics.push(Diagnostic {
@@ -1660,11 +1665,11 @@ impl Backend {
                 tree_sitter::Point::new(config.max_lines, 0)
                     ..tree_sitter::Point::new(usize::MAX, usize::MAX),
             );
-            let query = Query::new(tree_sitter_ic10::language(), "(instruction)@x").unwrap();
+            let query = Query::new(&tree_sitter_ic10::language(), "(instruction)@x").unwrap();
+            let mut captures =
+                cursor.captures(&query, tree.root_node(), document.content.as_bytes());
 
-            for (capture, _) in
-                cursor.captures(&query, tree.root_node(), document.content.as_bytes())
-            {
+            while let Some((capture, _)) = captures.next() {
                 let node = capture.captures[0].node;
                 diagnostics.push(Diagnostic {
                     range: Range::from(node.range()).into(),
@@ -1675,10 +1680,10 @@ impl Backend {
             }
 
             if config.warn_overline_comment {
-                let query = Query::new(tree_sitter_ic10::language(), "(comment)@x").unwrap();
-                for (capture, _) in
-                    cursor.captures(&query, tree.root_node(), document.content.as_bytes())
-                {
+                let query = Query::new(&tree_sitter_ic10::language(), "(comment)@x").unwrap();
+                let mut captures =
+                    cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+                while let Some((capture, _)) = captures.next() {
                     let node = capture.captures[0].node;
                     diagnostics.push(Diagnostic {
                         range: Range::from(node.range()).into(),
@@ -1701,13 +1706,14 @@ impl Backend {
             );
             let mut cursor = QueryCursor::new();
             let query = Query::new(
-                tree_sitter_ic10::language(),
+                &tree_sitter_ic10::language(),
                 "(instruction operand: (operand (number))) @x",
             )
             .unwrap();
             let mut tree_cursor = tree.walk();
-            let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
-            for (capture, _) in captures {
+            let mut captures =
+                cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+            while let Some((capture, _)) = captures.next() {
                 let capture = capture.captures[0].node;
                 let Some(operation_node) = capture.child_by_field_name("operation") else {
                     continue;
@@ -1747,14 +1753,14 @@ impl Backend {
         {
             let mut cursor = QueryCursor::new();
             let query = Query::new(
-                tree_sitter_ic10::language(),
+                &tree_sitter_ic10::language(),
                 "(instruction (operation)@op (operand (number)@n) .)",
             )
             .unwrap();
 
-            let matches = cursor.matches(&query, tree.root_node(), document.content.as_bytes());
+            let mut matches = cursor.matches(&query, tree.root_node(), document.content.as_bytes());
 
-            for query_match in matches {
+            while let Some(query_match) = matches.next() {
                 {
                     let operation_node = query_match.captures[0].node;
                     let operation_text = operation_node
@@ -1805,14 +1811,15 @@ impl Backend {
         {
             let mut cursor = QueryCursor::new();
             let query = Query::new(
-                tree_sitter_ic10::language(),
+                &tree_sitter_ic10::language(),
                 "(instruction (operation \"lr\") . (operand) . (operand) . (operand (number)@n))",
             )
             .unwrap();
 
-            let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
+            let mut captures =
+                cursor.captures(&query, tree.root_node(), document.content.as_bytes());
 
-            for (capture, _) in captures {
+            while let Some((capture, _)) = captures.next() {
                 let node = capture.captures[0].node;
 
                 let Ok(value) = node
@@ -1890,7 +1897,7 @@ impl<'a> NodeEx for Node<'a> {
 
     fn query(&self, query: &str, content: impl AsRef<[u8]>) -> Option<Node<'a>> {
         let mut cursor = QueryCursor::new();
-        let query = Query::new(tree_sitter_ic10::language(), query).unwrap();
+        let query = Query::new(&tree_sitter_ic10::language(), query).unwrap();
 
         let mut captures = cursor.captures(&query, self.clone(), content.as_ref());
         captures
@@ -1908,7 +1915,7 @@ async fn main() {
 
     let mut parser = Parser::new();
     parser
-        .set_language(tree_sitter_ic10::language())
+        .set_language(&tree_sitter_ic10::language())
         .expect("Failed to set language");
 
     let (service, socket) = LspService::new(|client| Backend {
