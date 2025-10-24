@@ -166,7 +166,9 @@ pub(crate) const INSTRUCTIONS: phf::Map<&'static str, InstructionSignature> = ph
     "get" => InstructionSignature(&[REGISTER, DEVICE, VALUE]),
     "getd" => InstructionSignature(&[REGISTER, VALUE, VALUE]),
     "put" => InstructionSignature(&[DEVICE, VALUE, VALUE]),
-    "putd" => InstructionSignature(&[VALUE, VALUE, VALUE])
+    "putd" => InstructionSignature(&[VALUE, VALUE, VALUE]),
+    "bdnvl" => InstructionSignature(&[DEVICE, LOGIC_TYPE, VALUE]),
+    "bdnvs" => InstructionSignature(&[DEVICE, LOGIC_TYPE, VALUE]),
 };
 
 pub(crate) const LOGIC_TYPES: phf::Set<&'static str> = phf_set! {
@@ -623,7 +625,9 @@ pub(crate) const INSTRUCTION_DOCS: phf::Map<&'static str, &'static str> = phf_ma
     "sbn" => "Stores register value to LogicType on all output network devices with provided type hash and name.",
     "srl" => "Performs a bitwise logical right shift operation on the binary representation of a value. It shifts the bits to the right and fills the vacated leftmost bits with zeros",
     "snan" => "Register = 1 if a is NaN, otherwise 0",
-    "lbn" => "Loads LogicType from all output network devices with provided type and name hashes using the provide batch mode. Average (0), Sum (1), Minimum (2), Maximum (3). Can use either the word, or the number."
+    "lbn" => "Loads LogicType from all output network devices with provided type and name hashes using the provide batch mode. Average (0), Sum (1), Minimum (2), Maximum (3). Can use either the word, or the number.",
+    "bdnvl" => "Branch to line c if the provided logic type is not \'loadable\', that is the device would provide an exception if you tried to use LOAD(\"l\")",
+    "bdnvs" => "Branch to line c if the provided logic type is not \'storable\', that is the device would provide an exception if you tried to use STORE(\"s\")",
 };
 
 pub(crate) const LOGIC_TYPE_DOCS: phf::Map<&'static str, &'static str> = phf_map! {

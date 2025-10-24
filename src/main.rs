@@ -1,4 +1,3 @@
-use regex::Regex;
 use std::{borrow::Cow, collections::HashMap, fmt::Display, net::Ipv4Addr, sync::Arc};
 
 use phf::phf_set;
@@ -709,7 +708,10 @@ impl LanguageServer for Backend {
                     return Ok(None);
                 };
 
-                let Some(instruction_node) = line_node.query("(instruction)@x", file_data.document_data.content.as_bytes()) else {
+                let Some(instruction_node) = line_node.query(
+                    "(instruction)@x",
+                    file_data.document_data.content.as_bytes(),
+                ) else {
                     return Ok(None);
                 };
 
@@ -860,7 +862,9 @@ impl LanguageServer for Backend {
             return Ok(None);
         };
 
-        let Some(instruction_node) = line_node.query("(instruction)@x", document.content.as_bytes()) else {
+        let Some(instruction_node) =
+            line_node.query("(instruction)@x", document.content.as_bytes())
+        else {
             return Ok(None);
         };
 
@@ -936,9 +940,13 @@ impl LanguageServer for Backend {
         };
 
         'diagnostics: for diagnostic in params.context.diagnostics {
-            let Some(line_node) = node.find_parent("line") else { continue 'diagnostics; };
+            let Some(line_node) = node.find_parent("line") else {
+                continue 'diagnostics;
+            };
 
-            let Some(NumberOrString::String(code)) = diagnostic.code.clone() else {continue;};
+            let Some(NumberOrString::String(code)) = diagnostic.code.clone() else {
+                continue;
+            };
             match code.as_str() {
                 LINT_NUMBER_BATCH_MODE => {
                     let replacement = diagnostic.data.as_ref().unwrap().as_str().unwrap();
@@ -1021,7 +1029,8 @@ impl LanguageServer for Backend {
         params: GotoDefinitionParams,
     ) -> Result<Option<GotoDefinitionResponse>> {
         let files = self.files.read().await;
-        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri) else {
+        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri)
+        else {
             return Err(tower_lsp::jsonrpc::Error::internal_error());
         };
         let document = &file_data.document_data;
@@ -1047,7 +1056,8 @@ impl LanguageServer for Backend {
 
     async fn hover(&self, params: HoverParams) -> Result<Option<Hover>> {
         let files = self.files.read().await;
-        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri) else {
+        let Some(file_data) = files.get(&params.text_document_position_params.text_document.uri)
+        else {
             return Err(tower_lsp::jsonrpc::Error::internal_error());
         };
         let document = &file_data.document_data;
@@ -1102,7 +1112,7 @@ impl LanguageServer for Backend {
                 }
             }
             "operation" => {
-                let Some(signature) =  instructions::INSTRUCTIONS.get(name) else {
+                let Some(signature) = instructions::INSTRUCTIONS.get(name) else {
                     return Ok(None);
                 };
                 let mut content = name.to_string();
@@ -1388,19 +1398,19 @@ impl Backend {
                     .utf8_text(document.content.as_bytes())
                     .unwrap();
                 let Some(signature) = instructions::INSTRUCTIONS.get(operation) else {
-                                if operation != "define" && operation != "alias" && operation != "label" {
-                                    diagnostics.push(Diagnostic::new(
-                                            Range::from(operation_node.range()).into(),
-                                            Some(DiagnosticSeverity::INFORMATION),
-                                            None,
-                                            None,
-                                            format!("Unsupported instruction"),
-                                            None,
-                                            None,
-                                            ));
-                                }
-                                continue;
-                            };
+                    if operation != "define" && operation != "alias" && operation != "label" {
+                        diagnostics.push(Diagnostic::new(
+                            Range::from(operation_node.range()).into(),
+                            Some(DiagnosticSeverity::INFORMATION),
+                            None,
+                            None,
+                            format!("Unsupported instruction"),
+                            None,
+                            None,
+                        ));
+                    }
+                    continue;
+                };
 
                 let mut argument_count = 0;
                 let mut tree_cursor = capture.walk();
@@ -1413,11 +1423,11 @@ impl Backend {
                     use instructions::DataType;
                     argument_count = argument_count + 1;
                     let Some(parameter) = parameters.next() else {
-                                        if first_superfluous_arg.is_none() {
-                                            first_superfluous_arg = Some(operand);
-                                        }
-                                        continue;
-                                    };
+                        if first_superfluous_arg.is_none() {
+                            first_superfluous_arg = Some(operand);
+                        }
+                        continue;
+                    };
 
                     let mut types = Vec::new();
                     let typ = match operand.named_child(0).unwrap().kind() {
@@ -1546,13 +1556,14 @@ impl Backend {
 
         let config = self.config.read().await;
         let files = self.files.read().await;
-        let Some(file_data) = files.get(uri) else {return;};
+        let Some(file_data) = files.get(uri) else {
+            return;
+        };
 
         let document = &file_data.document_data;
         let Some(tree) = document.tree.as_ref() else {
             return;
         };
-        let str_lines_var = str_lines(&document.content);
 
         // Syntax errors
         {
@@ -1560,10 +1571,6 @@ impl Backend {
             let query = Query::new(tree_sitter_ic10::language(), "(ERROR)@error").unwrap();
             let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
             for (capture, _) in captures {
-                let line = capture.captures[0].node.start_position().row;
-                if str_lines_var.contains(&line) {
-                    continue;
-                }
                 diagnostics.push(Diagnostic::new(
                     Range::from(capture.captures[0].node.range()).into(),
                     Some(DiagnosticSeverity::ERROR),
@@ -1586,10 +1593,6 @@ impl Backend {
             .unwrap();
             let captures = cursor.captures(&query, tree.root_node(), document.content.as_bytes());
             for (capture, _) in captures {
-                let line = capture.captures[0].node.start_position().row;
-                if str_lines_var.contains(&line) {
-                    continue;
-                }
                 diagnostics.push(Diagnostic::new(
                     Range::from(capture.captures[0].node.range()).into(),
                     Some(DiagnosticSeverity::ERROR),
@@ -1693,7 +1696,8 @@ impl Backend {
                 "bdns", "bdnsal", "bdse", "bdseal", "bap", "bapz", "bapzal", "beq", "beqal",
                 "beqz", "beqzal", "bge", "bgeal", "bgez", "bgezal", "bgt", "bgtal", "bgtz",
                 "bgtzal", "ble", "bleal", "blez", "blezal", "blt", "bltal", "bltz", "bltzal",
-                "bna", "bnaz", "bnazal", "bne", "bneal", "bnez", "bnezal", "j", "jal"
+                "bna", "bnaz", "bnazal", "bne", "bneal", "bnez", "bnezal", "j", "jal", "bdnvl",
+                "bdnvs"
             );
             let mut cursor = QueryCursor::new();
             let query = Query::new(
@@ -1716,7 +1720,11 @@ impl Backend {
                 }
 
                 tree_cursor.reset(capture);
-                let Some(last_operand) = capture.children_by_field_name("operand", &mut tree_cursor).into_iter().last() else {
+                let Some(last_operand) = capture
+                    .children_by_field_name("operand", &mut tree_cursor)
+                    .into_iter()
+                    .last()
+                else {
                     continue;
                 };
                 let last_operand = last_operand.child(0).unwrap();
@@ -1761,7 +1769,8 @@ impl Backend {
                 let Ok(value) = node
                     .utf8_text(document.content.as_bytes())
                     .unwrap()
-                    .parse::<u8>() else {
+                    .parse::<u8>()
+                else {
                     diagnostics.push(Diagnostic {
                         range: Range::from(node.range()).into(),
                         severity: Some(DiagnosticSeverity::ERROR),
@@ -1809,7 +1818,8 @@ impl Backend {
                 let Ok(value) = node
                     .utf8_text(document.content.as_bytes())
                     .unwrap()
-                    .parse::<u8>() else {
+                    .parse::<u8>()
+                else {
                     diagnostics.push(Diagnostic {
                         range: Range::from(node.range()).into(),
                         severity: Some(DiagnosticSeverity::ERROR),
@@ -1839,15 +1849,6 @@ impl Backend {
                 });
             }
         }
-
-        let str_lines_set = str_lines(&document.content);
-        let diagnostics: Vec<_> = diagnostics
-            .into_iter()
-            .filter(|diag| {
-                let line = diag.range.start.line as usize;
-                !str_lines_set.contains(&line)
-            })
-            .collect();
 
         self.client
             .publish_diagnostics(uri.to_owned(), diagnostics, None)
@@ -1898,17 +1899,6 @@ impl<'a> NodeEx for Node<'a> {
             .and_then(|x| x.get(0))
             .map(|x| x.node)
     }
-}
-
-/// Check for STR(""), STR('')  anywhere. I am not sure if it can only appear at the end of a content line
-fn str_lines(content: &str) -> std::collections::HashSet<usize> {
-    let re1 = Regex::new(r#"STR\s*\(\s*"[^"]*"\s*\)"#).unwrap();
-    let re2 = Regex::new(r#"STR\s*\(\s*'[^']*'\s*\)"#).unwrap();
-    content
-        .lines()
-        .enumerate()
-        .filter_map(|(i, line)| if re1.is_match(line) || re2.is_match(line) { Some(i) } else { None })
-        .collect()
 }
 
 #[tokio::main]
