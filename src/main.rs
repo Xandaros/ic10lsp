@@ -31,7 +31,10 @@ use tower_lsp::{
     },
     Client, LanguageServer, LspService, Server,
 };
+#[cfg(not(target_arch = "wasm32"))]
 use tree_sitter::{Node, Parser, Query, QueryCursor, StreamingIterator as _, Tree};
+#[cfg(target_arch = "wasm32")]
+use tree_sitter_c2rust::{Node, Parser, Query, QueryCursor, StreamingIterator as _, Tree};
 
 mod cli;
 mod instructions;
