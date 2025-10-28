@@ -10,10 +10,6 @@ crate-type = ["cdylib", "rlib"]
 [[bin]]
 name = "ic10lsp"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-# [features]
-# default = ["tower-lsp/runtime-agnostic"]
-
 [dependencies]
 clap = { version = "4.1.13", features = ["derive"] }
 phf = { version = "0.13.1", features = ["macros"] }
