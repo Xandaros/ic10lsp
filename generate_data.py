@@ -14,6 +14,9 @@ from pprint import pprint
 from typing import Callable, Iterable, TypedDict, TypeVar
 
 translation_regex = re.compile(r"<N:([A-Z]{2}):(\w+)>")
+color_regex = re.compile(r"<color=.*?>|</color>")
+link_regex = re.compile(r"<link=.*?>|</link>")
+
 
 def replace_translation(m: re.Match[str]) -> str:
     match m.groups():
@@ -23,8 +26,20 @@ def replace_translation(m: re.Match[str]) -> str:
             return m.string
 
 
+def strip_color(s: str) -> str:
+    return re.sub(color_regex, "", s)
+
+
+def strip_link(s: str) -> str:
+    return re.sub(link_regex, "", s)
+
+
+def clean_str(s: str) -> str:
+    return strip_color(strip_link(s))
+
+
 def trans(s: str) -> str:
-    return re.sub(translation_regex, replace_translation, s)
+    return re.sub(translation_regex, replace_translation, clean_str(s))
 
 
 def intOrNone(val):
@@ -169,19 +184,31 @@ def extract_data(install_path):
         exported_enum_listing = json.load(f)
 
     exported_logictypes = map(
-        lambda enum: (enum[0], (intOrNone(enum[1]["value"]), trans(enum[1]["description"]))),
+        lambda enum: (
+            enum[0],
+            (intOrNone(enum[1]["value"]), trans(enum[1]["description"])),
+        ),
         exported_enum_listing["scriptEnums"]["LogicType"]["values"].items(),
     )
     exported_slotlogictypes = map(
-        lambda enum: (enum[0], (intOrNone(enum[1]["value"]), trans(enum[1]["description"]))),
+        lambda enum: (
+            enum[0],
+            (intOrNone(enum[1]["value"]), trans(enum[1]["description"])),
+        ),
         exported_enum_listing["scriptEnums"]["LogicSlotType"]["values"].items(),
     )
     exported_reagentmodes = map(
-        lambda enum: (enum[0], (intOrNone(enum[1]["value"]), trans(enum[1]["description"]))),
+        lambda enum: (
+            enum[0],
+            (intOrNone(enum[1]["value"]), trans(enum[1]["description"])),
+        ),
         exported_enum_listing["scriptEnums"]["LogicReagentMode"]["values"].items(),
     )
     exported_batchmodes = map(
-        lambda enum: (enum[0], (intOrNone(enum[1]["value"]), trans(enum[1]["description"]))),
+        lambda enum: (
+            enum[0],
+            (intOrNone(enum[1]["value"]), trans(enum[1]["description"])),
+        ),
         exported_enum_listing["scriptEnums"]["LogicBatchMethod"]["values"].items(),
     )
 
@@ -206,7 +233,10 @@ def extract_data(install_path):
         )
 
     exported_enums = map(
-        lambda enum: (enum[0], (intOrNone(enum[1]["value"]), trans(enum[1]["description"]))),
+        lambda enum: (
+            enum[0],
+            (intOrNone(enum[1]["value"]), trans(enum[1]["description"])),
+        ),
         chain.from_iterable(
             map(map_enum_listing, exported_enum_listing["basicEnums"].items())
         ),
@@ -240,7 +270,6 @@ def extract_data(install_path):
             entry = reagentmodes[name]
             reagentmodes[name] = (entry[0], help)
 
-
     for name, help in help_patches["enums"].items():
         if name in enums and help:
             entry = enums[name]
@@ -265,12 +294,6 @@ def extract_data(install_path):
                 patches.append((lst, (lst_entry[0], enum_entry[1])))
     slotlogictypes.update(patches)
 
-    op_help_path = Path("data") / "instructions_help.txt"
-    with op_help_path.open(mode="w") as f:
-        for key, val in sorted(operations.items()):
-            help = val["desc"].replace("\r", "").replace("\n", "\\n")
-            f.write(f"{key} {help}\n")
-
     stationpedia: dict[str, tuple[str, str | None]] = {}
     for page in exported_stationpedia["pages"]:
         if "PrefabName" not in page or not page["PrefabHash"]:
@@ -291,6 +314,16 @@ def extract_data(install_path):
                 )
             )
 
+    op_help_path = Path("data") / "instructions_help.txt"
+    with op_help_path.open(mode="w") as f:
+        for key, val in sorted(operations.items()):
+            help = trans(val["desc"].replace("\r", "").replace("\n", "\\n"))
+            f.write(f"{key} {help}\n")
+    op_sig_path = Path("data") / "instructions_sig.txt"
+    with op_sig_path.open(mode="w") as f:
+        for key, val in sorted(operations.items()):
+            sig = trans(val["example"])
+            f.write(f"{sig}\n")
     logic_types_path = Path("data") / "logictypes.txt"
     with logic_types_path.open(mode="w") as f:
         for t, (v, help) in sorted(logictypes.items()):

@@ -126,7 +126,7 @@ LogicType.Chart 256 Progress status of Chart scan at the rocket's target Space M
 LogicType.ChartedNavPoints 259 The number of charted NavPoints at the rocket's target Space Map Location.
 LogicType.ClearMemory 62 When set to 1, clears the counter memory (e.g. ExportCount). Will set itself back to 0 when actioned
 LogicType.CollectableGoods 101 Gets the cost of fuel to return the rocket to your current world.
-LogicType.Color 38 \n        Whether driven by concerns for clarity, safety or simple aesthetics, <link=Stationeers><color=#0080FFFF>Stationeers</color></link> have access to a small rainbow of colors for their constructions. These are the color setting for devices, represented as an integer.\n\n0: Blue\n1: Grey\n2: Green\n3: Orange\n4: Red\n5: Yellow\n6: White\n7: Black\n8: Brown\n9: Khaki\n10: Pink\n11: Purple\n\n        It is an unwavering universal law that anything higher than 11 will be purple. The <link=ODA><color=#0080FFFF>ODA</color></link> is powerless to change this. Similarly, anything lower than 0 will be Blue.\n      
+LogicType.Color 38 \n        Whether driven by concerns for clarity, safety or simple aesthetics, Stationeers have access to a small rainbow of colors for their constructions. These are the color setting for devices, represented as an integer.\n\n0: Blue\n1: Grey\n2: Green\n3: Orange\n4: Red\n5: Yellow\n6: White\n7: Black\n8: Brown\n9: Khaki\n10: Pink\n11: Purple\n\n        It is an unwavering universal law that anything higher than 11 will be purple. The ODA is powerless to change this. Similarly, anything lower than 0 will be Blue.\n      
 LogicType.Combustion 98 The assess atmosphere is on fire. Returns 1 if atmosphere is on fire, 0 if not.
 LogicType.CombustionInput 146 The assess atmosphere is on fire. Returns 1 if device's input network is on fire, 0 if not.
 LogicType.CombustionInput2 147 The assess atmosphere is on fire. Returns 1 if device's Input2 network is on fire, 0 if not.
@@ -239,53 +239,53 @@ LogicType.Progress 214 Progress of the rocket to the next node on the map expres
 LogicType.ProportionalGain 274 The proportional gain of the PID controller. This value determines how aggressively the controller responds to the error between the setpoint and the process variable. A higher value results in a faster response but may lead to overshoot or instability.
 LogicType.Quantity 27 Total quantity on the device
 LogicType.Ratio 24 Context specific value depending on device, 0 to 1 based ratio
-LogicType.RatioCarbonDioxide 15 The ratio of <link=GasCarbonDioxide><color=#44AD83>Carbon Dioxide</color></link> in device atmosphere
-LogicType.RatioCarbonDioxideInput 109 The ratio of <link=GasCarbonDioxide><color=#44AD83>Carbon Dioxide</color></link> in device's input network
-LogicType.RatioCarbonDioxideInput2 119 The ratio of <link=GasCarbonDioxide><color=#44AD83>Carbon Dioxide</color></link> in device's Input2 network
-LogicType.RatioCarbonDioxideOutput 129 The ratio of <link=GasCarbonDioxide><color=#44AD83>Carbon Dioxide</color></link> in device's Output network
-LogicType.RatioCarbonDioxideOutput2 139 The ratio of <link=GasCarbonDioxide><color=#44AD83>Carbon Dioxide</color></link> in device's Output2 network
-LogicType.RatioHydrogen 252 The ratio of <link=GasHydrogen><color=#44AD83>Hydrogen</color></link> in device's Atmopshere
-LogicType.RatioLiquidCarbonDioxide 199 The ratio of <link=GasLiquidCarbonDioxide><color=#44AD83>Liquid Carbon Dioxide</color></link> in device's Atmosphere
-LogicType.RatioLiquidCarbonDioxideInput 200 The ratio of <link=GasLiquidCarbonDioxide><color=#44AD83>Liquid Carbon Dioxide</color></link> in device's Input Atmosphere
-LogicType.RatioLiquidCarbonDioxideInput2 201 The ratio of <link=GasLiquidCarbonDioxide><color=#44AD83>Liquid Carbon Dioxide</color></link> in device's Input2 Atmosphere
-LogicType.RatioLiquidCarbonDioxideOutput 202 The ratio of <link=GasLiquidCarbonDioxide><color=#44AD83>Liquid Carbon Dioxide</color></link> in device's device's Output Atmosphere
-LogicType.RatioLiquidCarbonDioxideOutput2 203 The ratio of <link=GasLiquidCarbonDioxide><color=#44AD83>Liquid Carbon Dioxide</color></link> in device's Output2 Atmopshere
-LogicType.RatioLiquidHydrogen 253 The ratio of <link=GasLiquidHydrogen><color=#44AD83>Liquid Hydrogen</color></link> in device's Atmopshere
-LogicType.RatioLiquidNitrogen 177 The ratio of <link=GasLiquidNitrogen><color=#44AD83>Liquid Nitrogen</color></link> in device atmosphere
-LogicType.RatioLiquidNitrogenInput 178 The ratio of <link=GasLiquidNitrogen><color=#44AD83>Liquid Nitrogen</color></link> in device's input network
-LogicType.RatioLiquidNitrogenInput2 179 The ratio of <link=GasLiquidNitrogen><color=#44AD83>Liquid Nitrogen</color></link> in device's Input2 network
-LogicType.RatioLiquidNitrogenOutput 180 The ratio of <link=GasLiquidNitrogen><color=#44AD83>Liquid Nitrogen</color></link> in device's Output network
-LogicType.RatioLiquidNitrogenOutput2 181 The ratio of <link=GasLiquidNitrogen><color=#44AD83>Liquid Nitrogen</color></link> in device's Output2 network
-LogicType.RatioLiquidNitrousOxide 209 The ratio of <link=GasLiquidNitrousOxide><color=#44AD83>Liquid Nitrous Oxide</color></link> in device's Atmosphere
-LogicType.RatioLiquidNitrousOxideInput 210 The ratio of <link=GasLiquidNitrousOxide><color=#44AD83>Liquid Nitrous Oxide</color></link> in device's Input Atmosphere
-LogicType.RatioLiquidNitrousOxideInput2 211 The ratio of <link=GasLiquidNitrousOxide><color=#44AD83>Liquid Nitrous Oxide</color></link> in device's Input2 Atmosphere
-LogicType.RatioLiquidNitrousOxideOutput 212 The ratio of <link=GasLiquidNitrousOxide><color=#44AD83>Liquid Nitrous Oxide</color></link> in device's device's Output Atmosphere
-LogicType.RatioLiquidNitrousOxideOutput2 213 The ratio of <link=GasLiquidNitrousOxide><color=#44AD83>Liquid Nitrous Oxide</color></link> in device's Output2 Atmopshere
-LogicType.RatioLiquidOxygen 183 The ratio of <link=GasLiquidOxygen><color=#44AD83>Liquid Oxygen</color></link> in device's Atmosphere
-LogicType.RatioLiquidOxygenInput 184 The ratio of <link=GasLiquidOxygen><color=#44AD83>Liquid Oxygen</color></link> in device's Input Atmosphere
-LogicType.RatioLiquidOxygenInput2 185 The ratio of <link=GasLiquidOxygen><color=#44AD83>Liquid Oxygen</color></link> in device's Input2 Atmosphere
-LogicType.RatioLiquidOxygenOutput 186 The ratio of <link=GasLiquidOxygen><color=#44AD83>Liquid Oxygen</color></link> in device's device's Output Atmosphere
-LogicType.RatioLiquidOxygenOutput2 187 The ratio of <link=GasLiquidOxygen><color=#44AD83>Liquid Oxygen</color></link> in device's Output2 Atmopshere
-LogicType.RatioLiquidPollutant 204 The ratio of <link=GasLiquidPollutant><color=#44AD83>Liquid Pollutant</color></link> in device's Atmosphere
-LogicType.RatioLiquidPollutantInput 205 The ratio of <link=GasLiquidPollutant><color=#44AD83>Liquid Pollutant</color></link> in device's Input Atmosphere
-LogicType.RatioLiquidPollutantInput2 206 The ratio of <link=GasLiquidPollutant><color=#44AD83>Liquid Pollutant</color></link> in device's Input2 Atmosphere
-LogicType.RatioLiquidPollutantOutput 207 The ratio of <link=GasLiquidPollutant><color=#44AD83>Liquid Pollutant</color></link> in device's device's Output Atmosphere
-LogicType.RatioLiquidPollutantOutput2 208 The ratio of <link=GasLiquidPollutant><color=#44AD83>Liquid Pollutant</color></link> in device's Output2 Atmopshere
-LogicType.RatioLiquidVolatiles 188 The ratio of <link=GasLiquidVolatiles><color=#44AD83>Liquid Volatiles</color></link> in device's Atmosphere
-LogicType.RatioLiquidVolatilesInput 189 The ratio of <link=GasLiquidVolatiles><color=#44AD83>Liquid Volatiles</color></link> in device's Input Atmosphere
-LogicType.RatioLiquidVolatilesInput2 190 The ratio of <link=GasLiquidVolatiles><color=#44AD83>Liquid Volatiles</color></link> in device's Input2 Atmosphere
-LogicType.RatioLiquidVolatilesOutput 191 The ratio of <link=GasLiquidVolatiles><color=#44AD83>Liquid Volatiles</color></link> in device's device's Output Atmosphere
-LogicType.RatioLiquidVolatilesOutput2 192 The ratio of <link=GasLiquidVolatiles><color=#44AD83>Liquid Volatiles</color></link> in device's Output2 Atmopshere
+LogicType.RatioCarbonDioxide 15 The ratio of Carbon Dioxide in device atmosphere
+LogicType.RatioCarbonDioxideInput 109 The ratio of Carbon Dioxide in device's input network
+LogicType.RatioCarbonDioxideInput2 119 The ratio of Carbon Dioxide in device's Input2 network
+LogicType.RatioCarbonDioxideOutput 129 The ratio of Carbon Dioxide in device's Output network
+LogicType.RatioCarbonDioxideOutput2 139 The ratio of Carbon Dioxide in device's Output2 network
+LogicType.RatioHydrogen 252 The ratio of Hydrogen in device's Atmopshere
+LogicType.RatioLiquidCarbonDioxide 199 The ratio of Liquid Carbon Dioxide in device's Atmosphere
+LogicType.RatioLiquidCarbonDioxideInput 200 The ratio of Liquid Carbon Dioxide in device's Input Atmosphere
+LogicType.RatioLiquidCarbonDioxideInput2 201 The ratio of Liquid Carbon Dioxide in device's Input2 Atmosphere
+LogicType.RatioLiquidCarbonDioxideOutput 202 The ratio of Liquid Carbon Dioxide in device's device's Output Atmosphere
+LogicType.RatioLiquidCarbonDioxideOutput2 203 The ratio of Liquid Carbon Dioxide in device's Output2 Atmopshere
+LogicType.RatioLiquidHydrogen 253 The ratio of Liquid Hydrogen in device's Atmopshere
+LogicType.RatioLiquidNitrogen 177 The ratio of Liquid Nitrogen in device atmosphere
+LogicType.RatioLiquidNitrogenInput 178 The ratio of Liquid Nitrogen in device's input network
+LogicType.RatioLiquidNitrogenInput2 179 The ratio of Liquid Nitrogen in device's Input2 network
+LogicType.RatioLiquidNitrogenOutput 180 The ratio of Liquid Nitrogen in device's Output network
+LogicType.RatioLiquidNitrogenOutput2 181 The ratio of Liquid Nitrogen in device's Output2 network
+LogicType.RatioLiquidNitrousOxide 209 The ratio of Liquid Nitrous Oxide in device's Atmosphere
+LogicType.RatioLiquidNitrousOxideInput 210 The ratio of Liquid Nitrous Oxide in device's Input Atmosphere
+LogicType.RatioLiquidNitrousOxideInput2 211 The ratio of Liquid Nitrous Oxide in device's Input2 Atmosphere
+LogicType.RatioLiquidNitrousOxideOutput 212 The ratio of Liquid Nitrous Oxide in device's device's Output Atmosphere
+LogicType.RatioLiquidNitrousOxideOutput2 213 The ratio of Liquid Nitrous Oxide in device's Output2 Atmopshere
+LogicType.RatioLiquidOxygen 183 The ratio of Liquid Oxygen in device's Atmosphere
+LogicType.RatioLiquidOxygenInput 184 The ratio of Liquid Oxygen in device's Input Atmosphere
+LogicType.RatioLiquidOxygenInput2 185 The ratio of Liquid Oxygen in device's Input2 Atmosphere
+LogicType.RatioLiquidOxygenOutput 186 The ratio of Liquid Oxygen in device's device's Output Atmosphere
+LogicType.RatioLiquidOxygenOutput2 187 The ratio of Liquid Oxygen in device's Output2 Atmopshere
+LogicType.RatioLiquidPollutant 204 The ratio of Liquid Pollutant in device's Atmosphere
+LogicType.RatioLiquidPollutantInput 205 The ratio of Liquid Pollutant in device's Input Atmosphere
+LogicType.RatioLiquidPollutantInput2 206 The ratio of Liquid Pollutant in device's Input2 Atmosphere
+LogicType.RatioLiquidPollutantOutput 207 The ratio of Liquid Pollutant in device's device's Output Atmosphere
+LogicType.RatioLiquidPollutantOutput2 208 The ratio of Liquid Pollutant in device's Output2 Atmopshere
+LogicType.RatioLiquidVolatiles 188 The ratio of Liquid Volatiles in device's Atmosphere
+LogicType.RatioLiquidVolatilesInput 189 The ratio of Liquid Volatiles in device's Input Atmosphere
+LogicType.RatioLiquidVolatilesInput2 190 The ratio of Liquid Volatiles in device's Input2 Atmosphere
+LogicType.RatioLiquidVolatilesOutput 191 The ratio of Liquid Volatiles in device's device's Output Atmosphere
+LogicType.RatioLiquidVolatilesOutput2 192 The ratio of Liquid Volatiles in device's Output2 Atmopshere
 LogicType.RatioNitrogen 16 The ratio of nitrogen in device atmosphere
 LogicType.RatioNitrogenInput 110 The ratio of nitrogen in device's input network
 LogicType.RatioNitrogenInput2 120 The ratio of nitrogen in device's Input2 network
 LogicType.RatioNitrogenOutput 130 The ratio of nitrogen in device's Output network
 LogicType.RatioNitrogenOutput2 140 The ratio of nitrogen in device's Output2 network
-LogicType.RatioNitrousOxide 83 The ratio of <link=GasNitrousOxide><color=#44AD83>Nitrous Oxide</color></link> in device atmosphere
-LogicType.RatioNitrousOxideInput 114 The ratio of <link=GasNitrousOxide><color=#44AD83>Nitrous Oxide</color></link> in device's input network
-LogicType.RatioNitrousOxideInput2 124 The ratio of <link=GasNitrousOxide><color=#44AD83>Nitrous Oxide</color></link> in device's Input2 network
-LogicType.RatioNitrousOxideOutput 134 The ratio of <link=GasNitrousOxide><color=#44AD83>Nitrous Oxide</color></link> in device's Output network
-LogicType.RatioNitrousOxideOutput2 144 The ratio of <link=GasNitrousOxide><color=#44AD83>Nitrous Oxide</color></link> in device's Output2 network
+LogicType.RatioNitrousOxide 83 The ratio of Nitrous Oxide in device atmosphere
+LogicType.RatioNitrousOxideInput 114 The ratio of Nitrous Oxide in device's input network
+LogicType.RatioNitrousOxideInput2 124 The ratio of Nitrous Oxide in device's Input2 network
+LogicType.RatioNitrousOxideOutput 134 The ratio of Nitrous Oxide in device's Output network
+LogicType.RatioNitrousOxideOutput2 144 The ratio of Nitrous Oxide in device's Output2 network
 LogicType.RatioOxygen 14 The ratio of oxygen in device atmosphere
 LogicType.RatioOxygenInput 108 The ratio of oxygen in device's input network
 LogicType.RatioOxygenInput2 118 The ratio of oxygen in device's Input2 network
@@ -297,11 +297,11 @@ LogicType.RatioPollutantInput2 121 The ratio of pollutant in device's Input2 net
 LogicType.RatioPollutantOutput 131 The ratio of pollutant in device's Output network
 LogicType.RatioPollutantOutput2 141 The ratio of pollutant in device's Output2 network
 LogicType.RatioPollutedWater 254 The ratio of polluted water in device atmosphere
-LogicType.RatioSteam 193 The ratio of <link=GasSteam><color=#44AD83>Steam</color></link> in device's Atmosphere
-LogicType.RatioSteamInput 194 The ratio of <link=GasSteam><color=#44AD83>Steam</color></link> in device's Input Atmosphere
-LogicType.RatioSteamInput2 195 The ratio of <link=GasSteam><color=#44AD83>Steam</color></link> in device's Input2 Atmosphere
-LogicType.RatioSteamOutput 196 The ratio of <link=GasSteam><color=#44AD83>Steam</color></link> in device's device's Output Atmosphere
-LogicType.RatioSteamOutput2 197 The ratio of <link=GasSteam><color=#44AD83>Steam</color></link> in device's Output2 Atmopshere
+LogicType.RatioSteam 193 The ratio of Steam in device's Atmosphere
+LogicType.RatioSteamInput 194 The ratio of Steam in device's Input Atmosphere
+LogicType.RatioSteamInput2 195 The ratio of Steam in device's Input2 Atmosphere
+LogicType.RatioSteamOutput 196 The ratio of Steam in device's device's Output Atmosphere
+LogicType.RatioSteamOutput2 197 The ratio of Steam in device's Output2 Atmopshere
 LogicType.RatioVolatiles 18 The ratio of volatiles in device atmosphere
 LogicType.RatioVolatilesInput 112 The ratio of volatiles in device's input network
 LogicType.RatioVolatilesInput2 122 The ratio of volatiles in device's Input2 network

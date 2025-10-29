@@ -1,11 +1,9 @@
-use std::{borrow::Cow, collections::HashMap, fmt::Display, net::Ipv4Addr, sync::Arc};
+use std::{collections::HashMap, fmt::Display, sync::Arc};
 
-use phf::phf_set;
 use serde_json::Value;
-use tokio::{
-    net::{TcpListener, TcpStream},
-    sync::RwLock,
-};
+use tokio::
+    sync::RwLock
+;
 use tower_lsp::{
     async_trait,
     jsonrpc::Result,
@@ -29,7 +27,7 @@ use tower_lsp::{
         SymbolKind, TextDocumentSyncCapability, TextDocumentSyncKind, TextEdit, Url,
         WorkDoneProgressOptions, WorkspaceEdit,
     },
-    Client, LanguageServer, LspService, Server,
+    Client, LanguageServer,
 };
 #[cfg(not(target_arch = "wasm32"))]
 use tree_sitter::{Node, Parser, Query, QueryCursor, StreamingIterator as _, Tree};
@@ -1699,13 +1697,6 @@ impl Backend {
 
         // Absolute jump to number lint
         {
-            const BRANCH_INSTRUCTIONS: phf::Set<&'static str> = phf_set!(
-                "bdns", "bdnsal", "bdse", "bdseal", "bap", "bapz", "bapzal", "beq", "beqal",
-                "beqz", "beqzal", "bge", "bgeal", "bgez", "bgezal", "bgt", "bgtal", "bgtz",
-                "bgtzal", "ble", "bleal", "blez", "blezal", "blt", "bltal", "bltz", "bltzal",
-                "bna", "bnaz", "bnazal", "bne", "bneal", "bnez", "bnezal", "j", "jal", "bdnvl",
-                "bdnvs"
-            );
             let mut cursor = QueryCursor::new();
             let query = Query::new(
                 &tree_sitter_ic10::language(),
@@ -1723,7 +1714,7 @@ impl Backend {
                 let operation = operation_node
                     .utf8_text(document.content.as_bytes())
                     .unwrap();
-                if !BRANCH_INSTRUCTIONS.contains(operation) {
+                if !instructions::BRANCH_INSTRUCTIONS.contains(operation) {
                     continue;
                 }
 
@@ -1777,7 +1768,7 @@ impl Backend {
                 let Ok(value) = node
                     .utf8_text(document.content.as_bytes())
                     .unwrap()
-                    .parse::<u8>()
+                    .parse::<u16>()
                 else {
                     diagnostics.push(Diagnostic {
                         range: Range::from(node.range()).into(),
@@ -1827,7 +1818,7 @@ impl Backend {
                 let Ok(value) = node
                     .utf8_text(document.content.as_bytes())
                     .unwrap()
-                    .parse::<u8>()
+                    .parse::<u16>()
                 else {
                     diagnostics.push(Diagnostic {
                         range: Range::from(node.range()).into(),
