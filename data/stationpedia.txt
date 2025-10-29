@@ -1,0 +1,1252 @@
+-1330388999 AccessCardBlack Access Card (Black)
+-1411327657 AccessCardBlue Access Card (Blue)
+1412428165 AccessCardBrown Access Card (Brown)
+-1339479035 AccessCardGray Access Card (Gray)
+-374567952 AccessCardGreen Access Card (Green)
+337035771 AccessCardKhaki Access Card (Khaki)
+-332896929 AccessCardOrange Access Card (Orange)
+431317557 AccessCardPink Access Card (Pink)
+459843265 AccessCardPurple Access Card (Purple)
+-1713748313 AccessCardRed Access Card (Red)
+2079959157 AccessCardWhite Access Card (White)
+568932536 AccessCardYellow Access Card (Yellow)
+-1686269127 ApplianceBobbleHeadBasicSuit Bobble Head (Basic Suit)
+-38993607 ApplianceBobbleHeadHardSuit Bobble Head (Hard Suit)
+142593802 ApplianceBobbleHeadMarine Bobble Head (Marine)
+1365789392 ApplianceChemistryStation Chemistry Station
+-1683849799 ApplianceDeskLampLeft Appliance Desk Lamp Left
+1174360780 ApplianceDeskLampRight Appliance Desk Lamp Right
+-1136173965 ApplianceMicrowave Microwave
+-749191906 AppliancePackagingMachine Basic Packaging Machine
+-1303038067 AppliancePlantGeneticAnalyzer Plant Genetic Analyzer
+-1094868323 AppliancePlantGeneticSplicer Plant Genetic Splicer
+871432335 AppliancePlantGeneticStabilizer Plant Genetic Stabilizer
+1260918085 ApplianceReagentProcessor Reagent Processor
+142831994 ApplianceSeedTray Appliance Seed Tray
+1853941363 ApplianceTabletDock Tablet Dock
+221058307 AutolathePrinterMod Autolathe Printer Mod
+-462415758 Battery_Wireless_cell Battery Wireless Cell
+-41519077 Battery_Wireless_cell_Big Battery Wireless Cell (Big)
+-1976947556 CardboardBox Cardboard Box
+-1634532552 CartridgeAccessController Cartridge (Access Controller)
+-1550278665 CartridgeAtmosAnalyser Cartridge (Atmos Analyzer)
+-932136011 CartridgeConfiguration Cartridge (Configuration)
+1006351599 CartridgeDeepMiner Cartridge (Deep Miner)
+1606989119 CartridgeNetworkAnalyser Cartridge (Network Analyzer)
+-1768732546 CartridgeOreScanner Cartridge (Ore Scanner)
+1738236580 CartridgeOreScannerColor Cartridge (Ore Scanner Color)
+1101328282 CartridgePlantAnalyser Cartridge (Plant Analyser)
+81488783 CartridgeTracker Cartridge (Tracker)
+1633663176 CircuitboardAdvAirlockControl Advanced Airlock
+1618019559 CircuitboardAirControl Air Control
+912176135 CircuitboardAirlockControl Airlock
+855694771 CircuitboardDoorControl Door Control
+-82343730 CircuitboardGasDisplay Gas Display
+1344368806 CircuitboardGraphDisplay Graph Display
+1633074601 CircuitboardHashDisplay Hash Display
+-1134148135 CircuitboardModeControl Mode Control
+-1923778429 CircuitboardPowerControl Power Control
+2020180320 CircuitboardSolarControl Solar Control
+1228794916 CompositeRollCover Composite Roll Cover
+8709219 CrateMkII Crate Mk II
+1531087544 DecayedFood Decayed Food
+-1844430312 DeviceLfoVolume Low frequency oscillator
+1762696475 DeviceStepUnit Device Step Unit
+519913639 DynamicAirConditioner Portable Air Conditioner
+1941079206 DynamicCrate Dynamic Crate
+-2085885850 DynamicGPR Dynamic GPR
+-1741267161 DynamicGasCanisterEmpty Portable Gas Tank
+-386375420 DynamicGasTankAdvanced Gas Tank Mk II
+-82087220 DynamicGenerator Portable Generator
+587726607 DynamicHydroponics Portable Hydroponics
+-21970188 DynamicLight Portable Light
+-1939209112 DynamicLiquidCanisterEmpty Portable Liquid Tank
+2130739600 DynamicMKIILiquidCanisterEmpty Portable Liquid Tank Mk II
+-319510386 DynamicMKIILiquidCanisterWater Portable Liquid Tank Mk II (Water)
+755048589 DynamicScrubber Portable Air Scrubber
+106953348 DynamicSkeleton Skeleton
+-311170652 ElectronicPrinterMod Electronic Printer Mod
+-110788403 ElevatorCarrage Elevator
+1517856652 Fertilizer Fertilizer
+1845441951 Flag_ODA_10m Flag (ODA 10m)
+1159126354 Flag_ODA_4m Flag (ODA 4m)
+1998634960 Flag_ODA_6m Flag (ODA 6m)
+-375156130 Flag_ODA_8m Flag (ODA 8m)
+118685786 FlareGun Flare Gun
+1840108251 H2Combustor H2 Combustor
+-857713709 HumanSkull Human Skull
+-842048328 ItemActiveVent Kit (Active Vent)
+1871048978 ItemAdhesiveInsulation Adhesive Insulation
+1722785341 ItemAdvancedTablet Advanced Tablet
+176446172 ItemAlienMushroom Alien Mushroom
+201215010 ItemAngleGrinder Angle Grinder
+1385062886 ItemArcWelder Arc Welder
+1757673317 ItemAreaPowerControl Kit (Area Power Controller)
+412924554 ItemAstroloyIngot Ingot (Astroloy)
+-1662476145 ItemAstroloySheets Astroloy Sheets
+789015045 ItemAuthoringTool Authoring Tool
+-1262580790 ItemBasketBall Basket Ball
+700133157 ItemBatteryCell Battery Cell (Small)
+-459827268 ItemBatteryCellLarge Battery Cell (Large)
+544617306 ItemBatteryCellNuclear Battery Cell (Nuclear)
+-1866880307 ItemBatteryCharger Kit (Battery Charger)
+1008295833 ItemBatteryChargerSmall Battery Charger Small
+-869869491 ItemBeacon Tracking Beacon
+-831480639 ItemBiomass Biomass
+173826094 ItemBlueberry Blueberry
+893514943 ItemBreadLoaf Bread Loaf
+-1792787349 ItemCableAnalyser Kit (Cable Analyzer)
+-466050668 ItemCableCoil Cable Coil
+2060134443 ItemCableCoilHeavy Cable Coil (Heavy)
+195442047 ItemCableFuse Kit (Cable Fuses)
+-2104175091 ItemCannedCondensedMilk Canned Condensed Milk
+-999714082 ItemCannedEdamame Canned Edamame
+-1344601965 ItemCannedMushroom Canned Mushroom
+1161510063 ItemCannedPowderedEggs Canned Powdered Eggs
+-1185552595 ItemCannedRicePudding Canned Rice Pudding
+791746840 ItemCerealBar Cereal Bar
+-75205276 ItemCerealBarBag Cereal Bar Bag
+-401648353 ItemCerealBarBox Cereal Bar Box
+252561409 ItemCharcoal Charcoal
+-772542081 ItemChemLightBlue Chem Light (Blue)
+-597479390 ItemChemLightGreen Chem Light (Green)
+-525810132 ItemChemLightRed Chem Light (Red)
+1312166823 ItemChemLightWhite Chem Light (White)
+1224819963 ItemChemLightYellow Chem Light (Yellow)
+234601764 ItemChocolateBar Chocolate Bar
+-261575861 ItemChocolateCake Chocolate Cake
+860793245 ItemChocolateCerealBar Chocolate Cereal Bar
+1724793494 ItemCoalOre Ore (Coal)
+-983091249 ItemCobaltOre Ore (Cobalt)
+457286516 ItemCocoaPowder Cocoa Powder
+680051921 ItemCocoaTree Cocoa
+1800622698 ItemCoffeeMug Coffee Mug
+1058547521 ItemConstantanIngot Ingot (Constantan)
+1715917521 ItemCookedCondensedMilk Condensed Milk
+1344773148 ItemCookedCorn Cooked Corn
+-1076892658 ItemCookedMushroom Cooked Mushroom
+-1712264413 ItemCookedPowderedEggs Powdered Eggs
+1849281546 ItemCookedPumpkin Cooked Pumpkin
+2013539020 ItemCookedRice Cooked Rice
+1353449022 ItemCookedSoybean Cooked Soybean
+-709086714 ItemCookedTomato Cooked Tomato
+-404336834 ItemCopperIngot Ingot (Copper)
+-707307845 ItemCopperOre Ore (Copper)
+258339687 ItemCorn Corn
+545034114 ItemCornSoup Corn Soup
+-1756772618 ItemCreditCard Credit Card
+215486157 ItemCropHay Hay
+856108234 ItemCrowbar Crowbar
+1005843700 ItemDataDisk Data Disk
+902565329 ItemDirtCanister Dirt Canister
+-1234745580 ItemDirtyOre Dirty Ore
+-2124435700 ItemDisposableBatteryCharger Disposable Battery Charger
+2009673399 ItemDrill Hand Drill
+-1943134693 ItemDuctTape Duct Tape
+1072914031 ItemDynamicAirCon Kit (Portable Air Conditioner)
+-971920158 ItemDynamicScrubber Kit (Portable Scrubber)
+-524289310 ItemEggCarton Egg Carton
+731250882 ItemElectronicParts Electronic Parts
+502280180 ItemElectrumIngot Ingot (Electrum)
+-351438780 ItemEmergencyAngleGrinder Emergency Angle Grinder
+-1056029600 ItemEmergencyArcWelder Emergency Arc Welder
+976699731 ItemEmergencyCrowbar Emergency Crowbar
+-2052458905 ItemEmergencyDrill Emergency Drill
+1791306431 ItemEmergencyEvaSuit Emergency Eva Suit
+-1061510408 ItemEmergencyPickaxe Emergency Pickaxe
+266099983 ItemEmergencyScrewdriver Emergency Screwdriver
+205916793 ItemEmergencySpaceHelmet Emergency Space Helmet
+851103794 ItemEmergencySuppliesBox Emergency Supplies
+1661941301 ItemEmergencyToolBelt Emergency Tool Belt
+2102803952 ItemEmergencyWireCutters Emergency Wire Cutters
+162553030 ItemEmergencyWrench Emergency Wrench
+1013818348 ItemEmptyCan Empty Can
+1677018918 ItemEvaSuit Eva Suit
+235361649 ItemExplosive Demolition Charge
+892110467 ItemFern Fern
+-383972371 ItemFertilizedEgg Egg
+266654416 ItemFilterFern Darga Fern
+2011191088 ItemFlagSmall Kit (Small Flag)
+-2107840748 ItemFlashingLight Kit (Flashing Light)
+-838472102 ItemFlashlight Flashlight
+-1345959473 ItemFlax Flax
+-665995854 ItemFlour Flour
+-57608687 ItemFrenchFries Canned French Fries
+1371786091 ItemFries French Fries
+42280099 ItemGasCanisterEmpty Canister
+-668314371 ItemGasCanisterSmart Gas Canister (Smart)
+1635000764 ItemGasFilterCarbonDioxide Filter (Carbon Dioxide)
+-185568964 ItemGasFilterCarbonDioxideInfinite Catalytic Filter (Carbon Dioxide)
+1876847024 ItemGasFilterCarbonDioxideL Heavy Filter (Carbon Dioxide)
+416897318 ItemGasFilterCarbonDioxideM Medium Filter (Carbon Dioxide)
+632853248 ItemGasFilterNitrogen Filter (Nitrogen)
+152751131 ItemGasFilterNitrogenInfinite Catalytic Filter (Nitrogen)
+-1387439451 ItemGasFilterNitrogenL Heavy Filter (Nitrogen)
+-632657357 ItemGasFilterNitrogenM Medium Filter (Nitrogen)
+-1247674305 ItemGasFilterNitrousOxide Filter (Nitrous Oxide)
+-123934842 ItemGasFilterNitrousOxideInfinite Catalytic Filter (Nitrous Oxide)
+465267979 ItemGasFilterNitrousOxideL Heavy Filter (Nitrous Oxide)
+1824284061 ItemGasFilterNitrousOxideM Medium Filter (Nitrous Oxide)
+-721824748 ItemGasFilterOxygen Filter (Oxygen)
+-1055451111 ItemGasFilterOxygenInfinite Catalytic Filter (Oxygen)
+-1217998945 ItemGasFilterOxygenL Heavy Filter (Oxygen)
+-1067319543 ItemGasFilterOxygenM Medium Filter (Oxygen)
+1915566057 ItemGasFilterPollutants Filter (Pollutant)
+-503738105 ItemGasFilterPollutantsInfinite Catalytic Filter (Pollutants)
+1959564765 ItemGasFilterPollutantsL Heavy Filter (Pollutants)
+63677771 ItemGasFilterPollutantsM Medium Filter (Pollutants)
+15011598 ItemGasFilterVolatiles Filter (Volatiles)
+-1916176068 ItemGasFilterVolatilesInfinite Catalytic Filter (Volatiles)
+1255156286 ItemGasFilterVolatilesL Heavy Filter (Volatiles)
+1037507240 ItemGasFilterVolatilesM Medium Filter (Volatiles)
+-1993197973 ItemGasFilterWater Filter (Water)
+-1678456554 ItemGasFilterWaterInfinite Catalytic Filter (Water)
+2004969680 ItemGasFilterWaterL Heavy Filter (Water)
+8804422 ItemGasFilterWaterM Medium Filter (Water)
+1716878560 ItemGasMask Gas Mask
+1717593480 ItemGasSensor Kit (Gas Sensor)
+-2113012215 ItemGasTankStorage Kit (Canister Storage)
+1588896491 ItemGlassSheets Glass Sheets
+-1068925231 ItemGlasses Glasses
+226410516 ItemGoldIngot Ingot (Gold)
+-1348105509 ItemGoldOre Ore (Gold)
+921641358 ItemGorse Gorse
+2116552372 ItemGrass Grass
+1544275894 ItemGrenade Hand Grenade
+470636008 ItemHEMDroidRepairKit HEMDroid Repair Kit
+374891127 ItemHardBackpack Hardsuit Backpack
+-1306016444 ItemHardHat Hard Hat
+-412551656 ItemHardJetpack Hardsuit Jetpack
+900366130 ItemHardMiningBackPack Hard Mining Backpack
+-1758310454 ItemHardSuit Hardsuit
+-84573099 ItemHardsuitHelmet Hardsuit Helmet
+1579842814 ItemHastelloyIngot Ingot (Hastelloy)
+998653377 ItemHighVolumeGasCanisterEmpty High Volume Gas Canister
+-1193543727 ItemHydroponicTray Kit (Hydroponic Tray)
+-1555582482 ItemIcarusHelmet Icarus Helmet
+-2112405954 ItemIcarusSuit Icarus Suit
+1217489948 ItemIce Ice (Water)
+890106742 ItemIgniter Kit (Igniter)
+-787796599 ItemInconelIngot Ingot (Inconel)
+1485675617 ItemInsulatedCanisterPackage Insulated Canister Package
+-744098481 ItemIntegratedCircuit10 Integrated Circuit (IC10)
+-297990285 ItemInvarIngot Ingot (Invar)
+1225836666 ItemIronFrames Iron Frames
+-1301215609 ItemIronIngot Ingot (Iron)
+1758427767 ItemIronOre Ore (Iron)
+-487378546 ItemIronSheets Iron Sheets
+1969189000 ItemJetpackBasic Jetpack Basic
+496830914 ItemKitAIMeE Kit (AIMeE)
+513258369 ItemKitAccessBridge Kit (Access Bridge)
+-1431998347 ItemKitAdvancedComposter Kit (Advanced Composter)
+-616758353 ItemKitAdvancedFurnace Kit (Advanced Furnace)
+-598545233 ItemKitAdvancedPackagingMachine Kit (Advanced Packaging Machine)
+964043875 ItemKitAirlock Kit (Airlock)
+682546947 ItemKitAirlockGate Kit (Hangar Door)
+-98995857 ItemKitArcFurnace Kit (Arc Furnace)
+1222286371 ItemKitAtmospherics Kit (Atmospherics)
+1668815415 ItemKitAutoMinerSmall Kit (Autominer Small)
+-1753893214 ItemKitAutolathe Kit (Autolathe)
+-1931958659 ItemKitAutomatedOven Kit (Automated Oven)
+148305004 ItemKitBasket Kit (Basket)
+1406656973 ItemKitBattery Kit (Battery)
+-21225041 ItemKitBatteryLarge Kit (Battery Large)
+249073136 ItemKitBeacon Kit (Beacon)
+-1241256797 ItemKitBeds Kit (Beds)
+-1755116240 ItemKitBlastDoor Kit (Blast Door)
+578182956 ItemKitCentrifuge Kit (Centrifuge)
+-1394008073 ItemKitChairs Kit (Chairs)
+1025254665 ItemKitChute Kit (Basic Chutes)
+-876560854 ItemKitChuteUmbilical Kit (Chute Umbilical)
+-1470820996 ItemKitCompositeCladding Kit (Cladding)
+1182412869 ItemKitCompositeFloorGrating Kit (Floor Grating)
+1990225489 ItemKitComputer Kit (Computer)
+-1241851179 ItemKitConsole Kit (Consoles)
+429365598 ItemKitCrate Kit (Crate)
+-1585956426 ItemKitCrateMkII Kit (Crate Mk II)
+-551612946 ItemKitCrateMount Kit (Container Mount)
+-545234195 ItemKitCryoTube Kit (Cryo Tube)
+-1935075707 ItemKitDeepMiner Kit (Deep Miner)
+77421200 ItemKitDockingPort Kit (Docking Port)
+168615924 ItemKitDoor Kit (Door)
+-1743663875 ItemKitDrinkingFountain Kit (Drinking Fountain)
+-1061945368 ItemKitDynamicCanister Kit (Portable Gas Tank)
+1533501495 ItemKitDynamicGasTankAdvanced Kit (Portable Gas Tank Mk II)
+-732720413 ItemKitDynamicGenerator Kit (Portable Generator)
+-1861154222 ItemKitDynamicHydroponics Kit (Portable Hydroponics)
+375541286 ItemKitDynamicLiquidCanister Kit (Portable Liquid Tank)
+-638019974 ItemKitDynamicMKIILiquidCanister Kit (Portable Liquid Tank Mk II)
+1603046970 ItemKitElectricUmbilical Kit (Power Umbilical)
+-1181922382 ItemKitElectronicsPrinter Kit (Electronics Printer)
+-945806652 ItemKitElevator Kit (Elevator)
+1587787610 ItemKitEvaporationChamber Kit (Phase Change Device)
+1701764190 ItemKitFlagODA Kit (ODA Flag)
+-1168199498 ItemKitFridgeBig Kit (Fridge Large)
+1661226524 ItemKitFridgeSmall Kit (Fridge Small)
+-806743925 ItemKitFurnace Kit (Furnace)
+1162905029 ItemKitFurniture Kit (Furniture)
+-366262681 ItemKitFuselage Kit (Fuselage)
+377745425 ItemKitGasGenerator Kit (Gas Fuel Generator)
+-1867280568 ItemKitGasUmbilical Kit (Gas Umbilical)
+206848766 ItemKitGovernedGasRocketEngine Kit (Pumped Gas Rocket Engine)
+-2140672772 ItemKitGroundTelescope Kit (Telescope)
+341030083 ItemKitGrowLight Kit (Grow Light)
+-1022693454 ItemKitHarvie Kit (Harvie)
+844391171 ItemKitHorizontalAutoMiner Kit (OGRE)
+-2098556089 ItemKitHydraulicPipeBender Kit (Hydraulic Pipe Bender)
+-927931558 ItemKitHydroponicAutomated Kit (Automated Hydroponics)
+2057179799 ItemKitHydroponicStation Kit (Hydroponic Station)
+288111533 ItemKitIceCrusher Kit (Ice Crusher)
+2067655311 ItemKitInsulatedLiquidPipe Kit (Insulated Liquid Pipe)
+452636699 ItemKitInsulatedPipe Kit (Insulated Pipe)
+-27284803 ItemKitInsulatedPipeUtility Kit (Insulated Pipe Utility Gas)
+-1831558953 ItemKitInsulatedPipeUtilityLiquid Kit (Insulated Pipe Utility Liquid)
+1935945891 ItemKitInteriorDoors Kit (Interior Doors)
+489494578 ItemKitLadder Kit (Ladder)
+1817007843 ItemKitLandingPadAtmos Kit (Landing Pad Atmospherics)
+293581318 ItemKitLandingPadBasic Kit (Landing Pad Basic)
+-1267511065 ItemKitLandingPadWaypoint Kit (Landing Pad Runway)
+450164077 ItemKitLargeDirectHeatExchanger Kit (Large Direct Heat Exchanger)
+847430620 ItemKitLargeExtendableRadiator Kit (Large Extendable Radiator)
+-2039971217 ItemKitLargeSatelliteDish Kit (Large Satellite Dish)
+385528206 ItemKitLarreDockAtmos Kit (LArRE Dock Atmos)
+-940470326 ItemKitLarreDockBypass Kit (LArRE Dock Bypass)
+-1067485367 ItemKitLarreDockCargo Kit (LArRE Dock Cargo)
+347658127 ItemKitLarreDockCollector Kit (LArRE Dock Collector)
+656181408 ItemKitLarreDockHydroponics Kit (LArRE Dock Hydroponics)
+-1854167549 ItemKitLaunchMount Kit (Launch Mount)
+-174523552 ItemKitLaunchTower Kit (Rocket Launch Tower)
+-441759975 ItemKitLinearRail Kit (Linear Rail)
+1951126161 ItemKitLiquidRegulator Kit (Liquid Regulator)
+-799849305 ItemKitLiquidTank Kit (Liquid Tank)
+617773453 ItemKitLiquidTankInsulated Kit (Insulated Liquid Tank)
+-1805020897 ItemKitLiquidTurboVolumePump Kit (Turbo Volume Pump - Liquid)
+1571996765 ItemKitLiquidUmbilical Kit (Liquid Umbilical)
+882301399 ItemKitLocker Kit (Locker)
+1512322581 ItemKitLogicCircuit Kit (IC Housing)
+1997293610 ItemKitLogicInputOutput Kit (Logic I/O)
+-2098214189 ItemKitLogicMemory Kit (Logic Memory)
+220644373 ItemKitLogicProcessor Kit (Logic Processor)
+124499454 ItemKitLogicSwitch Kit (Logic Switch)
+1005397063 ItemKitLogicTransmitter Kit (Logic Transmitter)
+-2038889137 ItemKitMusicMachines Kit (Music Machines)
+-1752768283 ItemKitPassiveLargeRadiatorGas Kit (Medium Radiator)
+1453961898 ItemKitPassiveLargeRadiatorLiquid Kit (Medium Radiator Liquid)
+636112787 ItemKitPassthroughHeatExchanger Kit (CounterFlow Heat Exchanger)
+-2062364768 ItemKitPictureFrame Kit Picture Frame
+-1619793705 ItemKitPipe Kit (Pipe)
+-1166461357 ItemKitPipeLiquid Kit (Liquid Pipe)
+-827125300 ItemKitPipeOrgan Kit (Pipe Organ)
+920411066 ItemKitPipeRadiator Kit (Pipe Radiator)
+-1697302609 ItemKitPipeRadiatorLiquid Kit (Pipe Radiator Liquid)
+1934508338 ItemKitPipeUtility Kit (Pipe Utility Gas)
+595478589 ItemKitPipeUtilityLiquid Kit (Pipe Utility Liquid)
+119096484 ItemKitPlanter Kit (Planter)
+1041148999 ItemKitPortablesConnector Kit (Portables Connector)
+291368213 ItemKitPowerTransmitter Kit (Power Transmitter)
+-831211676 ItemKitPowerTransmitterOmni Kit (Power Transmitter Omni)
+2015439334 ItemKitPoweredVent Kit (Powered Vent)
+-121514007 ItemKitPressureFedGasEngine Kit (Pressure Fed Gas Engine)
+-99091572 ItemKitPressureFedLiquidEngine Kit (Pressure Fed Liquid Engine)
+123504691 ItemKitPressurePlate Kit (Trigger Plate)
+1921918951 ItemKitPumpedLiquidEngine Kit (Pumped Liquid Engine)
+750176282 ItemKitRailing Kit (Railing)
+849148192 ItemKitRecycler Kit (Recycler)
+1181371795 ItemKitRegulator Kit (Pressure Regulator)
+1459985302 ItemKitReinforcedWindows Kit (Reinforced Walls)
+1574688481 ItemKitRespawnPointWallMounted Kit (Respawn)
+-753675589 ItemKitRobotArmDoor Kit (Linear Rail Door)
+-1228287398 ItemKitRoboticArm Kit (LArRE)
+925932637 ItemKitRocketAtmospherics Kit (Rocket Atmospherics)
+1396305045 ItemKitRocketAvionics Kit (Avionics)
+-314072139 ItemKitRocketBattery Kit (Rocket Battery)
+479850239 ItemKitRocketCargoStorage Kit (Rocket Cargo Storage)
+-303008602 ItemKitRocketCelestialTracker Kit (Rocket Celestial Tracker)
+721251202 ItemKitRocketCircuitHousing Kit (Rocket Circuit Housing)
+-1256996603 ItemKitRocketDatalink Kit (Rocket Datalink)
+-1629347579 ItemKitRocketGasFuelTank Kit (Rocket Gas Fuel Tank)
+2032027950 ItemKitRocketLiquidFuelTank Kit (Rocket Liquid Fuel Tank)
+-636127860 ItemKitRocketManufactory Kit (Rocket Manufactory)
+-867969909 ItemKitRocketMiner Kit (Rocket Miner)
+1753647154 ItemKitRocketScanner Kit (Rocket Scanner)
+-932335800 ItemKitRocketTransformerSmall Kit (Transformer Small (Rocket))
+197243872 ItemKitRoverMKI Kit (Rover Mk I)
+323957548 ItemKitSDBHopper Kit (SDB Hopper)
+178422810 ItemKitSatelliteDish Kit (Medium Satellite Dish)
+578078533 ItemKitSecurityPrinter Kit (Security Printer)
+-1776897113 ItemKitSensor Kit (Sensors)
+735858725 ItemKitShower Kit (Shower)
+529996327 ItemKitSign Kit (Sign)
+326752036 ItemKitSleeper Kit (Sleeper)
+-1332682164 ItemKitSmallDirectHeatExchanger Kit (Small Direct Heat Exchanger)
+1960952220 ItemKitSmallSatelliteDish Kit (Small Satellite Dish)
+-1924492105 ItemKitSolarPanel Kit (Solar Panel)
+844961456 ItemKitSolarPanelBasic Kit (Solar Panel Basic)
+-528695432 ItemKitSolarPanelBasicReinforced Kit (Solar Panel Basic Heavy)
+-364868685 ItemKitSolarPanelReinforced Kit (Solar Panel Heavy)
+1293995736 ItemKitSolidGenerator Kit (Solid Generator)
+969522478 ItemKitSorter Kit (Sorter)
+-126038526 ItemKitSpeaker Kit (Speaker)
+1013244511 ItemKitStacker Kit (Stacker)
+170878959 ItemKitStairs Kit (Stairs)
+-1868555784 ItemKitStairwell Kit (Stairwell)
+2133035682 ItemKitStandardChute Kit (Powered Chutes)
+-1821571150 ItemKitStirlingEngine Kit (Stirling Engine)
+1088892825 ItemKitSuitStorage Kit (Suit Storage)
+-1361598922 ItemKitTables Kit (Tables)
+771439840 ItemKitTank Kit (Tank)
+1021053608 ItemKitTankInsulated Kit (Insulated Tank)
+529137748 ItemKitToolManufactory Kit (Tool Manufactory)
+-453039435 ItemKitTransformer Kit (Transformer Large)
+665194284 ItemKitTransformerSmall Kit (Transformer Small)
+-1248429712 ItemKitTurboVolumePump Kit (Turbo Volume Pump - Gas)
+-1798044015 ItemKitUprightWindTurbine Kit (Upright Wind Turbine)
+-2038384332 ItemKitVendingMachine Kit (Vending Machine)
+-1867508561 ItemKitVendingMachineRefrigerated Kit (Vending Machine Refrigerated)
+-1826855889 ItemKitWall Kit (Wall)
+1625214531 ItemKitWallArch Kit (Arched Wall)
+-846838195 ItemKitWallFlat Kit (Flat Wall)
+-784733231 ItemKitWallGeometry Kit (Geometric Wall)
+-524546923 ItemKitWallIron Kit (Iron Wall)
+-821868990 ItemKitWallPadded Kit (Padded Wall)
+159886536 ItemKitWaterBottleFiller Kit (Water Bottle Filler)
+611181283 ItemKitWaterPurifier Kit (Water Purifier)
+337505889 ItemKitWeatherStation Kit (Weather Station)
+-868916503 ItemKitWindTurbine Kit (Wind Turbine)
+1779979754 ItemKitWindowShutter Kit (Composite Window Shutter)
+-743968726 ItemLabeller Labeller
+141535121 ItemLaptop Laptop
+2134647745 ItemLeadIngot Ingot (Lead)
+-190236170 ItemLeadOre Ore (Lead)
+-185207387 ItemLiquidCanisterEmpty Liquid Canister
+777684475 ItemLiquidCanisterSmart Liquid Canister (Smart)
+2036225202 ItemLiquidDrain Kit (Liquid Drain)
+226055671 ItemLiquidPipeAnalyzer Kit (Liquid Pipe Analyzer)
+-248475032 ItemLiquidPipeHeater Pipe Heater Kit (Liquid)
+-2126113312 ItemLiquidPipeValve Kit (Liquid Pipe Valve)
+-2106280569 ItemLiquidPipeVolumePump Kit (Liquid Volume Pump)
+2037427578 ItemLiquidTankStorage Kit (Liquid Canister Storage)
+-1152751269 ItemLiquidVacuum Liquid Vacuum
+240174650 ItemMKIIAngleGrinder Mk II Angle Grinder
+-2061979347 ItemMKIIArcWelder Mk II Arc Welder
+1440775434 ItemMKIICrowbar Mk II Crowbar
+324791548 ItemMKIIDrill Mk II Drill
+388774906 ItemMKIIDuctTape Mk II Duct Tape
+-1875271296 ItemMKIIMiningDrill Mk II Mining Drill
+-2015613246 ItemMKIIScrewdriver Mk II Screwdriver
+-178893251 ItemMKIIWireCutters Mk II Wire Cutters
+1862001680 ItemMKIIWrench Mk II Wrench
+1399098998 ItemMarineBodyArmor Marine Armor
+1073631646 ItemMarineHelmet Marine Helmet
+1327248310 ItemMilk Milk
+-1650383245 ItemMiningBackPack Mining Backpack
+-676435305 ItemMiningBelt Mining Belt
+1470787934 ItemMiningBeltMKII Mining Belt MK II
+15829510 ItemMiningCharge Mining Charge
+1055173191 ItemMiningDrill Mining Drill
+-1663349918 ItemMiningDrillHeavy Mining Drill (Heavy)
+1258187304 ItemMiningDrillPneumatic Pneumatic Mining Drill
+384478267 ItemMiningPackage Mining Supplies Package
+1467558064 ItemMkIIToolbelt Tool Belt MK II
+-1864982322 ItemMuffin Muffin
+2044798572 ItemMushroom Mushroom
+982514123 ItemNVG Night Vision Goggles
+-1406385572 ItemNickelIngot Ingot (Nickel)
+1830218956 ItemNickelOre Ore (Nickel)
+-1499471529 ItemNitrice Ice (Nitrice)
+-1805394113 ItemOxite Ice (Oxite)
+238631271 ItemPassiveVent Kit (Passive Vent)
+-1397583760 ItemPassiveVentInsulated Kit (Insulated Passive Vent)
+2042955224 ItemPeaceLily Peace Lily
+-913649823 ItemPickaxe Pickaxe
+1118069417 ItemPillHeal Pill (Medical)
+418958601 ItemPillStun Pill (Paralysis)
+-767597887 ItemPipeAnalyizer Kit (Pipe Analyzer)
+-38898376 ItemPipeCowl Pipe Cowl
+-1532448832 ItemPipeDigitalValve Kit (Digital Valve)
+-1134459463 ItemPipeGasMixer Kit (Gas Mixer)
+-1751627006 ItemPipeHeater Pipe Heater Kit (Gas)
+1366030599 ItemPipeIgniter Kit (Pipe Igniter)
+391769637 ItemPipeLabel Kit (Pipe Label)
+-906521320 ItemPipeLiquidRadiator Kit (Liquid Radiator)
+1207939683 ItemPipeMeter Kit (Pipe Meter)
+-1796655088 ItemPipeRadiator Kit (Radiator)
+799323450 ItemPipeValve Kit (Pipe Valve)
+-1766301997 ItemPipeVolumePump Kit (Volume Pump)
+-1108244510 ItemPlainCake Cake
+851290561 ItemPlantEndothermic_Genepool1 Winterspawn (Alpha strain)
+-1414203269 ItemPlantEndothermic_Genepool2 Winterspawn (Beta strain)
+173023800 ItemPlantSampler Plant Sampler
+-532672323 ItemPlantSwitchGrass Switch Grass
+-177792789 ItemPlantThermogenic_Genepool1 Hades Flower (Alpha strain)
+1819167057 ItemPlantThermogenic_Genepool2 Hades Flower (Beta strain)
+662053345 ItemPlasticSheets Plastic Sheets
+1459105919 ItemPortablesPackage Portables Package
+1929046963 ItemPotato Potato
+-2111886401 ItemPotatoBaked Baked Potato
+839924019 ItemPowerConnector Kit (Power Connector)
+1277828144 ItemPumpkin Pumpkin
+62768076 ItemPumpkinPie Pumpkin Pie
+1277979876 ItemPumpkinSoup Pumpkin Soup
+-1616308158 ItemPureIce Pure Ice Water
+-1251009404 ItemPureIceCarbonDioxide Pure Ice Carbon Dioxide
+944530361 ItemPureIceHydrogen Pure Ice Hydrogen
+-1715945725 ItemPureIceLiquidCarbonDioxide Pure Ice Liquid Carbon Dioxide
+-1044933269 ItemPureIceLiquidHydrogen Pure Ice Liquid Hydrogen
+1674576569 ItemPureIceLiquidNitrogen Pure Ice Liquid Nitrogen
+1428477399 ItemPureIceLiquidNitrous Pure Ice Liquid Nitrous
+541621589 ItemPureIceLiquidOxygen Pure Ice Liquid Oxygen
+-1748926678 ItemPureIceLiquidPollutant Pure Ice Liquid Pollutant
+-1306628937 ItemPureIceLiquidVolatiles Pure Ice Liquid Volatiles
+-1708395413 ItemPureIceNitrogen Pure Ice Nitrogen
+386754635 ItemPureIceNitrous Pure Ice NitrousOxide
+-1150448260 ItemPureIceOxygen Pure Ice Oxygen
+-1755356 ItemPureIcePollutant Pure Ice Pollutant
+-2073202179 ItemPureIcePollutedWater Pure Ice Polluted Water
+-874791066 ItemPureIceSteam Pure Ice Steam
+-633723719 ItemPureIceVolatiles Pure Ice Volatiles
+495305053 ItemRTG Kit (Creative RTG)
+1817645803 ItemRTGSurvival Kit (RTG)
+-1641500434 ItemReagentMix Reagent Mix
+678483886 ItemRemoteDetonator Remote Detonator
+509629504 ItemResidentialPackage Residential Supplies Package
+-1773192190 ItemReusableFireExtinguisher Fire Extinguisher (Reusable)
+658916791 ItemRice Rice
+871811564 ItemRoadFlare Road Flare
+532208167 ItemRocketDeepScanningHead Rocket Deep Scanner Head
+2109945337 ItemRocketMiningDrillHead Mining-Drill Head (Basic)
+1530764483 ItemRocketMiningDrillHeadDurable Mining-Drill Head (Durable)
+653461728 ItemRocketMiningDrillHeadHighSpeedIce Mining-Drill Head (High Speed Ice)
+1440678625 ItemRocketMiningDrillHeadHighSpeedMineral Mining-Drill Head (High Speed Mineral)
+-380904592 ItemRocketMiningDrillHeadIce Mining-Drill Head (Ice)
+-684020753 ItemRocketMiningDrillHeadLongTerm Mining-Drill Head (Long Term)
+1083675581 ItemRocketMiningDrillHeadMineral Mining-Drill Head (Mineral)
+-1198702771 ItemRocketScanningHead Rocket Scanner Head
+687940869 ItemScrewdriver Screwdriver
+-1981101032 ItemSecurityCamera Security Camera
+-1176140051 ItemSensorLenses Sensor Lenses
+-1154200014 ItemSensorProcessingUnitCelestialScanner Sensor Processing Unit (Celestial Scanner)
+-1730464583 ItemSensorProcessingUnitMesonScanner Sensor Processing Unit (T-Ray Scanner)
+-1219128491 ItemSensorProcessingUnitOreScanner Sensor Processing Unit (Ore Scanner)
+-290196476 ItemSiliconIngot Ingot (Silicon)
+1103972403 ItemSiliconOre Ore (Silicon)
+-929742000 ItemSilverIngot Ingot (Silver)
+-916518678 ItemSilverOre Ore (Silver)
+-82508479 ItemSolderIngot Ingot (Solder)
+-365253871 ItemSolidFuel Solid Fuel (Hydrocarbon)
+-1883441704 ItemSoundCartridgeBass Sound Cartridge Bass
+-1901500508 ItemSoundCartridgeDrums Sound Cartridge Drums
+-1174735962 ItemSoundCartridgeLeads Sound Cartridge Leads
+-1971419310 ItemSoundCartridgeSynth Sound Cartridge Synth
+1387403148 ItemSoyOil Soy Oil
+1924673028 ItemSoybean Soybean
+714830451 ItemSpaceHelmet Space Helmet
+675686937 ItemSpaceIce Space Ice
+2131916219 ItemSpaceOre Dirty Ore
+-1260618380 ItemSpacepack Spacepack
+-688107795 ItemSprayCanBlack Spray Paint (Black)
+-498464883 ItemSprayCanBlue Spray Paint (Blue)
+845176977 ItemSprayCanBrown Spray Paint (Brown)
+-1880941852 ItemSprayCanGreen Spray Paint (Green)
+-1645266981 ItemSprayCanGrey Spray Paint (Grey)
+1918456047 ItemSprayCanKhaki Spray Paint (Khaki)
+-158007629 ItemSprayCanOrange Spray Paint (Orange)
+1344257263 ItemSprayCanPink Spray Paint (Pink)
+30686509 ItemSprayCanPurple Spray Paint (Purple)
+1514393921 ItemSprayCanRed Spray Paint (Red)
+498481505 ItemSprayCanWhite Spray Paint (White)
+995468116 ItemSprayCanYellow Spray Paint (Yellow)
+1289723966 ItemSprayGun Spray Gun
+-1448105779 ItemSteelFrames Steel Frames
+-654790771 ItemSteelIngot Ingot (Steel)
+38555961 ItemSteelSheets Steel Sheets
+-2038663432 ItemStelliteGlassSheets Stellite Glass Sheets
+-1897868623 ItemStelliteIngot Ingot (Stellite)
+-906450470 ItemStrawberry Strawberry
+2111910840 ItemSugar Sugar
+-1335056202 ItemSugarCane Sugarcane
+-347191982 ItemSuitHARM HARM Suit
+-981522067 ItemSuitHelmetHARM HARM Helmet
+-1274308304 ItemSuitModCryogenicUpgrade Cryogenic Suit Upgrade
+-229808600 ItemTablet Handheld Tablet
+111280987 ItemTerrainManipulator Terrain Manipulator
+-998592080 ItemTomato Tomato
+688734890 ItemTomatoSoup Tomato Soup
+-355127880 ItemToolBelt Tool Belt
+-800947386 ItemTropicalPlant Tropical Lily
+-1516581844 ItemUraniumOre Ore (Uranium)
+1253102035 ItemVolatiles Ice (Volatiles)
+-1567752627 ItemWallCooler Kit (Wall Cooler)
+1880134612 ItemWallHeater Kit (Wall Heater)
+1108423476 ItemWallLight Kit (Lights)
+156348098 ItemWaspaloyIngot Ingot (Waspaloy)
+107741229 ItemWaterBottle Water Bottle
+1476318823 ItemWaterBottleBag Water Bottle Bag
+-971586619 ItemWaterBottlePackage Water Bottle Package
+309693520 ItemWaterPipeDigitalValve Kit (Liquid Digital Valve)
+-90898877 ItemWaterPipeMeter Kit (Liquid Pipe Meter)
+-1721846327 ItemWaterWallCooler Kit (Liquid Wall Cooler)
+-1392622903 ItemWatermelon Watermelon
+-598730959 ItemWearLamp Headlamp
+-2066892079 ItemWeldingTorch Welding Torch
+-1057658015 ItemWheat Wheat
+1535854074 ItemWireCutters Wire Cutters
+-504717121 ItemWirelessBatteryCellExtraLarge Wireless Battery Cell Extra Large
+-964363642 ItemWreckageLargeExtendableRadiator Wreckage
+-2120466121 ItemWreckageSmallFan Wreckage
+1335155606 ItemWreckageSteelCornerSmall ItemWreckageSteelCornerSmall
+-178735543 ItemWreckageSteelFragmentSmall Wreckage
+1013894259 ItemWreckageStructureWeatherStation Wreckage
+-1886261558 ItemWrench Wrench
+1932952652 KitSDBSilo Kit (SDB Silo)
+231903234 KitStructureCombustionCentrifuge Kit (Combustion Centrifuge)
+-1427415566 KitchenTableShort Kitchen Table (Short)
+-78099334 KitchenTableSimpleShort Kitchen Table (Simple Short)
+-1068629349 KitchenTableSimpleTall Kitchen Table (Simple Tall)
+-1386237782 KitchenTableTall Kitchen Table (Tall)
+1605130615 Lander Lander
+1323320543 LanderMkII Lander Mk II
+-1295222317 Landingpad_2x2CenterPiece01 Landingpad 2x2 Center Piece
+912453390 Landingpad_BlankPiece Landingpad
+1070143159 Landingpad_CenterPiece01 Landingpad Center
+1101296153 Landingpad_CrossPiece Landingpad Cross
+-2066405918 Landingpad_DataConnectionPiece Landingpad Data And Power
+977899131 Landingpad_DiagonalPiece01 Landingpad Diagonal
+817945707 Landingpad_GasConnectorInwardPiece Landingpad Gas Input
+-1100218307 Landingpad_GasConnectorOutwardPiece Landingpad Gas Output
+170818567 Landingpad_GasCylinderTankPiece Landingpad Tank (Small)
+-1621116858 Landingpad_LargeTank Landingpad Tank (Large)
+-1216167727 Landingpad_LiquidConnectorInwardPiece Landingpad Liquid Input
+-1788929869 Landingpad_LiquidConnectorOutwardPiece Landingpad Liquid Output
+-976273247 Landingpad_StraightPiece01 Landingpad Straight
+-1872345847 Landingpad_TaxiPieceCorner Landingpad Taxi Corner
+146051619 Landingpad_TaxiPieceHold Landingpad Taxi Hold
+-1477941080 Landingpad_TaxiPieceStraight Landingpad Taxi Straight
+-1514298582 Landingpad_ThreshholdPiece Landingpad Threshhold
+1531272458 LogicStepSequencer8 Logic Step Sequencer
+-337075633 MotherboardComms Communications Motherboard
+502555944 MotherboardLogic Logic Motherboard
+1708439824 MotherboardMap Map Motherboard
+-161107071 MotherboardProgrammableChip IC Editor Motherboard
+-806986392 MotherboardRockets Rocket Control Motherboard
+-1908268220 MotherboardSorter Sorter Motherboard
+155856647 NpcChick Chick
+399074198 NpcChicken Chicken
+248893646 PassiveSpeaker Passive Speaker
+443947415 PipeBenderMod Pipe Bender Mod
+-1958705204 PortableComposter Portable Composter
+2043318949 PortableSolarPanel Portable Solar Panel
+399661231 RailingElegant01 Railing Elegant (Type 1)
+-1898247915 RailingElegant02 Railing Elegant (Type 2)
+-2072792175 RailingIndustrial02 Railing Industrial (Type 2)
+-788672929 RespawnPoint Respawn Point
+-491247370 RespawnPointWallMounted Respawn Point (Mounted)
+434786784 Robot AIMeE Bot
+-2049946335 Rover_MkI Rover MkI
+861674123 Rover_MkI_build_states Rover MKI
+897717596 SeedBag_Blueberry Blueberry Seeds
+1139887531 SeedBag_Cocoa Cocoa Seeds
+-1290755415 SeedBag_Corn Corn Seeds
+980397232 SeedBag_DargaFern Darga Fern Seeds
+-1990600883 SeedBag_Fern Fern Seeds
+-1066145654 SeedBag_HadesAlpha Hades Seed (Alpha strain)
+-969228551 SeedBag_HadesBeta Hades Seed (Beta strain)
+311593418 SeedBag_Mushroom Mushroom Seeds
+1005571172 SeedBag_Potato Potato Seeds
+1423199840 SeedBag_Pumpkin Pumpkin Seeds
+-1691151239 SeedBag_Rice Rice Seeds
+1783004244 SeedBag_Soybean Soybean Seeds
+2009884607 SeedBag_Strawberry Strawberry Seeds
+-1884103228 SeedBag_SugarCane Sugarcane Seeds
+488360169 SeedBag_Switchgrass Switchgrass Seed
+-1922066841 SeedBag_Tomato Tomato Seeds
+315264172 SeedBag_Watermelon Watermelon Seeds
+-654756733 SeedBag_Wheet Wheat Seeds
+-1740754636 SeedBag_WinterspawnAlpha Winterspawn Seed (Alpha strain)
+-475065916 SeedBag_WinterspawnBeta Winterspawn Seed (Beta strain)
+-1447924975 ShuttlecraftMkII ShuttlecraftMkII
+-1527229051 StopWatch Stop Watch
+1298920475 StructureAccessBridge Access Bridge
+-1129453144 StructureActiveVent Active Vent
+446212963 StructureAdvancedComposter Advanced Composter
+545937711 StructureAdvancedFurnace Advanced Furnace
+-463037670 StructureAdvancedPackagingMachine Advanced Packaging Machine
+-2087593337 StructureAirConditioner Air Conditioner
+-2105052344 StructureAirlock Airlock
+1736080881 StructureAirlockGate Small Hangar Door
+1941072263 StructureAirlockWide Airlock Wide
+1811979158 StructureAngledBench Bench (Angled)
+-247344692 StructureArcFurnace Arc Furnace
+1999523701 StructureAreaPowerControl Area Power Control
+-1032513487 StructureAreaPowerControlReversed Area Power Control (Reversed)
+7274344 StructureAutoMinerSmall Autominer (Small)
+336213101 StructureAutolathe Autolathe
+-1672404896 StructureAutomatedOven Automated Oven
+2099900163 StructureBackLiquidPressureRegulator Liquid Back Volume Regulator
+-1149857558 StructureBackPressureRegulator Back Pressure Regulator
+-1613497288 StructureBasketHoop Basket Hoop
+-400115994 StructureBattery Station Battery
+1945930022 StructureBatteryCharger Battery Cell Charger
+-761772413 StructureBatteryChargerSmall Battery Charger Small
+-1388288459 StructureBatteryLarge Station Battery (Large)
+-1125305264 StructureBatteryMedium Battery (Medium)
+-2123455080 StructureBatterySmall Auxiliary Rocket Battery 
+-188177083 StructureBeacon Beacon
+-2042448192 StructureBench Powered Bench
+406745009 StructureBench1 Bench (Counter Style)
+-2127086069 StructureBench2 Bench (High Tech Style)
+-164622691 StructureBench3 Bench (Frame Style)
+1750375230 StructureBench4 Bench (Workbench Style)
+337416191 StructureBlastDoor Blast Door
+697908419 StructureBlockBed Block Bed
+378084505 StructureBlocker Blocker
+1036015121 StructureCableAnalysizer Cable Analyzer
+-889269388 StructureCableCorner Cable (Corner)
+980469101 StructureCableCorner3 Cable (3-Way Corner)
+318437449 StructureCableCorner3Burnt Burnt Cable (3-Way Corner)
+2393826 StructureCableCorner3HBurnt Cable
+-1542172466 StructureCableCorner4 Cable (4-Way Corner)
+268421361 StructureCableCorner4Burnt Burnt Cable (4-Way Corner)
+-981223316 StructureCableCorner4HBurnt Burnt Heavy Cable (4-Way Corner)
+-177220914 StructureCableCornerBurnt Burnt Cable (Corner)
+-39359015 StructureCableCornerH Heavy Cable (Corner)
+-1843379322 StructureCableCornerH3 Heavy Cable (3-Way Corner)
+205837861 StructureCableCornerH4 Heavy Cable (4-Way Corner)
+1931412811 StructureCableCornerHBurnt Burnt Cable (Corner)
+281380789 StructureCableFuse100k Fuse (100kW)
+-1103727120 StructureCableFuse1k Fuse (1kW)
+-349716617 StructureCableFuse50k Fuse (50kW)
+-631590668 StructureCableFuse5k Fuse (5kW)
+-175342021 StructureCableJunction Cable (Junction)
+1112047202 StructureCableJunction4 Cable (4-Way Junction)
+-1756896811 StructureCableJunction4Burnt Burnt Cable (4-Way Junction)
+-115809132 StructureCableJunction4HBurnt Burnt Cable (4-Way Junction)
+894390004 StructureCableJunction5 Cable (5-Way Junction)
+1545286256 StructureCableJunction5Burnt Burnt Cable (5-Way Junction)
+-1404690610 StructureCableJunction6 Cable (6-Way Junction)
+-628145954 StructureCableJunction6Burnt Burnt Cable (6-Way Junction)
+1854404029 StructureCableJunction6HBurnt Burnt Cable (6-Way Junction)
+-1620686196 StructureCableJunctionBurnt Burnt Cable (Junction)
+469451637 StructureCableJunctionH Heavy Cable (3-Way Junction)
+-742234680 StructureCableJunctionH4 Heavy Cable (4-Way Junction)
+-1530571426 StructureCableJunctionH5 Heavy Cable (5-Way Junction)
+1701593300 StructureCableJunctionH5Burnt Burnt Heavy Cable (5-Way Junction)
+1036780772 StructureCableJunctionH6 Heavy Cable (6-Way Junction)
+-341365649 StructureCableJunctionHBurnt Burnt Cable (Junction)
+605357050 StructureCableStraight Cable (Straight)
+-1196981113 StructureCableStraightBurnt Burnt Cable (Straight)
+-146200530 StructureCableStraightH Heavy Cable (Straight)
+2085762089 StructureCableStraightHBurnt Burnt Cable (Straight)
+-342072665 StructureCamera Camera
+-1385712131 StructureCapsuleTankGas Gas Capsule Tank Small
+1415396263 StructureCapsuleTankLiquid Liquid Capsule Tank Small
+1151864003 StructureCargoStorageMedium Cargo Storage (Medium)
+-1493672123 StructureCargoStorageSmall Cargo Storage (Small)
+690945935 StructureCentrifuge Centrifuge
+1167659360 StructureChair Chair
+1944858936 StructureChairBacklessDouble Chair (Backless Double)
+1672275150 StructureChairBacklessSingle Chair (Backless Single)
+-367720198 StructureChairBoothCornerLeft Chair (Booth Corner Left)
+1640720378 StructureChairBoothMiddle Chair (Booth Middle)
+-1152812099 StructureChairRectangleDouble Chair (Rectangle Double)
+-1425428917 StructureChairRectangleSingle Chair (Rectangle Single)
+-1245724402 StructureChairThickDouble Chair (Thick Double)
+-1510009608 StructureChairThickSingle Chair (Thick Single)
+-850484480 StructureChuteBin Chute Import Bin
+1360330136 StructureChuteCorner Chute (Corner)
+-810874728 StructureChuteDigitalFlipFlopSplitterLeft Chute Digital Flip Flop Splitter Left
+163728359 StructureChuteDigitalFlipFlopSplitterRight Chute Digital Flip Flop Splitter Right
+648608238 StructureChuteDigitalValveLeft Chute Digital Valve Left
+-1337091041 StructureChuteDigitalValveRight Chute Digital Valve Right
+1957571043 StructureChuteExportBin Chute Export Bin
+-1446854725 StructureChuteFlipFlopSplitter Chute Flip Flop Splitter
+-1469588766 StructureChuteInlet Chute Inlet
+-611232514 StructureChuteJunction Chute (Junction)
+-1022714809 StructureChuteOutlet Chute Outlet
+225377225 StructureChuteOverflow Chute Overflow
+168307007 StructureChuteStraight Chute (Straight)
+-1154376263 StructureChuteStraight10 Chute (Straight 10)
+-608261233 StructureChuteStraight3 Chute (Straight 3)
+853348026 StructureChuteStraight5 Chute (Straight 5)
+-1918892177 StructureChuteUmbilicalFemale Umbilical Socket (Chute)
+-659093969 StructureChuteUmbilicalFemaleSide Umbilical Socket Angle (Chute)
+-958884053 StructureChuteUmbilicalMale Umbilical (Chute)
+434875271 StructureChuteValve Chute Valve
+-607241919 StructureChuteWindow Chute (Window)
+-128473777 StructureCircuitHousing IC Housing
+2037291645 StructureCircuitHousingCompact IC Housing (Compact)
+1238905683 StructureCombustionCentrifuge Combustion Centrifuge
+-1513030150 StructureCompositeCladdingAngled Composite Cladding (Angled)
+-69685069 StructureCompositeCladdingAngledCorner Composite Cladding (Angled Corner)
+-1841871763 StructureCompositeCladdingAngledCornerInner Composite Cladding (Angled Corner Inner)
+-1417912632 StructureCompositeCladdingAngledCornerInnerLong Composite Cladding (Angled Corner Inner Long)
+947705066 StructureCompositeCladdingAngledCornerInnerLongL Composite Cladding (Angled Corner Inner Long L)
+-1032590967 StructureCompositeCladdingAngledCornerInnerLongR Composite Cladding (Angled Corner Inner Long R)
+850558385 StructureCompositeCladdingAngledCornerLong Composite Cladding (Long Angled Corner)
+-348918222 StructureCompositeCladdingAngledCornerLongR Composite Cladding (Long Angled Mirrored Corner)
+-387546514 StructureCompositeCladdingAngledLong Composite Cladding (Long Angled)
+212919006 StructureCompositeCladdingCylindrical Composite Cladding (Cylindrical)
+1077151132 StructureCompositeCladdingCylindricalPanel Composite Cladding (Cylindrical Panel)
+1997436771 StructureCompositeCladdingPanel Composite Cladding (Panel)
+-259357734 StructureCompositeCladdingRounded Composite Cladding (Rounded)
+1951525046 StructureCompositeCladdingRoundedCorner Composite Cladding (Rounded Corner)
+110184667 StructureCompositeCladdingRoundedCornerInner Composite Cladding (Rounded Corner Inner)
+139107321 StructureCompositeCladdingSpherical Composite Cladding (Spherical)
+534213209 StructureCompositeCladdingSphericalCap Composite Cladding (Spherical Cap)
+1751355139 StructureCompositeCladdingSphericalCorner Composite Cladding (Spherical Corner)
+-793837322 StructureCompositeDoor Composite Door
+324868581 StructureCompositeFloorGrating Composite Floor Grating
+-895027741 StructureCompositeFloorGrating2 Composite Floor Grating  (Type 2)
+-1113471627 StructureCompositeFloorGrating3 Composite Floor Grating  (Type 3)
+600133846 StructureCompositeFloorGrating4 Composite Floor Grating  (Type 4)
+2109695912 StructureCompositeFloorGratingOpen Composite Floor Grating Open
+882307910 StructureCompositeFloorGratingOpenRotated Composite Floor Grating Open Rotated
+1237302061 StructureCompositeWall Composite Wall (Type 1)
+718343384 StructureCompositeWall02 Composite Wall (Type 2)
+1574321230 StructureCompositeWall03 Composite Wall (Type 3)
+-1011701267 StructureCompositeWall04 Composite Wall (Type 4)
+-2060571986 StructureCompositeWindow Composite Window
+-688284639 StructureCompositeWindowIron Iron Window
+1580592998 StructureCompositeWindowShutter Composite Window Shutter
+791407452 StructureCompositeWindowShutterConnector Composite Window Shutter Connector
+-2078371660 StructureCompositeWindowShutterController Composite Window Shutter Controller
+-626563514 StructureComputer Computer (Modern)
+1952395881 StructureComputerBigScreen Computer (Big Screen)
+-868055390 StructureComputerBigScreenWallMounted Computer (Big Screen Wall Mounted)
+-405593895 StructureComputerUpright Computer (Retro)
+1420719315 StructureCondensationChamber Condensation Chamber
+-965741795 StructureCondensationValve Condensation Valve
+235638270 StructureConsole Console
+-722284333 StructureConsoleDual Console Dual
+-53151617 StructureConsoleLED1x2 LED Display (Medium)
+-1949054743 StructureConsoleLED1x3 LED Display (Large)
+-815193061 StructureConsoleLED5 LED Display (Small)
+801677497 StructureConsoleMonitor Console Monitor
+-1968255729 StructureCornerLocker Corner Locker
+-733500083 StructureCrateMount Container Mount
+1443059329 StructureCryoTubeHorizontal Cryo Tube Horizontal
+-1381321828 StructureCryoTubeVertical Cryo Tube Vertical
+1076425094 StructureDaylightSensor Daylight Sensor
+265720906 StructureDeepMiner Deep Miner
+-1280984102 StructureDigitalValve Digital Valve
+1944485013 StructureDiode LED
+576516101 StructureDiodeSlide Diode Slide
+1968371847 StructureDrinkingFountain Drinking Fountain
+-1668992663 StructureElectrolyzer Electrolyzer
+1307165496 StructureElectronicsPrinter Electronics Printer
+-827912235 StructureElevatorLevelFront Elevator Level (Cabled)
+2060648791 StructureElevatorLevelIndustrial Elevator Level
+826144419 StructureElevatorShaft Elevator Shaft (Cabled)
+1998354978 StructureElevatorShaftIndustrial Elevator Shaft
+1668452680 StructureEmergencyButton Important Button
+2035781224 StructureEngineMountTypeA1 Engine Mount (Type A1)
+-1429782576 StructureEvaporationChamber Evaporation Chamber
+195298587 StructureExpansionValve Expansion Valve
+1622567418 StructureFairingTypeA1 Fairing (Type A1)
+-104908736 StructureFairingTypeA2 Fairing (Type A2)
+-1900541738 StructureFairingTypeA3 Fairing (Type A3)
+-348054045 StructureFiltration Filtration
+-1127127263 StructureFireExtinguisherStorage Fire Extinguisher Storage
+-1529819532 StructureFlagSmall Small Flag
+-1535893860 StructureFlashingLight Flashing Light
+839890807 StructureFlatBench Bench (Flat)
+1048813293 StructureFloorDrain Passive Liquid Inlet
+1432512808 StructureFrame Steel Frame
+-2112390778 StructureFrameCorner Steel Frame (Corner)
+271315669 StructureFrameCornerCut Steel Frame (Corner Cut)
+-1240951678 StructureFrameIron Iron Frame
+-302420053 StructureFrameSide Steel Frame (Side)
+958476921 StructureFridgeBig Fridge (Large)
+751887598 StructureFridgeSmall Fridge Small
+1947944864 StructureFurnace Furnace
+-1965275716 StructureFuselageDoorsDual Fuselage Doors
+1033024712 StructureFuselageTypeA1 Fuselage (Type A1)
+-1533287054 StructureFuselageTypeA2 Fuselage (Type A2)
+1308115015 StructureFuselageTypeA4 Fuselage (Type A4)
+147395155 StructureFuselageTypeC5 Fuselage (Type C5)
+1165997963 StructureGasGenerator Gas Fuel Generator
+-377716086 StructureGasMaskStorage Gas Mask Storage
+2104106366 StructureGasMixer Gas Mixer
+-1252983604 StructureGasSensor Gas Sensor
+1632165346 StructureGasTankStorage Gas Tank Storage
+-1680477930 StructureGasUmbilicalFemale Umbilical Socket (Gas)
+-648683847 StructureGasUmbilicalFemaleSide Umbilical Socket Angle (Gas)
+-1814939203 StructureGasUmbilicalMale Umbilical (Gas)
+-324331872 StructureGlassDoor Glass Door
+-214232602 StructureGovernedGasEngine Pumped Gas Engine
+-619745681 StructureGroundBasedTelescope Telescope
+-1758710260 StructureGrowLight Grow Light
+958056199 StructureHarvie Harvie
+1070427573 StructureHorizontalAutoMiner OGRE
+-1888248335 StructureHydraulicPipeBender Hydraulic Pipe Bender
+1441767298 StructureHydroponicsStation Hydroponics Station
+1464854517 StructureHydroponicsTray Hydroponics Tray
+-1841632400 StructureHydroponicsTrayData Hydroponics Device
+443849486 StructureIceCrusher Ice Crusher
+1005491513 StructureIgniter Igniter
+-1693382705 StructureInLineTankGas1x1 In-Line Tank Small Gas
+35149429 StructureInLineTankGas1x2 In-Line Tank Gas
+543645499 StructureInLineTankLiquid1x1 In-Line Tank Small Liquid
+-1183969663 StructureInLineTankLiquid1x2 In-Line Tank Liquid
+1818267386 StructureInsulatedInLineTankGas1x1 In-Line Tank Small Gas (Insulated)
+-177610944 StructureInsulatedInLineTankGas1x2 In-Line Tank Gas (Insulated)
+-813426145 StructureInsulatedInLineTankLiquid1x1 In-Line Liquid (Insulated)
+1452100517 StructureInsulatedInLineTankLiquid1x2 In-Line Tank Liquid (Insulated)
+-1967711059 StructureInsulatedPipeCorner Insulated Pipe (Corner)
+-92778058 StructureInsulatedPipeCrossJunction Insulated Pipe (Cross Junction)
+1328210035 StructureInsulatedPipeCrossJunction3 Insulated Pipe (3-Way Junction)
+-783387184 StructureInsulatedPipeCrossJunction4 Insulated Pipe (4-Way Junction)
+-1505147578 StructureInsulatedPipeCrossJunction5 Insulated Pipe (5-Way Junction)
+1061164284 StructureInsulatedPipeCrossJunction6 Insulated Pipe (6-Way Junction)
+1713710802 StructureInsulatedPipeLiquidCorner Insulated Liquid Pipe (Corner)
+1926651727 StructureInsulatedPipeLiquidCrossJunction Insulated Liquid Pipe (3-Way Junction)
+363303270 StructureInsulatedPipeLiquidCrossJunction4 Insulated Liquid Pipe (4-Way Junction)
+1654694384 StructureInsulatedPipeLiquidCrossJunction5 Insulated Liquid Pipe (5-Way Junction)
+-72748982 StructureInsulatedPipeLiquidCrossJunction6 Insulated Liquid Pipe (6-Way Junction)
+295678685 StructureInsulatedPipeLiquidStraight Insulated Liquid Pipe (Straight)
+-1331405428 StructureInsulatedPipeLiquidStraight10 Insulated Liquid Pipe (Straight 10)
+-1784561856 StructureInsulatedPipeLiquidStraight3 Insulated Liquid Pipe (Straight 3)
+2093095541 StructureInsulatedPipeLiquidStraight5 Insulated Liquid Pipe (Straight 5)
+-532384855 StructureInsulatedPipeLiquidTJunction Insulated Liquid Pipe (T Junction)
+2134172356 StructureInsulatedPipeStraight Insulated Pipe (Straight)
+1087359947 StructureInsulatedPipeStraight10 Insulated Pipe (Straight 10)
+-240862000 StructureInsulatedPipeStraight3 Insulated Pipe (Straight 3)
+415701477 StructureInsulatedPipeStraight5 Insulated Pipe (Straight 5)
+-2076086215 StructureInsulatedPipeTJunction Insulated Pipe (T Junction)
+-31273349 StructureInsulatedTankConnector Insulated Tank Connector
+-1602030414 StructureInsulatedTankConnectorLiquid Insulated Tank Connector Liquid
+-2096421875 StructureInteriorDoorGlass Interior Door Glass
+847461335 StructureInteriorDoorPadded Interior Door Padded
+1981698201 StructureInteriorDoorPaddedThin Interior Door Padded Thin
+-1182923101 StructureInteriorDoorTriangle Interior Door Triangle
+-828056979 StructureKlaxon Klaxon Speaker
+-415420281 StructureLadder Ladder
+1541734993 StructureLadderEnd Ladder End
+-1230658883 StructureLargeDirectHeatExchangeGastoGas Large Direct Heat Exchanger - Gas + Gas
+1412338038 StructureLargeDirectHeatExchangeGastoLiquid Large Direct Heat Exchanger - Gas + Liquid
+792686502 StructureLargeDirectHeatExchangeLiquidtoLiquid Large Direct Heat Exchange - Liquid + Liquid
+-566775170 StructureLargeExtendableRadiator Large Extendable Radiator
+-1351081801 StructureLargeHangerDoor Large Hangar Door
+-988382953 StructureLargeRocketGasFuelTank Gas Capsule Tank Large
+-1374757070 StructureLargeRocketLiquidFuelTank Liquid Capsule Tank Large
+1913391845 StructureLargeSatelliteDish Large Satellite Dish
+1978422481 StructureLarreDockAtmos LArRE Dock (Atmos)
+1011275082 StructureLarreDockBypass LArRE Dock (Bypass)
+-1555459562 StructureLarreDockCargo LArRE Dock (Cargo)
+-522428667 StructureLarreDockCollector LArRE Dock (Collector)
+85133079 StructureLarreDockHydroponics LArRE Dock (Hydroponics)
+-558953231 StructureLaunchMount Launch Mount
+797794350 StructureLightLong Wall Light (Long)
+1847265835 StructureLightLongAngled Wall Light (Long Angled)
+555215790 StructureLightLongWide Wall Light (Long Wide)
+1514476632 StructureLightRound Light Round
+1592905386 StructureLightRoundAngled Light Round (Angled)
+1436121888 StructureLightRoundSmall Light Round (Small)
+1687692899 StructureLiquidDrain Active Liquid Outlet
+-2113838091 StructureLiquidPipeAnalyzer Liquid Pipe Analyzer
+-287495560 StructureLiquidPipeHeater Pipe Heater (Liquid)
+2072805863 StructureLiquidPipeRadiator Liquid Pipe Convection Radiator
+482248766 StructureLiquidPressureRegulator Liquid Volume Regulator
+1098900430 StructureLiquidTankBig Liquid Tank Big
+-1430440215 StructureLiquidTankBigInsulated Liquid Tank Big (Insulated)
+1988118157 StructureLiquidTankSmall Liquid Tank Small
+608607718 StructureLiquidTankSmallInsulated Liquid Tank Small (Insulated)
+1691898022 StructureLiquidTankStorage Liquid Tank Storage
+-1051805505 StructureLiquidTurboVolumePump Turbo Volume Pump (Liquid)
+1734723642 StructureLiquidUmbilicalFemale Umbilical Socket (Liquid)
+1220870319 StructureLiquidUmbilicalFemaleSide Umbilical Socket Angle (Liquid)
+-1798420047 StructureLiquidUmbilicalMale Umbilical (Liquid)
+1849974453 StructureLiquidValve Valve (Liquid)
+-454028979 StructureLiquidVolumePump Liquid Volume Pump
+-647164662 StructureLockerSmall Locker (Small)
+264413729 StructureLogicBatchReader Batch Reader
+436888930 StructureLogicBatchSlotReader Batch Slot Reader
+1415443359 StructureLogicBatchWriter Batch Writer
+491845673 StructureLogicButton Button
+-1489728908 StructureLogicCompare Logic Compare
+554524804 StructureLogicDial Dial
+1942143074 StructureLogicGate Logic Gate
+2077593121 StructureLogicHashGen Logic Hash Generator
+1657691323 StructureLogicMath Logic Math
+-1160020195 StructureLogicMathUnary Math Unary
+-851746783 StructureLogicMemory Logic Memory
+929022276 StructureLogicMinMax Logic Min/Max
+2096189278 StructureLogicMirror Logic Mirror
+-1905534007 StructureLogicPidController PID Controller
+-345383640 StructureLogicReader Logic Reader
+-124308857 StructureLogicReagentReader Reagent Reader
+876108549 StructureLogicRocketDownlink Logic Rocket Downlink
+546002924 StructureLogicRocketUplink Logic Uplink
+1822736084 StructureLogicSelect Logic Select
+-767867194 StructureLogicSlotReader Slot Reader
+873418029 StructureLogicSorter Logic Sorter
+1220484876 StructureLogicSwitch Lever
+321604921 StructureLogicSwitch2 Switch
+-693235651 StructureLogicTransmitter Logic Transmitter
+-1326019434 StructureLogicWriter Logic Writer
+-1321250424 StructureLogicWriterSwitch Logic Writer Switch
+1435578852 StructureManualFloorHatch Manual Floor Hatch
+-1808154199 StructureManualHatch Manual Hatch
+-1918215845 StructureMediumConvectionRadiator Medium Convection Radiator
+-1169014183 StructureMediumConvectionRadiatorLiquid Medium Convection Radiator Liquid
+-566348148 StructureMediumHangerDoor Medium Hangar Door
+-975966237 StructureMediumRadiator Medium Radiator
+-1141760613 StructureMediumRadiatorLiquid Medium Radiator Liquid
+-1093860567 StructureMediumRocketGasFuelTank Gas Capsule Tank Medium
+1143639539 StructureMediumRocketLiquidFuelTank Liquid Capsule Tank Medium
+-1713470563 StructureMotionSensor Motion Sensor
+1898243702 StructureNitrolyzer Nitrolyzer
+322782515 StructureOccupancySensor Occupancy Sensor
+-1794932560 StructureOverheadShortCornerLocker Overhead Corner Locker
+1468249454 StructureOverheadShortLocker Overhead Locker
+2066977095 StructurePassiveLargeRadiatorGas Medium Convection Radiator
+24786172 StructurePassiveLargeRadiatorLiquid Medium Convection Radiator Liquid
+1812364811 StructurePassiveLiquidDrain Passive Liquid Drain
+335498166 StructurePassiveVent Passive Vent
+1363077139 StructurePassiveVentInsulated Insulated Passive Vent
+-75599100 StructurePassiveVentValve Passive Vent (Valve)
+-1674187440 StructurePassthroughHeatExchangerGasToGas CounterFlow Heat Exchanger - Gas + Gas
+1928991265 StructurePassthroughHeatExchangerGasToLiquid CounterFlow Heat Exchanger - Gas + Liquid
+-1472829583 StructurePassthroughHeatExchangerLiquidToLiquid CounterFlow Heat Exchanger - Liquid + Liquid
+-1434523206 StructurePictureFrameThickLandscapeLarge Picture Frame Thick Landscape Large
+-2041566697 StructurePictureFrameThickLandscapeSmall Picture Frame Thick Landscape Small
+950004659 StructurePictureFrameThickMountLandscapeLarge Picture Frame Thick Landscape Large
+347154462 StructurePictureFrameThickMountLandscapeSmall Picture Frame Thick Landscape Small
+-1459641358 StructurePictureFrameThickMountPortraitLarge Picture Frame Thick Mount Portrait Large
+-2066653089 StructurePictureFrameThickMountPortraitSmall Picture Frame Thick Mount Portrait Small
+-1686949570 StructurePictureFrameThickPortraitLarge Picture Frame Thick Portrait Large
+-1218579821 StructurePictureFrameThickPortraitSmall Picture Frame Thick Portrait Small
+-1418288625 StructurePictureFrameThinLandscapeLarge Picture Frame Thin Landscape Large
+-2024250974 StructurePictureFrameThinLandscapeSmall Picture Frame Thin Landscape Small
+-1146760430 StructurePictureFrameThinMountLandscapeLarge Picture Frame Thin Landscape Large
+-1752493889 StructurePictureFrameThinMountLandscapeSmall Picture Frame Thin Landscape Small
+1094895077 StructurePictureFrameThinMountPortraitLarge Picture Frame Thin Portrait Large
+1835796040 StructurePictureFrameThinMountPortraitSmall Picture Frame Thin Portrait Small
+1212777087 StructurePictureFrameThinPortraitLarge Picture Frame Thin Portrait Large
+1684488658 StructurePictureFrameThinPortraitSmall Picture Frame Thin Portrait Small
+435685051 StructurePipeAnalysizer Pipe Analyzer
+-1785673561 StructurePipeCorner Pipe (Corner)
+465816159 StructurePipeCowl Passive Vent (Pipe Cowl)
+-1405295588 StructurePipeCrossJunction Pipe (Cross Junction)
+2038427184 StructurePipeCrossJunction3 Pipe (3-Way Junction)
+-417629293 StructurePipeCrossJunction4 Pipe (4-Way Junction)
+-1877193979 StructurePipeCrossJunction5 Pipe (5-Way Junction)
+152378047 StructurePipeCrossJunction6 Pipe (6-Way Junction)
+-419758574 StructurePipeHeater Pipe Heater (Gas)
+1286441942 StructurePipeIgniter Pipe Igniter
+-2068497073 StructurePipeInsulatedLiquidCrossJunction Insulated Liquid Pipe (Cross Junction)
+-999721119 StructurePipeLabel Pipe Label
+-1856720921 StructurePipeLiquidCorner Liquid Pipe (Corner)
+1848735691 StructurePipeLiquidCrossJunction Liquid Pipe (Cross Junction)
+1628087508 StructurePipeLiquidCrossJunction3 Liquid Pipe (3-Way Junction)
+-9555593 StructurePipeLiquidCrossJunction4 Liquid Pipe (4-Way Junction)
+-2006384159 StructurePipeLiquidCrossJunction5 Liquid Pipe (5-Way Junction)
+291524699 StructurePipeLiquidCrossJunction6 Liquid Pipe (6-Way Junction)
+-523832822 StructurePipeLiquidOneWayValveLever One Way Valve (Liquid)
+667597982 StructurePipeLiquidStraight Liquid Pipe (Straight)
+-1941415400 StructurePipeLiquidStraight10 Liquid Pipe (Straight 10)
+2051209828 StructurePipeLiquidStraight3 Liquid Pipe (Straight 3)
+-1826529455 StructurePipeLiquidStraight5 Liquid Pipe (Straight 5)
+262616717 StructurePipeLiquidTJunction Liquid Pipe (T Junction)
+-1798362329 StructurePipeMeter Pipe Meter
+1289581593 StructurePipeOneWayValveLever One Way Valve (Gas)
+1305252611 StructurePipeOrgan Pipe Organ
+1696603168 StructurePipeRadiator Pipe Convection Radiator
+-399883995 StructurePipeRadiatorFlat Pipe Radiator
+2024754523 StructurePipeRadiatorFlatLiquid Pipe Radiator Liquid
+73728932 StructurePipeStraight Pipe (Straight)
+-230749741 StructurePipeStraight10 Pipe (Straight 10)
+-1133671319 StructurePipeStraight3 Pipe (Straight 3)
+1426991452 StructurePipeStraight5 Pipe (Straight 5)
+-913817472 StructurePipeTJunction Pipe (T Junction)
+-1125641329 StructurePlanter Planter
+1559586682 StructurePlatformLadderOpen Ladder Platform
+989835703 StructurePlinth Plinth
+-899013427 StructurePortablesConnector Portables Connector
+-782951720 StructurePowerConnector Power Connector
+-65087121 StructurePowerTransmitter Microwave Power Transmitter
+-327468845 StructurePowerTransmitterOmni Power Transmitter Omni
+1195820278 StructurePowerTransmitterReceiver Microwave Power Receiver
+101488029 StructurePowerUmbilicalFemale Umbilical Socket (Power)
+1922506192 StructurePowerUmbilicalFemaleSide Umbilical Socket Angle (Power)
+1529453938 StructurePowerUmbilicalMale Umbilical (Power)
+938836756 StructurePoweredVent Powered Vent
+-785498334 StructurePoweredVentLarge Powered Vent Large
+23052817 StructurePressurantValve Pressurant Valve
+-624011170 StructurePressureFedGasEngine Pressure Fed Gas Engine
+379750958 StructurePressureFedLiquidEngine Pressure Fed Liquid Engine
+-2008706143 StructurePressurePlateLarge Trigger Plate (Large)
+1269458680 StructurePressurePlateMedium Trigger Plate (Medium)
+-1536471028 StructurePressurePlateSmall Trigger Plate (Small)
+209854039 StructurePressureRegulator Pressure Regulator
+568800213 StructureProximitySensor Proximity Sensor
+-2031440019 StructurePumpedLiquidEngine Pumped Liquid Engine
+-737232128 StructurePurgeValve Purge Valve
+-1756913871 StructureRailing Railing Industrial (Type 1)
+-1633947337 StructureRecycler Recycler
+-1577831321 StructureRefrigeratedVendingMachine Refrigerated Vending Machine
+2027713511 StructureReinforcedCompositeWindow Reinforced Window (Composite)
+-816454272 StructureReinforcedCompositeWindowSteel Reinforced Window (Composite Steel)
+-475746988 StructureReinforcedWall Reinforced Wall
+1939061729 StructureReinforcedWallPaddedWindow Reinforced Window (Padded)
+158502707 StructureReinforcedWallPaddedWindowThin Reinforced Window (Thin)
+-2131782367 StructureRobotArmDoor Linear Rail Door
+-1818718810 StructureRoboticArmDock LArRE Dock
+-1323992709 StructureRoboticArmRailCorner Linear Rail Corner
+1974053060 StructureRoboticArmRailCornerStop Linear Rail Corner Station
+-267108827 StructureRoboticArmRailInnerCorner Linear Rail Inner Corner
+-33470826 StructureRoboticArmRailOuterCorner Linear Rail Outer Corner
+-2056592380 StructureRoboticArmRailScrewLeft Linear Rail Screw Left
+-265202332 StructureRoboticArmRailScrewRight Linear Rail Screw Right
+-1785844184 StructureRoboticArmRailStraight Linear Rail Straight
+1800701885 StructureRoboticArmRailStraightStop Linear Rail Straight Station
+808389066 StructureRocketAvionics Rocket Avionics
+997453927 StructureRocketCelestialTracker Rocket Celestial Tracker
+150135861 StructureRocketCircuitHousing Rocket Circuit Housing
+178472613 StructureRocketEngineTiny Rocket Engine (Tiny)
+-1061194321 StructureRocketFiltrationGas Rocket Gas Filtration
+-1720125735 StructureRocketGasCollector Rocket Gas Collector
+1781051034 StructureRocketManufactory Rocket Manufactory
+-2087223687 StructureRocketMiner Rocket Miner
+2014252591 StructureRocketScanner Rocket Scanner
+-654619479 StructureRocketTower Launch Tower
+518925193 StructureRocketTransformerSmall Transformer Small (Rocket)
+-1875856925 StructureSDBHopper SDB Hopper
+467225612 StructureSDBHopperAdvanced SDB Hopper Advanced
+1155865682 StructureSDBSilo SDB Silo
+439026183 StructureSatelliteDish Medium Satellite Dish
+-641491515 StructureSecurityPrinter Security Printer
+1172114950 StructureShelf Shelf
+182006674 StructureShelfMedium Shelf Medium
+1330754486 StructureShortCornerLocker Short Corner Locker
+-554553467 StructureShortLocker Short Locker
+-775128944 StructureShower Shower
+-1081797501 StructureShowerPowered Shower (Powered)
+879058460 StructureSign1x1 Sign 1x1
+908320837 StructureSign2x1 Sign 2x1
+-492611 StructureSingleBed Single Bed
+-1467449329 StructureSleeper Sleeper
+1213495833 StructureSleeperLeft Sleeper Left
+-1812330717 StructureSleeperRight Sleeper Right
+-1300059018 StructureSleeperVertical Sleeper Vertical
+1382098999 StructureSleeperVerticalDroid Droid Sleeper Vertical
+1310303582 StructureSmallDirectHeatExchangeGastoGas Small Direct Heat Exchanger - Gas + Gas
+1825212016 StructureSmallDirectHeatExchangeLiquidtoGas Small Direct Heat Exchanger - Liquid + Gas 
+-507770416 StructureSmallDirectHeatExchangeLiquidtoLiquid Small Direct Heat Exchanger - Liquid + Liquid
+-2138748650 StructureSmallSatelliteDish Small Satellite Dish
+-1633000411 StructureSmallTableBacklessDouble Small (Table Backless Double)
+-1897221677 StructureSmallTableBacklessSingle Small (Table Backless Single)
+1260651529 StructureSmallTableDinnerSingle Small (Table Dinner Single)
+-660451023 StructureSmallTableRectangleDouble Small (Table Rectangle Double)
+-924678969 StructureSmallTableRectangleSingle Small (Table Rectangle Single)
+-19246131 StructureSmallTableThickDouble Small (Table Thick Double)
+-291862981 StructureSmallTableThickSingle Small Table (Thick Single)
+-2045627372 StructureSolarPanel Solar Panel
+-1554349863 StructureSolarPanel45 Solar Panel (Angled)
+930865127 StructureSolarPanel45Reinforced Solar Panel (Heavy Angled)
+-539224550 StructureSolarPanelDual Solar Panel (Dual)
+-1545574413 StructureSolarPanelDualReinforced Solar Panel (Heavy Dual)
+1968102968 StructureSolarPanelFlat Solar Panel (Flat)
+1697196770 StructureSolarPanelFlatReinforced Solar Panel (Heavy Flat)
+-934345724 StructureSolarPanelReinforced Solar Panel (Heavy)
+813146305 StructureSolidFuelGenerator Generator (Solid Fuel)
+-1009150565 StructureSorter Sorter
+-2020231820 StructureStacker Stacker
+1585641623 StructureStackerReverse Stacker
+1405018945 StructureStairs4x2 Stairs
+155214029 StructureStairs4x2RailL Stairs with Rail (Left)
+-212902482 StructureStairs4x2RailR Stairs with Rail (Right)
+-1088008720 StructureStairs4x2Rails Stairs with Rails
+505924160 StructureStairwellBackLeft Stairwell (Back Left)
+-862048392 StructureStairwellBackPassthrough Stairwell (Back Passthrough)
+-2128896573 StructureStairwellBackRight Stairwell (Back Right)
+-37454456 StructureStairwellFrontLeft Stairwell (Front Left)
+-1625452928 StructureStairwellFrontPassthrough Stairwell (Front Passthrough)
+340210934 StructureStairwellFrontRight Stairwell (Front Right)
+2049879875 StructureStairwellNoDoors Stairwell (No Doors)
+-260316435 StructureStirlingEngine Stirling Engine
+-793623899 StructureStorageLocker Locker
+255034731 StructureSuitStorage Suit Storage
+-504802150 StructureSuitStorageFrame Suit Storage Frame
+-346183425 StructureSuitStorageLocker Suit Storage Locker
+-1606848156 StructureTankBig Large Tank
+1280378227 StructureTankBigInsulated Tank Big (Insulated)
+1013514688 StructureTankSmall Small Tank
+955744474 StructureTankSmallAir Small Tank (Air)
+2102454415 StructureTankSmallFuel Small Tank (Fuel)
+272136332 StructureTankSmallInsulated Tank Small (Insulated)
+-465741100 StructureToolManufactory Tool Manufactory
+1570931620 StructureTraderWaypoint Trader Waypoint
+-1423212473 StructureTransformer Transformer (Large)
+-1065725831 StructureTransformerMedium Transformer (Medium)
+-890946730 StructureTransformerSmall Transformer (Small)
+1054059374 StructureTransformerSmallReversed Transformer Reversed (Small)
+1310794736 StructureTurboVolumePump Turbo Volume Pump (Gas)
+750118160 StructureUnloader Unloader
+1622183451 StructureUprightWindTurbine Upright Wind Turbine
+-692036078 StructureValve Valve (Gas)
+-443130773 StructureVendingMachine Vending Machine
+19591354 StructureVendingMachineSmall Vending Machine Small
+-321403609 StructureVolumePump Volume Pump
+-858143148 StructureWallArch Wall (Arch)
+1649708822 StructureWallArchArrow Wall (Arch Arrow)
+1794588890 StructureWallArchCornerRound Wall (Arch Corner Round)
+-1963016580 StructureWallArchCornerSquare Wall (Arch Corner Square)
+1281911841 StructureWallArchCornerTriangle Wall (Arch Corner Triangle)
+1182510648 StructureWallArchPlating Wall (Arch Plating)
+782529714 StructureWallArchTwoTone Wall (Arch Two Tone)
+-739292323 StructureWallCooler Wall Cooler
+1635864154 StructureWallFlat Wall (Flat)
+898708250 StructureWallFlatCornerRound Wall (Flat Corner Round)
+298130111 StructureWallFlatCornerSquare Wall (Flat Corner Square)
+2097419366 StructureWallFlatCornerTriangle Wall (Flat Corner Triangle)
+-1161662836 StructureWallFlatCornerTriangleFlat Wall (Flat Corner Triangle Flat)
+1979212240 StructureWallGeometryCorner Wall (Geometry Corner)
+1049735537 StructureWallGeometryStreight Wall (Geometry Straight)
+1602758612 StructureWallGeometryT Wall (Geometry T)
+-1427845483 StructureWallGeometryTMirrored Wall (Geometry T Mirrored)
+24258244 StructureWallHeater Wall Heater
+1287324802 StructureWallIron Iron Wall (Type 1)
+1485834215 StructureWallIron02 Iron Wall (Type 2)
+798439281 StructureWallIron03 Iron Wall (Type 3)
+-1309433134 StructureWallIron04 Iron Wall (Type 4)
+1492930217 StructureWallLargePanel Wall (Large Panel)
+-776581573 StructureWallLargePanelArrow Wall (Large Panel Arrow)
+-1860064656 StructureWallLight Wall Light
+-1306415132 StructureWallLightBattery Wall Light (Battery)
+1590330637 StructureWallPaddedArch Wall (Padded Arch)
+-1126688298 StructureWallPaddedArchCorner Wall (Padded Arch Corner)
+1171987947 StructureWallPaddedArchLightFittingTop Wall (Padded Arch Light Fitting Top)
+-1546743960 StructureWallPaddedArchLightsFittings Wall (Padded Arch Lights Fittings)
+-155945899 StructureWallPaddedCorner Wall (Padded Corner)
+1183203913 StructureWallPaddedCornerThin Wall (Padded Corner Thin)
+8846501 StructureWallPaddedNoBorder Wall (Padded No Border)
+179694804 StructureWallPaddedNoBorderCorner Wall (Padded No Border Corner)
+-1611559100 StructureWallPaddedThinNoBorder Wall (Padded Thin No Border)
+1769527556 StructureWallPaddedThinNoBorderCorner Wall (Padded Thin No Border Corner)
+2087628940 StructureWallPaddedWindow Wall (Padded Window)
+-37302931 StructureWallPaddedWindowThin Wall (Padded Window Thin)
+635995024 StructureWallPadding Wall (Padding)
+-1243329828 StructureWallPaddingArchVent Wall (Padding Arch Vent)
+2024882687 StructureWallPaddingLightFitting Wall (Padding Light Fitting)
+-1102403554 StructureWallPaddingThin Wall (Padding Thin)
+26167457 StructureWallPlating Wall (Plating)
+619828719 StructureWallSmallPanelsAndHatch Wall (Small Panels And Hatch)
+-639306697 StructureWallSmallPanelsArrow Wall (Small Panels Arrow)
+386820253 StructureWallSmallPanelsMonoChrome Wall (Small Panels Mono Chrome)
+-1407480603 StructureWallSmallPanelsOpen Wall (Small Panels Open)
+1709994581 StructureWallSmallPanelsTwoTone Wall (Small Panels Two Tone)
+-1177469307 StructureWallVent Passive Vent (Passthrough)
+-756587791 StructureWaterBottleFillerPowered Waterbottle Filler
+1986658780 StructureWaterBottleFillerPoweredBottom Waterbottle Filler
+-517628750 StructureWaterDigitalValve Liquid Digital Valve
+433184168 StructureWaterPipeMeter Liquid Pipe Meter
+887383294 StructureWaterPurifier Water Purifier
+-1369060582 StructureWaterWallCooler Liquid Wall Cooler
+1997212478 StructureWeatherStation Weather Station
+-2082355173 StructureWindTurbine Wind Turbine
+1700018136 ToolPrinterMod Tool Printer Mod
+94730034 ToyLuna Toy Luna
+-2083426457 UniformCommander Uniform Commander
+-48342840 UniformMarine Marine Uniform
+810053150 UniformOrangeJumpSuit Jump Suit (Orange)

@@ -3,17 +3,31 @@ name = "ic10lsp"
 version = "0.7.5"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "ic10lsp_lib"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "ic10lsp"
 
 [dependencies]
 clap = { version = "4.1.13", features = ["derive"] }
-phf = {version="0.13.1", features=["macros"]}
-regex = "1.9.3"
+phf = { version = "0.13.1", features = ["macros"] }
 serde_json = "1.0.94"
-tokio = {version="1.48.0", features=["full"]}
-tower-lsp = "0.20.0"
-tree-sitter = "0.25.7"
 tree-sitter-ic10 = "0.6.2"
 
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+tokio = { version = "1.48.0", features = ["full"] }
+tree-sitter = "0.25.7"
+tower-lsp = {version = "0.20.0"}
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+tokio = { version = "1.48.0", features = ["sync", "macros", "io-util", "rt"] }
+tree-sitter-c2rust = "0.25.2"
+tower-lsp = {version = "0.20.0", default-features = false, features = ["runtime-agnostic"] }
+
+
 [build-dependencies]
+indoc = "2.0.7"
+itertools = "0.14.0"
 phf_codegen = "0.13.1"

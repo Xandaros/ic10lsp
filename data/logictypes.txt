@@ -1,0 +1,280 @@
+Acceleration 216 Change in velocity. Rockets that are deccelerating when landing will show this as negative value.
+Activate 9 1 if device is activated (usually means running), otherwise 0
+AirRelease 75 The current state of the air release system, for example AirRelease = 1 for a Hardsuit sets Air Release to On
+AlignmentError 243 The angular discrepancy between the telescope's current orientation and the target. Indicates how 'off target' the telescope is. Returns NaN when no target.
+Altitude 269 The altitude that the rocket above the planet's surface. -1 if the rocket is in space.
+Apex 238 The lowest altitude that the rocket will reach before it starts travelling upwards again.
+AutoLand 226 Engages the automatic landing algorithm. The rocket will automatically throttle and turn on and off its engines to achieve a smooth landing.
+AutoShutOff 218 Turns off all devices in the rocket upon reaching destination
+BestContactFilter 267 Filters the satellite's auto selection of targets to a single reference ID.
+Bpm 103 Bpm
+BurnTimeRemaining 225 Estimated time in seconds until fuel is depleted. Calculated based on current fuel usage.
+CelestialHash 242 The current hash of the targeted celestial object.
+CelestialParentHash 250 The hash for the name of the parent the celestial is orbiting, 0 if there is no parent celestial.
+Channel0 165 Channel on a cable network which should be considered volatile
+Channel1 166 Channel on a cable network which should be considered volatile
+Channel2 167 Channel on a cable network which should be considered volatile
+Channel3 168 Channel on a cable network which should be considered volatile
+Channel4 169 Channel on a cable network which should be considered volatile
+Channel5 170 Channel on a cable network which should be considered volatile
+Channel6 171 Channel on a cable network which should be considered volatile
+Channel7 172 Channel on a cable network which should be considered volatile
+Charge 11 The current charge the device has
+Chart 256 Progress status of Chart scan at the rocket's target Space Map Location. Returns a clamped normalised value. If Chart scan is not available returns -1.
+ChartedNavPoints 259 The number of charted NavPoints at the rocket's target Space Map Location.
+ClearMemory 62 When set to 1, clears the counter memory (e.g. ExportCount). Will set itself back to 0 when actioned
+CollectableGoods 101 Gets the cost of fuel to return the rocket to your current world.
+Color 38 \n        Whether driven by concerns for clarity, safety or simple aesthetics, Stationeers have access to a small rainbow of colors for their constructions. These are the color setting for devices, represented as an integer.\n\n0: Blue\n1: Grey\n2: Green\n3: Orange\n4: Red\n5: Yellow\n6: White\n7: Black\n8: Brown\n9: Khaki\n10: Pink\n11: Purple\n\n        It is an unwavering universal law that anything higher than 11 will be purple. The ODA is powerless to change this. Similarly, anything lower than 0 will be Blue.\n      
+Combustion 98 The assess atmosphere is on fire. Returns 1 if atmosphere is on fire, 0 if not.
+CombustionInput 146 The assess atmosphere is on fire. Returns 1 if device's input network is on fire, 0 if not.
+CombustionInput2 147 The assess atmosphere is on fire. Returns 1 if device's Input2 network is on fire, 0 if not.
+CombustionLimiter 153 Retards the rate of combustion inside the machine (range: 0-100), with 0 being the slowest rate of combustion and 100 being the fastest
+CombustionOutput 148 The assess atmosphere is on fire. Returns 1 if device's Output network is on fire, 0 if not.
+CombustionOutput2 149 The assess atmosphere is on fire. Returns 1 if device's Output2 network is on fire, 0 if not.
+CompletionRatio 61 How complete the current production is for this device, between 0 and 1
+ContactTypeId 198 The type id of the contact.
+CurrentCode 261 The Space Map Address of the rockets current Space Map Location
+CurrentResearchPodType 93 <A:EN:1890273128>
+Density 262 The density of the rocket's target site's mine-able deposit.
+DerivativeGain 276 The derivative gain of the PID controller. This value determines how much the controller responds to the rate of change of the error. A higher value can help dampen oscillations and improve stability, but may also lead to noise amplification.
+DestinationCode 215 The Space Map Address of the rockets target Space Map Location
+Discover 255 Progress status of Discovery scan at the rocket's target Space Map Location. Returns a clamped normalised value. If Discovery scan is not available returns -1.
+DistanceAu 244 The current distance to the celestial object, measured in astronomical units.
+DistanceKm 249 The current distance to the celestial object, measured in kilometers.
+DrillCondition 240 The current condition of the drill head in this devices drill slot. Expressed as a ratio between 0 and 1.
+DryMass 220 The Mass in kilograms of the rocket excluding fuel. The more massive the rocket the more fuel will be required to move to a new location in space.
+Eccentricity 247 A measure of how elliptical (oval) an orbit is. Ranges from 0 (a perfect circle) to 1 (a parabolic trajectory).
+ElevatorLevel 40 Level the elevator is currently at
+ElevatorSpeed 39 Current speed of the elevator
+EntityState 239 The current entity state, such as whether it is dead, unconscious or alive, expressed as a state integer.
+EnvironmentEfficiency 104 The Environment Efficiency reported by the machine, as a float between 0 and 1
+Error 4 1 if device is in error state, otherwise 0
+ExhaustVelocity 235 The velocity of the exhaust gas in m/s
+ExportCount 63 How many items exported since last ClearMemory
+ExportQuantity 31 Total quantity of items exported by the device
+ExportSlotHash 42 DEPRECATED
+ExportSlotOccupant 32 DEPRECATED
+Extended 272 Extended
+Filtration 74 The current state of the filtration system, for example Filtration = 1 for a Hardsuit sets filtration to On
+FlightControlRule 236 Flight control rule of rocket. None = 0, No AutoPilot. Normal = 1, Target Decent Apex of 60m. Alternate = 2, Velocity to High - Full throttle. Alternate2 = 3, Target an appropriate decent velocity as velocity is too low. FinalApproach = 4, Descend towards launch mount in a controlled manner.
+Flush 174 Set to 1 to activate the flush function on the device
+ForceWrite 85 Forces Logic Writer devices to rewrite value
+ForwardX 227 The direction the entity is facing expressed as a normalized vector
+ForwardY 228 The direction the entity is facing expressed as a normalized vector
+ForwardZ 229 The direction the entity is facing expressed as a normalized vector
+Fuel 99 Gets the cost of fuel to return the rocket to your current world.
+Harvest 69 Performs the harvesting action for any plant based machinery
+Horizontal 20 Horizontal setting of the device
+HorizontalRatio 34 Radio of horizontal setting for device
+Idle 37 Returns 1 if the device is currently idle, otherwise 0
+ImportCount 64 How many items imported since last ClearMemory
+ImportQuantity 29 Total quantity of items imported by the device
+ImportSlotHash 43 DEPRECATED
+ImportSlotOccupant 30 DEPRECATED
+Inclination 246 The tilt of an orbit's plane relative to the equatorial plane, measured in degrees. Defines the orbital plane's angle.
+Index 241 The current index for the device.
+IntegralGain 275 The integral gain of the PID controller. This value determines how much the controller responds to the accumulated error over time. A higher value can help eliminate steady-state errors but may also lead to oscillations or instability.
+InterrogationProgress 157 Progress of this sattellite dish's interrogation of its current target, as a ratio from 0-1
+LineNumber 173 The line number of current execution for an integrated circuit running on this device. While this number can be written, use with caution
+Lock 10 1 if device is locked, otherwise 0, can be set in most devices and prevents the user from access the values
+ManualResearchRequiredPod 94 Sets the pod type to search for a certain pod when breaking down a pods.
+Mass 219 The total Mass of the rocket in kilograms including fuel and cargo. The more massive the rocket the more fuel will be required to move to a new location in space.
+Maximum 23 Maximum setting of the device
+MineablesInQueue 96 Returns the amount of mineables AIMEe has queued up to mine.
+MineablesInVicinity 95 Returns the amount of potential mineables within an extended area around AIMEe.
+MinedQuantity 266 The total number of resources that have been mined at the rocket's target Space Map Site.
+Minimum 277 Minimum value for provided logic device.
+MinimumWattsToContact 163 Minimum required amount of watts from the dish hitting the target trader contact to start interrogating the contact
+Mode 3 Integer for mode state, different devices will have different mode states available to them
+NameHash 268 Provides the hash value for the name of the object as a 32 bit integer.
+NavPoints 258 The number of NavPoints at the rocket's target Space Map Location.
+NetworkFault 273 Attached network is experiencing a fault, such as a pipe burst or other failure.
+NextWeatherEventTime 97 Returns in seconds when the next weather event is inbound.
+None 0 No description
+On 28 The current state of the device, 0 for off, 1 for on
+Open 2 1 if device is open, otherwise 0
+OperationalTemperatureEfficiency 150 How the input pipe's temperature effects the machines efficiency
+OrbitPeriod 245 The time it takes for an object to complete one full orbit around another object, measured in days. Indicates the duration of the orbital cycle.
+Orientation 230 The orientation of the entity in degrees in a plane relative towards the north origin
+Output 70 The output operation for a sort handling device, such as a stacker or sorter, when in logic mode the device will only action one repetition when set zero or above and then back to -1 and await further instructions
+PassedMoles 234 The number of moles that passed through this device on the previous simulation tick
+Plant 68 Performs the planting action for any plant based machinery
+PlantEfficiency1 52 DEPRECATED
+PlantEfficiency2 53 DEPRECATED
+PlantEfficiency3 54 DEPRECATED
+PlantEfficiency4 55 DEPRECATED
+PlantGrowth1 48 DEPRECATED
+PlantGrowth2 49 DEPRECATED
+PlantGrowth3 50 DEPRECATED
+PlantGrowth4 51 DEPRECATED
+PlantHash1 56 DEPRECATED
+PlantHash2 57 DEPRECATED
+PlantHash3 58 DEPRECATED
+PlantHash4 59 DEPRECATED
+PlantHealth1 44 DEPRECATED
+PlantHealth2 45 DEPRECATED
+PlantHealth3 46 DEPRECATED
+PlantHealth4 47 DEPRECATED
+PositionX 76 The current position in X dimension in world coordinates
+PositionY 77 The current position in Y dimension in world coordinates
+PositionZ 78 The current position in Z dimension in world coordinates
+Power 1 Can be read to return if the device is correctly powered or not, set via the power system, return 1 if powered and 0 if not
+PowerActual 26 How much energy the device or network is actually using
+PowerGeneration 65 Returns how much power is being generated
+PowerPotential 25 How much energy the device or network potentially provides
+PowerRequired 36 Power requested from the device and/or network
+PrefabHash 84 The hash of the structure
+Pressure 5 The current pressure reading of the device
+PressureEfficiency 152 How the pressure of the input pipe and waste pipe effect the machines efficiency
+PressureExternal 7 Setting for external pressure safety, in KPa. Represents the target pressure of the external atmosphere.
+PressureInput 106 The current pressure reading of the device's Input Network
+PressureInput2 116 The current pressure reading of the device's Input2 Network
+PressureInternal 8 Setting for internal pressure safety, in KPa. Represents the target pressure of the atmosphere inside the connected pipe network.
+PressureOutput 126 The current pressure reading of the device's Output Network
+PressureOutput2 136 The current pressure reading of the device's Output2 Network
+PressureSetting 71 The current setting for the internal pressure of the object (e.g. the Hardsuit Air release), in KPa
+Progress 214 Progress of the rocket to the next node on the map expressed as a value between 0-1.
+ProportionalGain 274 The proportional gain of the PID controller. This value determines how aggressively the controller responds to the error between the setpoint and the process variable. A higher value results in a faster response but may lead to overshoot or instability.
+Quantity 27 Total quantity on the device
+Ratio 24 Context specific value depending on device, 0 to 1 based ratio
+RatioCarbonDioxide 15 The ratio of Carbon Dioxide in device atmosphere
+RatioCarbonDioxideInput 109 The ratio of Carbon Dioxide in device's input network
+RatioCarbonDioxideInput2 119 The ratio of Carbon Dioxide in device's Input2 network
+RatioCarbonDioxideOutput 129 The ratio of Carbon Dioxide in device's Output network
+RatioCarbonDioxideOutput2 139 The ratio of Carbon Dioxide in device's Output2 network
+RatioHydrogen 252 The ratio of Hydrogen in device's Atmopshere
+RatioLiquidCarbonDioxide 199 The ratio of Liquid Carbon Dioxide in device's Atmosphere
+RatioLiquidCarbonDioxideInput 200 The ratio of Liquid Carbon Dioxide in device's Input Atmosphere
+RatioLiquidCarbonDioxideInput2 201 The ratio of Liquid Carbon Dioxide in device's Input2 Atmosphere
+RatioLiquidCarbonDioxideOutput 202 The ratio of Liquid Carbon Dioxide in device's device's Output Atmosphere
+RatioLiquidCarbonDioxideOutput2 203 The ratio of Liquid Carbon Dioxide in device's Output2 Atmopshere
+RatioLiquidHydrogen 253 The ratio of Liquid Hydrogen in device's Atmopshere
+RatioLiquidNitrogen 177 The ratio of Liquid Nitrogen in device atmosphere
+RatioLiquidNitrogenInput 178 The ratio of Liquid Nitrogen in device's input network
+RatioLiquidNitrogenInput2 179 The ratio of Liquid Nitrogen in device's Input2 network
+RatioLiquidNitrogenOutput 180 The ratio of Liquid Nitrogen in device's Output network
+RatioLiquidNitrogenOutput2 181 The ratio of Liquid Nitrogen in device's Output2 network
+RatioLiquidNitrousOxide 209 The ratio of Liquid Nitrous Oxide in device's Atmosphere
+RatioLiquidNitrousOxideInput 210 The ratio of Liquid Nitrous Oxide in device's Input Atmosphere
+RatioLiquidNitrousOxideInput2 211 The ratio of Liquid Nitrous Oxide in device's Input2 Atmosphere
+RatioLiquidNitrousOxideOutput 212 The ratio of Liquid Nitrous Oxide in device's device's Output Atmosphere
+RatioLiquidNitrousOxideOutput2 213 The ratio of Liquid Nitrous Oxide in device's Output2 Atmopshere
+RatioLiquidOxygen 183 The ratio of Liquid Oxygen in device's Atmosphere
+RatioLiquidOxygenInput 184 The ratio of Liquid Oxygen in device's Input Atmosphere
+RatioLiquidOxygenInput2 185 The ratio of Liquid Oxygen in device's Input2 Atmosphere
+RatioLiquidOxygenOutput 186 The ratio of Liquid Oxygen in device's device's Output Atmosphere
+RatioLiquidOxygenOutput2 187 The ratio of Liquid Oxygen in device's Output2 Atmopshere
+RatioLiquidPollutant 204 The ratio of Liquid Pollutant in device's Atmosphere
+RatioLiquidPollutantInput 205 The ratio of Liquid Pollutant in device's Input Atmosphere
+RatioLiquidPollutantInput2 206 The ratio of Liquid Pollutant in device's Input2 Atmosphere
+RatioLiquidPollutantOutput 207 The ratio of Liquid Pollutant in device's device's Output Atmosphere
+RatioLiquidPollutantOutput2 208 The ratio of Liquid Pollutant in device's Output2 Atmopshere
+RatioLiquidVolatiles 188 The ratio of Liquid Volatiles in device's Atmosphere
+RatioLiquidVolatilesInput 189 The ratio of Liquid Volatiles in device's Input Atmosphere
+RatioLiquidVolatilesInput2 190 The ratio of Liquid Volatiles in device's Input2 Atmosphere
+RatioLiquidVolatilesOutput 191 The ratio of Liquid Volatiles in device's device's Output Atmosphere
+RatioLiquidVolatilesOutput2 192 The ratio of Liquid Volatiles in device's Output2 Atmopshere
+RatioNitrogen 16 The ratio of nitrogen in device atmosphere
+RatioNitrogenInput 110 The ratio of nitrogen in device's input network
+RatioNitrogenInput2 120 The ratio of nitrogen in device's Input2 network
+RatioNitrogenOutput 130 The ratio of nitrogen in device's Output network
+RatioNitrogenOutput2 140 The ratio of nitrogen in device's Output2 network
+RatioNitrousOxide 83 The ratio of Nitrous Oxide in device atmosphere
+RatioNitrousOxideInput 114 The ratio of Nitrous Oxide in device's input network
+RatioNitrousOxideInput2 124 The ratio of Nitrous Oxide in device's Input2 network
+RatioNitrousOxideOutput 134 The ratio of Nitrous Oxide in device's Output network
+RatioNitrousOxideOutput2 144 The ratio of Nitrous Oxide in device's Output2 network
+RatioOxygen 14 The ratio of oxygen in device atmosphere
+RatioOxygenInput 108 The ratio of oxygen in device's input network
+RatioOxygenInput2 118 The ratio of oxygen in device's Input2 network
+RatioOxygenOutput 128 The ratio of oxygen in device's Output network
+RatioOxygenOutput2 138 The ratio of oxygen in device's Output2 network
+RatioPollutant 17 The ratio of pollutant in device atmosphere
+RatioPollutantInput 111 The ratio of pollutant in device's input network
+RatioPollutantInput2 121 The ratio of pollutant in device's Input2 network
+RatioPollutantOutput 131 The ratio of pollutant in device's Output network
+RatioPollutantOutput2 141 The ratio of pollutant in device's Output2 network
+RatioPollutedWater 254 The ratio of polluted water in device atmosphere
+RatioSteam 193 The ratio of Steam in device's Atmosphere
+RatioSteamInput 194 The ratio of Steam in device's Input Atmosphere
+RatioSteamInput2 195 The ratio of Steam in device's Input2 Atmosphere
+RatioSteamOutput 196 The ratio of Steam in device's device's Output Atmosphere
+RatioSteamOutput2 197 The ratio of Steam in device's Output2 Atmopshere
+RatioVolatiles 18 The ratio of volatiles in device atmosphere
+RatioVolatilesInput 112 The ratio of volatiles in device's input network
+RatioVolatilesInput2 122 The ratio of volatiles in device's Input2 network
+RatioVolatilesOutput 132 The ratio of volatiles in device's Output network
+RatioVolatilesOutput2 142 The ratio of volatiles in device's Output2 network
+RatioWater 19 The ratio of water in device atmosphere
+RatioWaterInput 113 The ratio of water in device's input network
+RatioWaterInput2 123 The ratio of water in device's Input2 network
+RatioWaterOutput 133 The ratio of water in device's Output network
+RatioWaterOutput2 143 The ratio of water in device's Output2 network
+ReEntryAltitude 237 The altitude that the rocket will begin its decent to the pad. Must be between 25km and 120km
+Reagents 13 Total number of reagents recorded by the device
+RecipeHash 41 Current hash of the recipe the device is set to produce
+ReferenceId 217 Unique Reference Identifier for this object
+RequestHash 60 When set to the unique identifier, re quests an item of the provided type from the device
+RequiredPower 33 Idle operating power quantity, does not necessarily include extra demand power
+Reset 279 Resets the PID controller's internal state, clearing any accumulated error and resetting the output to zero. This is useful for starting fresh or recovering from an unstable state.
+ReturnFuelCost 100 Gets the fuel remaining in your rocket's fuel tank.
+Richness 263 The richness of the rocket's target site's mine-able deposit.
+Rpm 155 The number of revolutions per minute that the device's spinning mechanism is doing
+SemiMajorAxis 248 The longest radius of an elliptical orbit in astronomical units, measuring half the major axis. Determines the size of the orbit.
+Setpoint 278 The desired value that the PID controller aims to achieve. This is the target value for the process variable, and the controller will adjust its output to minimize the difference between the setpoint and the process variable.
+Setting 12 A variable setting that can be read or written, depending on the device
+SettingInput 91 The input setting for the device
+SettingOutput 92 The output setting for the device
+SignalID 87 Returns the contact ID of the strongest signal from this Satellite
+SignalStrength 86 Returns the degree offset of the strongest contact
+Sites 260 The number of Sites that have been discovered at the rockets target Space Map location.
+Size 264 The size of the rocket's target site's mine-able deposit.
+SizeX 160 Size on the X (right) axis of the object in largeGrids (a largeGrid is 2meters)
+SizeY 161 Size on the Y(Up) axis of the object in largeGrids (a largeGrid is 2meters)
+SizeZ 162 Size on the Z(Forward) axis of the object in largeGrids (a largeGrid is 2meters)
+SolarAngle 22 Solar angle of the device
+SolarIrradiance 176 The current solar irradiance.
+SoundAlert 175 Plays a sound alert on the devices speaker
+StackSize 280 Returns the stack size of the devices internal memory.
+Stress 156 Machines get stressed when working hard. When Stress reaches 100 the machine will automatically shut down
+Survey 257 Progress status of Survey scan at the rocket's target Space Map Location. Returns a normalised value where 100% surveyed is equal to 1. If Survey scan is not available returns -1.
+TargetPadIndex 158 The index of the trader landing pad on this devices data network that it will try to call a trader in to land
+TargetPrefabHash 271 The prefab
+TargetSlotIndex 270 The slot index that the target device that this device will try to interact with
+TargetX 88 The target position in X dimension in world coordinates
+TargetY 89 The target position in Y dimension in world coordinates
+TargetZ 90 The target position in Z dimension in world coordinates
+Temperature 6 The current temperature reading of the device
+TemperatureDifferentialEfficiency 151 How the difference between the input pipe and waste pipe temperatures effect the machines efficiency
+TemperatureExternal 73 The temperature of the outside of the device, usually the world atmosphere surrounding it
+TemperatureInput 107 The current temperature reading of the device's Input Network
+TemperatureInput2 117 The current temperature reading of the device's Input2 Network
+TemperatureOutput 127 The current temperature reading of the device's Output Network
+TemperatureOutput2 137 The current temperature reading of the device's Output2 Network
+TemperatureSetting 72 The current setting for the internal temperature of the object (e.g. the Hardsuit A/C)
+Throttle 154 Increases the rate at which the machine works (range: 0-100)
+Thrust 221 Total current thrust of all rocket engines on the rocket in Newtons.
+ThrustToWeight 223 Ratio of thrust to weight of rocket. Weight is effected by local body gravity. A rocket with a low thrust to weight will expend more fuel during launch and landing.
+Time 102 Time
+TimeToDestination 224 Estimated time in seconds until rocket arrives at target destination.
+TotalMoles 66 Returns the total moles of the device
+TotalMolesInput 115 Returns the total moles of the device's Input Network
+TotalMolesInput2 125 Returns the total moles of the device's Input2 Network
+TotalMolesOutput 135 Returns the total moles of the device's Output Network
+TotalMolesOutput2 145 Returns the total moles of the device's Output2 Network
+TotalQuantity 265 The estimated total quantity of resources available to mine at the rocket's target Space Map Site.
+TrueAnomaly 251 An angular parameter that defines the position of a body moving along a Keplerian orbit. It is the angle between the direction of periapsis and the current position of the body, as seen from the main focus of the ellipse (the point around which the object orbits).
+VelocityMagnitude 79 The current magnitude of the velocity vector
+VelocityRelativeX 80 The current velocity X relative to the forward vector of this
+VelocityRelativeY 81 The current velocity Y relative to the forward vector of this
+VelocityRelativeZ 82 The current velocity Z relative to the forward vector of this
+VelocityX 231 The world velocity of the entity in the X axis
+VelocityY 232 The world velocity of the entity in the Y axis
+VelocityZ 233 The world velocity of the entity in the Z axis
+Vertical 21 Vertical setting of the device
+VerticalRatio 35 Radio of vertical setting for device
+Volume 67 Returns the device atmosphere volume
+VolumeOfLiquid 182 The total volume of all liquids in Liters in the atmosphere
+WattsReachingContact 164 The amount of watts actually hitting the contact. This is effected by the power of the dish and how far off-axis the dish is from the contact vector
+Weight 222 Weight of Rocket in Newtons (Including fuel and cargo). Weight is effected by local body gravity.
+WorkingGasEfficiency 105 The Working Gas Efficiency reported by the machine, as a float between 0 and 1
