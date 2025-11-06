@@ -1,0 +1,9 @@
+deg2rad 0.0174532923847437 Degrees to radians conversion constant
+epsilon 4.94065645841247E-324 A constant representing the smallest value representable in double precision
+nan NaN A constant representing 'not a number'. This constants technically provides a 'quiet' NaN, a signal NaN from some instructions will result in an exception and halt execution
+ninf -inf A constant representing a negative infinite value
+pi 3.14159265358979 A constant representing the ratio of the circumference of a circle to its diameter, provided in double precision
+pinf inf A constant representing a positive infinite value
+rad2deg 57.2957801818848 Radians to degrees conversion constant
+rgas 8.31446261815324 <color=yellow>8.31446261815324</color><br>Universal gas constant (J/(mol*K))
+tau 6.28318530717959 <color=yellow>6.28318530717959</color><br>A constant representing the ratio of the circumference of a circle to its radius, provided in double precision

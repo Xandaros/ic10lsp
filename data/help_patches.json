@@ -1,0 +1,45 @@
+{
+    "operations": {
+        "bapz": "Branch to line c if abs(a) <= max(b * abs(a),  float.epsilon * 8)",
+        "bapzal": "Branch to line c if abs(a) <= max(b * abs(a),  float.epsilon * 8)",
+        "brapz": "Relative branch to line c if abs(a) <= max(b * abs(a),  float.epsilon * 8)",
+        "bnaz": "Branch to line c if abs(a) > max(b * abs(a),  float.epsilon * 8)",
+        "bnazal": "Branch to line c if abs(a) > max(b * abs(a),  float.epsilon * 8)",
+        "brnaz": "Relative branch to line c if abs(a) > max(b * abs(a),  float.epsilon * 8)",
+        "sapz": "Register = 1 if  abs(a) <= max(b * abs(a),  float.epsilon * 8)",
+        "snaz": "Register = 1 if abs(a) > max(b * abs(a), float.epsilon), otherwise 0",
+        "log": "Register = base e log(a) or ln(a)",
+        "exp": "Register = exp(a) or e^a"
+    },
+    "constants": {
+        "nan": "A constant representing 'not a number'. This constants technically provides a 'quiet' NaN, a signal NaN from some instructions will result in an exception and halt execution",
+        "pinf": "A constant representing a positive infinite value",
+        "ninf": "A constant representing a negative infinite value",
+        "pi": "A constant representing the ratio of the circumference of a circle to its diameter, provided in double precision",
+        "deg2rad": "Degrees to radians conversion constant",
+        "rad2deg": "Radians to degrees conversion constant",
+        "epsilon": "A constant representing the smallest value representable in double precision"
+    },
+    "batchmodes": {
+        "Average": "Average of all read values",
+        "Maximum": "Highest of all read values",
+        "Minimum": "Lowest of all read values",
+        "Sum": "All read values added together"
+    },
+
+    "reagentmodes": {
+        "Contents": "amount of this Reagent present in the machine",
+        "Recipe": "amount of this Reagent required by the Machine's current recipe",
+        "Required": "amount of this Reagent needed to complete the Machine's current recipe after subtracting the amount currently present",
+        "TotalContents": ""
+    },
+    "enums": {
+        "RobotMode.Follow": "Follow nearest player",
+        "RobotMode.MoveToTarget": "Move to target in straight line",
+        "RobotMode.None": "Do nothing",
+        "RobotMode.PathToTarget": "(Path find) to target",
+        "RobotMode.Roam": "Roam around looking for ores in a 15 co-ors radius",
+        "RobotMode.StorageFull": "Automaticaly assigned state, shows when storage slots a full",
+        "RobotMode.Unload": "Unload in chute input of chute bin within 3 meters / 1.5 large grids"
+    }
+}
