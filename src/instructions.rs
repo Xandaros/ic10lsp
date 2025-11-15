@@ -7,6 +7,7 @@ pub(crate) enum DataType {
     Number,
     Register,
     Device,
+    Id,
     LogicType,
     SlotLogicType,
     Name,
@@ -21,7 +22,7 @@ pub(crate) struct Union<'a>(pub(crate) &'a [DataType]);
 pub(crate) struct InstructionSignature(pub(crate) &'static [Union<'static>]);
 
 const REGISTER: Union = Union(&[DataType::Register]);
-const DEVICE: Union = Union(&[DataType::Device]);
+const DEVICE: Union = Union(&[DataType::Device, DataType::Register, DataType::Id]);
 const VALUE: Union = Union(&[DataType::Register, DataType::Number]);
 const LOGIC_TYPE: Union = Union(&[DataType::LogicType]);
 const SLOT_LOGIC_TYPE: Union = Union(&[DataType::SlotLogicType]);
@@ -395,6 +396,7 @@ impl Display for DataType {
             DataType::Name => "name",
             DataType::BatchMode => "batchMode",
             DataType::ReagentMode => "reagentMode",
+            DataType::Id => "id"
         };
         write!(f, "{}", val)
     }
