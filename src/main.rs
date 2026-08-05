@@ -102,6 +102,7 @@ impl<T> DefinitionData<T> {
 enum AliasValue {
     Register(String),
     Device(String),
+    Id(String)
 }
 
 impl Display for AliasValue {
@@ -109,6 +110,7 @@ impl Display for AliasValue {
         let s = match self {
             AliasValue::Register(s) => s,
             AliasValue::Device(s) => s,
+            AliasValue::Id(s) => s,
         };
         s.fmt(f)
     }
@@ -119,8 +121,10 @@ impl From<String> for AliasValue {
         use AliasValue::*;
         if value.starts_with("d") {
             Device(value)
-        } else {
+        } else if value.starts_with("r") {
             Register(value)
+        } else {
+            Id(value)
         }
     }
 }
@@ -138,6 +142,7 @@ impl HasType for AliasValue {
         match *self {
             AliasValue::Register(_) => instructions::DataType::Register,
             AliasValue::Device(_) => instructions::DataType::Device,
+            AliasValue::Id(_) => instructions::DataType::Id,
         }
     }
 }
@@ -1571,6 +1576,9 @@ impl Backend {
                                     }
                                     AliasValue::Register(_) => {
                                         instructions::Union(&[DataType::Register])
+                                    }
+                                    AliasValue::Id(_) => {
+                                        instructions::Union(&[DataType::Id])
                                     }
                                 }
                             } else {
